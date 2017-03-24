@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Quolcato (QUick OnLine CAtaloging TOol</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+</head>
+
+<body>
+<form id='main_form' action='marc.php' method='post'>
+	<div class="f008">
+		<label for="type_of_date">008</label>
+   		<select name="type_of_date" id="f008_type_of_date" autofocus>
+			   <option value="t">t</option>
+         <option value="r">r</option>
+         <option value="s">s</option>
+      </select>
+   		<input class='datefield_YYYY' type="text" id="f008_date_1" placeholder="date 1" maxlength="4" pattern="(19|20)\d{2}">
+   		<input class='datefield_YYYY' type="text" id="f008_date_2" placeholder="date 2" maxlength="4" pattern="(19|20)\d{2}">
+      <input type='text' id='f008_place' list='f008_place_list' placeholder='place' maxlength="3" pattern="([a-z]{2})|([a-z]{3})">
+    	   <datalist id='f008_place_list'></datalist>
+      <input class='datefield_YYYY' type="text" id="f008_illustrations" placeholder="ill." maxlength="4" pattern="([a-o]| ){0,4}">
+      <input type='text' id='f008_target_audience' list='f008_target_audience_list' placeholder='aud.' maxlength="1" pattern="([a-g]|j| )?">
+         <datalist id='f008_target_audience_list'></datalist>
+      <input class='datefield_YYYY' type="text" id="f008_nature_of_content" placeholder="content" maxlength="4" pattern="([abcdefgijklmnopqrstuvwz ]){0,4}">
+      <select style="width:auto" id="f008_index">
+         <option value="1">1</option>
+         <option value="0">0</option>
+      </select>
+      <input type='text' id='f008_literary_form' list='f008_literary_form_list' placeholder='form' maxlength="1" pattern="[01defhijmpsu]{1}">
+         <datalist id='f008_literary_form_list'></datalist>
+      <input type='text' id='f008_biography' list='f008_biography_list' placeholder='bio.' maxlength="1" pattern="[abcd ]?">
+         <datalist id='f008_biography_list'></datalist>
+      <input type='text' id='f008_language' list='f008_language_list' placeholder='lang.' maxlength="3" pattern="[a-z]{3}">
+         <datalist id='f008_language_list'></datalist>
+  </div>
+  <div class="f020">
+    <label for="isbn">020</label>
+      <input type="text" id="f020_a" placeholder="ISBN 10 or 13" maxlength="13" pattern="^(97(8|9))?\d{9}(\d|X)$">
+      <input type='text' id='f020_q' list='f020_q_list' placeholder='binding' maxlength="20" pattern="\(([a-z]|[\u00E9])*\)">
+         <datalist id='f020_q_list'></datalist>
+      <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">
+  </div>
+  <div class='f04x'>
+    <div class="f040">
+      <label for="f040_a">040</label>
+        <input type="text" id="f040_a" placeholder="cataloguer" maxlength="10" pattern="\w*">
+        <input type='text' id='f040_b' list='f040_b_list' placeholder='lang.' maxlength="3" pattern="[a-z]{3}"> <!--f008_language_list reused for field 040-->
+           <datalist id='f040_b_list'></datalist>
+        <input type="text" id="f040_d" placeholder="mod. cat." maxlength="10" pattern="\w*">
+    </div>
+    <div class="f041">
+      <label for="f041_i1">041</label>
+        <select id="f041_i1">
+         <option value="0">0</option>
+         <option value="1">1</option>
+      </select>
+        <input type='text' id='f041_a' placeholder='lang.' maxlength="12" pattern="[a-z]{3}">
+        <input type='text' id='f041_h' list='f041_h_list' placeholder='orig.' maxlength="12" pattern="[a-z]{3}"> <!--f008_language_list reused for field 041-->
+          <datalist id='f041_h_list'></datalist>
+    </div>
+  </div>
+
+  <div class="f245">
+    <label for="title">245</label>
+      <input type="text" id="f245_a" placeholder="title">
+  </div>
+  
+  <div class="add_fields">
+    <label for="isbn">OPT</label>
+    <input type="button" id = 'add_f040_d' class="add_buttons" value="040d">
+  </div>
+
+  <div class="submit">
+      <input type="button" id = 'tomarc' class="isbn_submit" value="ToMarc">
+  </div>
+
+</form>
+
+<div class="infobox" id = "ib"></div>
+<div class="marc_download" id = "mrc_dl">
+  <a href="marcy.mrc">marc file</a>
+</div>
+
+<script src="js/func.js"></script>
+<script src="js/infobox.js"></script>
+<script src="js/listen.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,122 @@
+body {
+	font-family: "Verdana";
+	font-size: 12px;
+}
+
+.infobox {
+	/*display:none;*/
+	position:relative;
+ 	top:150px;
+}
+
+.marc_download {
+	position:relative;
+ 	top:170px;
+}
+}
+
+/* Red border for invalid inputs */
+input:invalid {
+  /*border: 1px solid black;*/
+  background: rgb(255, 0, 0);
+}
+
+input[type=button] {
+background-color: white;
+    color: black;
+    border: 1px solid #4CAF50; /* Green */
+    border-radius: 4px;
+}
+
+
+.datefield_YYYY {
+	width: 50px;
+}
+
+.singleChar {
+	width: 30px;
+}
+
+#f008_place {
+	width: 50px;
+}
+
+#f008_target_audience {
+	width: 50px;
+}
+
+#f008_literary_form {
+	width: 50px;
+}
+
+#f008_biography {
+	width: 50px;
+}
+
+#f008_language {
+	width: 50px;
+}
+
+.f020 {
+	position:relative;
+ 	top:5px;
+}
+
+#f020_a {
+	width: 97px;
+}
+
+#f020_q {
+	width: 96px;
+}
+
+.f04x {
+	position:relative;
+ 	top:10px;
+}
+
+.f040, .f041 {
+	display:inline;;
+}
+
+#f040_a {
+	display:inline;
+	width: 80px;
+}
+
+#f040_b {
+	width: 50px;
+}
+
+#f040_d {
+	display:none;
+	width: 80px;
+}
+
+#f041_a {
+	width: 50px;
+}
+
+#f041_h {
+	display:none;
+	width: 50px;
+}
+
+.f245 {
+	position:relative;
+ 	top:15px;
+}
+
+#f245_a {
+	width: 584px;
+}
+
+.add_fields {
+	position:relative;
+ 	top:20px;
+}
+
+.submit {
+	position:relative;
+ 	top:55px;
+}
