@@ -244,6 +244,7 @@ $(function() {
         ib.innerHTML = 'field 040 subfield b - Cataloging Source: Language of cataloging<BR>\
                         MARC code for the language of cataloging in the record.<BR>\
                         Dynamic form: prefilled using value of 008 pos. 35-37.<BR>\
+                        If left blank, default value will be \'eng\'.<BR>\
                         Common codes (<a target=\'_blank\' href=\'https://www.loc.gov/marc/languages/\'>or full list</a>):<BR>\
                         eng - English<BR>\
                         fre - French<BR>\
@@ -308,6 +309,67 @@ $(function() {
                         spa - Spanish<BR>\
                         mul - multiple languages';
 
+    })
+});
+
+$(function() {
+    $("#f100_i1").focusin(function() {
+        var ib = document.getElementById('ib');
+        $(".infobox").show();
+        ib.innerHTML = 'field 100 indicator 1 - Main entry - Personal name<BR>\
+                        Type of personal name entry element.<BR>\
+                        0 - Forename<BR>\
+                        1 - Surname (default)<BR>\
+                        3 - Family name';
+    })
+});
+
+$(function() {
+    $("#f100_a").focusin(function() {
+        var ib = document.getElementById('ib');
+        $(".infobox").show();
+        ib.innerHTML = 'field 100 subfield a - Personal name (NR)<BR>\
+                        Examples: <BR>\
+                        100 1#$aMorgan, John Pierpont,$d1837-1913,$ecollector.<BR>\
+                        100 3#$aFarquhar family.<BR>\
+                        100 0#$aJohn,$cthe Baptist, Saint.';
+    })
+});
+
+$(function() {
+    $("#f100_d").focusin(function() {
+        var ib = document.getElementById('ib');
+        $(".infobox").show();
+        ib.innerHTML = 'field 100 subfield d - Dates associated with a name (NR)<BR>\
+                        Examples: <BR>\
+                        100 1#$aMorgan, John Pierpont,$d1837-1913,$ecollector.<BR>\
+                        100 3#$aFarquhar family.<BR>\
+                        100 0#$aJohn,$cthe Baptist, Saint.';
+    })
+});
+
+$(function() {
+    $("#f245_i1").focusin(function() {
+        var ib = document.getElementById('ib');
+        $(".infobox").show();
+        ib.innerHTML = 'field 245 indicator 1 - Title<BR>\
+                        Whether a title added entry is made.<BR>\
+                        0 - No added entry<BR>\
+                        1 - Added entry <BR>\
+                        Value 0 is always used when a 1XX heading field is not present in the record.<BR>\
+                        Dynamic form: automatically set to 0 if field 100 is removed.';
+    })
+});
+
+$(function() {
+    $("#f245_i2").focusin(function() {
+        var ib = document.getElementById('ib');
+        $(".infobox").show();
+        ib.innerHTML = 'field 245 indicator 2 - Title<BR>\
+                        Nonfiling characters.<BR>\
+                        Dynamic form: automatically if the title begins with a definite or undefinite article.<BR>\
+                        0 - No nonfiling characters<BR>\
+                        1-9 - Number of nonfiling characters<BR>';
     })
 });
 

@@ -1,32 +1,3 @@
-/* SHOW HIDE FIELDS */
-
-$(document).ready(function() { 
-            $("#add_f040_d").click(function(event){
-               	console.log('click: add_f040_d');
-              	if( $('#f040_d').is(':visible') ) {
-  					$('#f040_d').hide();
-  					f040_d = undefined;
-  					console.log('state of field 040#d: ' + f040_d);
-					}
-				else {
-					$('#f040_d').show();
-					}
-                                   
-            });
-                
-         });
-
-
-// Alert if
-$(function () {
-  $("input").blur(function () {
-    if ($(this).is(":invalid")) {
-      alert('invalid value, please read the Marc documentation!');
-    }
-  });
-});
-
-
 /* DROP DOWN LISTS */
 
 // f008_place AJAX
@@ -324,3 +295,47 @@ $(function () {
 	// Set up and make the request.
 	request_f041_h.open('GET', 'resources/f008_language.json', true);
 	request_f041_h.send();
+
+// f240_l language AJAX
+$('#f041_i1').on('change', function () {
+	// Get the <datalist> and <input> elements.
+	var f240_l_list = document.getElementById('f240_l_list');
+	var f240_l = document.getElementById('f240_l_list');
+
+	// Create a new XMLHttpRequest.
+	var request_f240_l = new XMLHttpRequest();
+
+	// Handle state changes for the request.
+	request_f240_l.onreadystatechange = function(response) {
+	  if (request_f240_l.readyState === 4) {
+	    if (request_f240_l.status === 200) {
+	      // Parse the JSON
+	      var jsonOptions = JSON.parse(request_f240_l.responseText);
+	  
+	      // Loop over the JSON array.
+	      jsonOptions.forEach(function(item) {
+	        // Create a new <option> element.
+	        var option = document.createElement('option');
+	        // Set the value using the item in the JSON array.
+	        option.value = item;
+	        // Add the <option> element to the <datalist>.
+	        f240_l_list.appendChild(option);
+	      });
+	      // Update the placeholder text.
+	      f240_l.placeholder = "language of translation";
+	    } else {
+	      // An error occured :(
+	      f240_l.placeholder = "Couldn't load datalist options :(";
+	    }
+	  }
+	};
+	f240_l.placeholder = "Loading f240_l";
+	// Set up and make the request.
+	if (f040_b == 'fre') {
+		request_f240_l.open('GET', 'resources/f240_l_plain_text_fre.json', true);
+	}
+	else {
+		request_f240_l.open('GET', 'resources/f240_l_plain_text_eng.json', true);
+	}
+	request_f240_l.send();
+});
