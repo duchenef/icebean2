@@ -63,7 +63,6 @@ $GBtitle = $arrayGB[1];
 $author = $arrayGB[2];
 $author_status = "author taken from Google";
 $descrurlgb = $arrayGB[3];
-$imagepathGB = $arrayGB[4];
 $otherpathsGB = $arrayGB[5];
 
 // Requete Amazon images avec ASIN titre
@@ -126,7 +125,7 @@ $descr = str_replace("\xE2\x80\x99", "'", $descr);
 $descr = str_replace("\xE2\x80\xA6", "...", $descr); 
 $descr = "|".chr(30).chr(9)."520".chr(9)."8".chr(9).chr(32)."<BR>".chr(97).chr(9).$descr."|";
 
-$output_array = array($isbn, $author, $AMtitle);
+$output_array = array($isbn, $author, $AMtitle, $GRtitle);
 
 //echo $GBtitle.'<BR>';
 //echo $AMtitle.'<BR>';

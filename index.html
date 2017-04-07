@@ -88,7 +88,11 @@
     <input type="text" id="f100_a" placeholder="author">
     <input type="button" id = 'add_f100_d' class="add_buttons" value="100d">
     <label for="f100_d">d</label>
-    <input type="text" id="f100_d" placeholder="dates" maxlength="16">
+      <input type="text" id="f100_d" placeholder="dates" maxlength="16">
+    <input type="button" id = 'add_f100_e' class="add_buttons" value="100e">
+    <label for="f100_e">e</label>
+      <input type='text' id='f100_e' list='f100_e_list' placeholder='relator term' maxlength="32">
+        <datalist id='f100_e_list'></datalist>
   </div>
   <div id="f240">240
     <label for="f240_i1">i1</label>
@@ -114,6 +118,7 @@
       <input type="text" id="f245_i2" placeholder="i2" maxlength="1" pattern="[0-9]{1}"> 
     <label for="f245_a">a</label>
       <input type="text" id="f245_a" placeholder="title">
+    <input type="button" id = 'add_f245_b' class="add_buttons" value="245b">
     <label for="f245_b">b</label>
       <input type="text" id="f245_b" placeholder="subtitle">
     <label for="f245_c">c</label>
@@ -142,12 +147,25 @@
   <div class="f700">
   </div>
   <div class="actions">OPT
-    <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">
-    
     <input type="button" id = 'tomarc' class="isbn_submit" value="ToMarc">
+    <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">  
+  </div>
+  <div class="insert">INS
+    <label for="field_insert"></label>
+      <input type='text' id='field_insert' placeholder='000' maxlength="3" pattern="[0-9]{3}">
   </div>
 
 </form>
+
+
+<script id='field-template' type='text/x-custom-template'>
+    <div>
+        <label>i1</label>
+            <select></select>
+        <label>i2</label>
+        <select></select>
+    </div>
+</script>
 
 <div class="infobox" id = "ib"></div>
 <div class="marc_download" id = "mrc_dl">

@@ -40,7 +40,10 @@ else {
     }
 }
 
-echo "<BR>XXXXXXXXXXXXXXXXXXXXXXXX OLD CLASSIFY REQUEST XXXXXXXXXXXXXXXXXXX<BR>";
+
+echo "<BR>";
+echo "<BR>";
+ echo "<BR>XXXXXXXXXXXXXXXXXXXXXXXX OLD CLASSIFY REQUEST XXXXXXXXXXXXXXXXXXX<BR>";
 
 $clrequest = "http://classify.oclc.org/classify2/Classify?owi=".$owis[0];
 

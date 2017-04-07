@@ -20,6 +20,7 @@ $readArray = [];
 
 include 'resources/function_fast.php';
 $fastresults = fast2mdr($isbn);
+var_dump($fastresults);
 $marcArray = $fastresults[0];
 $readArray = $fastresults[1];
 

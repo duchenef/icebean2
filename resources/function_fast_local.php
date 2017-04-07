@@ -19,14 +19,15 @@ function fast2mdr($isbn) {
   $readArray =[];
   $fast_status = '';
 
+   
 // si classify ne retourne pas de fast, ne rien executer
 if ($fastClassify !='not found') {
   while ($i<=(count($fastClassify))-1) {
     //echo $fast[$i]." / ".$fastID[$i]."<BR>";
 
     // Requete FAST linked data
-    $fldRequest = "http://experimental.worldcat.org/fast/".$fastID[$i]."/marc21.xml";
-    $xml = simplexml_load_file($fldRequest);
+    
+    $xml = simplexml_load_file('http://diepifred.noip.me/xml/FASTFormGenre.marcxml');
     $xml->registerXPathNamespace('foo', 'http://www.loc.gov/MARC21/slim');
 
     foreach( $xml->xpath('//foo:record') as $record ) {

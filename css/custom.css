@@ -131,6 +131,15 @@ label[for=f100_d] {
 	width: 92px;
 }
 
+label[for=f100_e] {
+	display:none;
+}
+
+#f100_e {
+	display: none;
+	width: 92px;
+}
+
 #f240 {
 	display:none;
  	margin-top:5px;
@@ -170,15 +179,37 @@ label[for=f100_d] {
 	width: 300px;
 }
 
+label[for=f245_b] {
+	display:none;
+}
+
 #f245_b {
+	display:none;
 	width: 300px;
+}
+
+#f245_c {
+	width: 200px;
 }
 
 .actions {
  	margin-top:15px;
 }
 
-#isbn_submit {
+.insert {
+ 	margin-top:15px;
+ 	display:none;
+}
+
+label[for=field_insert] {
+}
+
+#field_insert {
+	margin-left:14px;
+	width: 30px;
+}
+
+#tomarc {
 	margin-left:14px;
 }
 

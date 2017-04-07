@@ -339,3 +339,40 @@ $('#f041_i1').on('change', function () {
 	}
 	request_f240_l.send();
 });
+
+// f100_e relator terms AJAX
+	// Get the <datalist> and <input> elements.
+	var f100_e_list = document.getElementById('f100_e_list');
+	var f100_e = document.getElementById('f100_e_list');
+
+	// Create a new XMLHttpRequest.
+	var request_f100_e = new XMLHttpRequest();
+
+	// Handle state changes for the request.
+	request_f100_e.onreadystatechange = function(response) {
+	  if (request_f100_e.readyState === 4) {
+	    if (request_f100_e.status === 200) {
+	      // Parse the JSON
+	      var jsonOptions = JSON.parse(request_f100_e.responseText);
+	  
+	      // Loop over the JSON array.
+	      jsonOptions.forEach(function(item) {
+	        // Create a new <option> element.
+	        var option = document.createElement('option');
+	        // Set the value using the item in the JSON array.
+	        option.value = item;
+	        // Add the <option> element to the <datalist>.
+	        f100_e_list.appendChild(option);
+	      });
+	      // Update the placeholder text.
+	      f100_e.placeholder = "relator term";
+	    } else {
+	      // An error occured :(
+	      f100_e.placeholder = "Couldn't load datalist options :(";
+	    }
+	  }
+	};
+	f100_e.placeholder = "Loading f100_e";
+	// Set up and make the request.
+	request_f100_e.open('GET', 'resources/f100_e_relator_terms.json', true);
+	request_f100_e.send();

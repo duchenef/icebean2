@@ -9,7 +9,11 @@ require 'File/MARC.php';
 	$f040 = $_POST[f040];
 	$f041 = $_POST[f041];
 	$f100 = $_POST[f100];
+	$f240 = $_POST[f240];
 	$f245 = $_POST[f245];
+	$f336 = $_POST[f336];
+	$f337 = $_POST[f337];
+	$f338 = $_POST[f338];
 
 // FUNCTION: CREATE FIELD FROM FIELD VARIABLE
 	function newField($field) {
@@ -51,7 +55,11 @@ require 'File/MARC.php';
 	$marc->appendField(newField($f040));
 	$marc->appendField(newField($f041));
 	$marc->appendField(newField($f100));
+	$marc->appendField(newField($f240));
 	$marc->appendField(newField($f245));
+	$marc->appendField(newField($f336));
+	$marc->appendField(newField($f337));
+	$marc->appendField(newField($f338));
 
 // OUTPUT
 	//var_dump($f041);

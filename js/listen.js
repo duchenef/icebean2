@@ -7,6 +7,9 @@ if (mm<10) mm = '0'+String(mm);
 var yyyy = String(today.getFullYear());
 var yy = yyyy.substring(2, 4);
 
+var insert = '';
+var focus_previous = '';
+
 // Marc fields Variables init and default values
 var f000 = '00000nam  2200000 i 4500';
 var f007 = 'ta';
@@ -33,18 +36,21 @@ var f008_3537 = '   '; /* f008_language */
 var f008 = f008_0005 + f008_06 + f008_0710 + f008_1114 + f008_1517 + f008_1821 + f008_22 + f008_23 + f008_2427 + f008_2830 + f008_31 + f008_32 + f008_33 + f008_34 + f008_3537 + f008_3839;
 
 // Main marc field variables
-var f020 =  {id: '020', i1: null, i2: null, a: '', q: ''};
-var f040 =  {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
-var f041 =  {id: '041', i1: 0, i2: null, a: '', h: ''};
-var f100 =  {id: '100', i1: 1, i2: null, a: ''};
-var f240 =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
-var f245 =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f020 = {id: '020', i1: null, i2: null, a: '', q: ''};
+var f040 = {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
+var f041 = {id: '041', i1: 0, i2: null, a: '', h: ''};
+var f100 = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
+var f240 = {id: '240', i1: 1, i2: 0, a: '', l: ''};
+var f245 = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f336 = {id: '336', i1: null, i2: null, a: 'text', b: 'txt', '2': 'rdacontent'}
+var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'}
+var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'}
 
 // Marc fields default value for reset
 var f020_default =  {id: '020', i1: null, i2: null, a: '', q: ''};
 var f040_default =  {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
 var f041_default =  {id: '041', i1: 0, i2: null, a: '', h: ''};
-var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: ''};
+var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240_default =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 
@@ -96,6 +102,19 @@ function findArticle(string, field) {
     });
 }
 
+/* String functions */
+
+/* upper case first letter */
+function upFirst(string) {
+    string = string.toLowerCase();
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/* lower case all but first letter */
+function lowerAll(string) {
+    return string.toLowerCase();
+}
+
 /* function: reset field of subfield to default values */
 /* reset('fieldnumber', 'subfield') */
 function reset(field_number, sub) {
@@ -111,7 +130,7 @@ function reset(field_number, sub) {
                 if (tmp[key] == undefined || tmp[key] == null) { tmp[key] = '';}
                 field_div_id = 'f' + field_number + '_' + key;
                 document.getElementById(field_div_id).value = tmp[key];
-                console.log('field ' + field_div_id + ' was reset');
+                console.log('field ' + field_div_id + ' has been reset');
             } 
         }
         else {
@@ -119,7 +138,7 @@ function reset(field_number, sub) {
             field_div_id = 'f' + String(field_number) + '_' + sub;
             if (tmp[sub] == undefined) { tmp[sub] = '';}
             document.getElementById(field_div_id).value = '';
-            console.log('subfield ' + field_div_id + ' was reset');
+            console.log('subfield ' + field_div_id + ' has been reset');
         }
     }
 
@@ -137,7 +156,17 @@ function  pop240l() {
             }
 }
 
+var field_template = $('#field-template').html();
 
+/* function add field */
+function addField(id, pos) {
+    var field_div = {};
+    field_div.id = "f" + id;
+    console.log(field_div.id);
+    //field_div.html = 
+
+    console.log(field_div.html);
+}
 
 // Form actions: f008
 /* capture the change of value in each field and adjust field 008 value with it */
@@ -145,14 +174,14 @@ $('#f008_type_of_date').on('change', function () {
         f008_06 = $(this).val();
         console.log('captured value: ' + f008_06);
         f008 = replaceAtPos(f008_06, f008, 6)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
         /* DYNAMIC FORM : 008 Hide date two if single date selected */
         if ($(this).val() == 's') {
             $('#f008_date_2').hide();
             f008_1114 = '    ';
             document.getElementById('f008_date_2').value = '';
             f008 = replaceAtPos(f008_1114, f008, 11)
-            console.log('state of field f008: ' + f008);
+            console.log('f008: ' + f008);
         } else {
             $('#f008_date_2').show();
         }
@@ -162,14 +191,14 @@ $('#f008_date_1').on('change', function () {
         f008_0710 = $(this).val();
         console.log('captured value: ' +f008_0710);
         f008 = replaceAtPos(f008_0710, f008, 7)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_date_2').on('blur', function () {
         f008_1114 = $(this).val();
         console.log('captured value: ' +f008_1114);
         f008 = replaceAtPos(f008_1114, f008, 11)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_place').on('blur', function () {
@@ -178,56 +207,56 @@ $('#f008_place').on('blur', function () {
         if (f008_1517.length == 2) f008_1517 = ' '+f008_1517;
         console.log('captured value: ' +f008_1517);
         f008 = replaceAtPos(f008_1517, f008, 15)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_illustrations').on('blur', function () {
         f008_1821 = $(this).val();
         console.log('captured value: ' +f008_1821);
         f008 = replaceAtPos(f008_1821, f008, 18)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_target_audience').on('blur', function () {
         f008_22 = $(this).val();
         console.log('captured value: ' +f008_22);
         f008 = replaceAtPos(f008_22, f008, 22)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_nature_of_content').on('blur', function () {
         f008_2427 = $(this).val();
         console.log('captured value: ' +f008_2427);
         f008 = replaceAtPos(f008_2427, f008, 24)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_index').on('change', function () {
         f008_31 = $(this).val();
         console.log('captured value: ' +f008_31);
         f008 = replaceAtPos(f008_31, f008, 31)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_literary_form').on('blur', function () {
         f008_33 = $(this).val();
         console.log('captured value: ' +f008_33);
         f008 = replaceAtPos(f008_33, f008, 33)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_biography').on('blur', function () {
         f008_34 = $(this).val();
         console.log('captured value: ' +f008_34);
         f008 = replaceAtPos(f008_34, f008, 34)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
     });
 
 $('#f008_language').on('change', function () {
         f008_3537 = $(this).val();
         console.log('captured value: ' +f008_3537);
         f008 = replaceAtPos(f008_3537, f008, 35)
-        console.log('state of field 008: ' + f008);
+        console.log('008: ' + f008);
         /* DYNAMIC FORM: prefill f040_b with f008_3537's value' */
         document.getElementById('f040_b').value = f008_3537;
         f040.b = f008_3537;
@@ -238,27 +267,32 @@ $('#f008_language').on('change', function () {
 // From actions: main marc fields
 $('#f020_a').on('blur', function () {
         f020.a = $(this).val();
-        console.log('state of field 020#a: ' + f020.a);
+        console.log('020#a: ' + f020.a);
+        icebean_submit();
+        console.log('the icebean has been called');
     });
 
 $('#f020_q').on('blur', function () {
         f020.q = $(this).val();
-        console.log('state of field 020#q: ' + f020.q);
+        console.log('020#q: ' + f020.q);
     });
 
 $('#f040_a').on('blur', function () {
         f040.a = $(this).val();
-        console.log('state of field 040#a: ' + f040.a);
+        console.log('040#a: ' + f040.a);
     });
 
 $('#f040_b').on('blur', function () {
         f040.b = $(this).val();
-        console.log('state of field 040#b: ' + f040.b);
+        console.log('040#b: ' + f040.b);
     });
 
 $('#f040_d').on('blur', function () {
         f040.d = $(this).val();
-        console.log('state of field 040#d: ' + f040.d);
+        console.log('040#d: ' + f040.d);
+        if ($(this).val() == '') {
+            $('label[for=f040_d], #f040_d').hide();
+        }
     });
 
 $('#f041_i1').on('change', function () {
@@ -279,7 +313,7 @@ $('#f041_i1').on('change', function () {
 
 $('#f041_a').on('blur', function () {
         f041.a = $(this).val();
-        console.log('state of field 041#a: ' + f041.a);
+        console.log('041#a: ' + f041.a);
         /* DYNAMIC FORM : 041_a populate f240_l with value from 041_a if 041_i1 = 1 (if 240 is visible*/
         if (f041.i1 == 1) {
             pop240l();
@@ -288,48 +322,59 @@ $('#f041_a').on('blur', function () {
 
 $('#f041_h').on('blur', function () {
         f041.h = $(this).val();
-        console.log('state of field 041#h: ' + f041.h);
+        console.log('041#h: ' + f041.h);
     });
 
 $('#f100_i1').on('change', function () {
         f100.i1 = $(this).val();
-        console.log('state of field 100i1: ' + f100.i1);
+        console.log('100i1: ' + f100.i1);
     });
 
 $('#f100_a').on('blur', function () {
         f100.a = $(this).val();
-        console.log('state of field 100#a: ' + f100.a);
+        console.log('100#a: ' + f100.a);
     });
 
 $('#f100_d').on('blur', function () {
         f100.d = $(this).val();
-        console.log('state of field 100#d: ' + f100.d);
+        console.log('100#d: ' + f100.d);
+        if ($(this).val() == '') {
+            $('label[for=f100_d], #f100_d').hide();
+        }
+    });
+
+$('#f100_e').on('blur', function () {
+        f100.e = $(this).val();
+        console.log('100#e: ' + f100.e);
+        if ($(this).val() == '') {
+            $('label[for=f100_e], #f100_e').hide();
+        }
     });
 
 $('#f240_i1').on('change', function () {
         f240.i1 = $(this).val();
-        console.log('state of field 240i1: ' + f240.i1);
+        console.log('240i1: ' + f240.i1);
     });
 
 $('#f240_i2').on('blur', function () {
         f240.i2 = $(this).val();
-        console.log('state of field 240_i2: ' + f240.i2);
+        console.log('240_i2: ' + f240.i2);
     });
 
 $('#f240_a').on('blur', function () {
         f240.a = $(this).val();
-        console.log('state of field 240_a: ' + f240.a);
+        console.log('240_a: ' + f240.a);
         findArticle(f240.a, 'f240_a');
     });
 
 $('#f240_l').on('blur', function () {
         f240.l = $(this).val();
-        console.log('state of field 240_l: ' + f240.l);
+        console.log('240_l: ' + f240.l);
     });
 
 $('#f245_i1').on('change', function () {
         f245.i1 = $(this).val();
-        console.log('state of field 245i1: ' + f245.i1);
+        console.log('245i1: ' + f245.i1);
         /* DYNAMIC FORM : f245_i1 Hide/show f100 -Main entry - Personal name */
         if ($(this).val() == '0') {
             $('#f100').hide();
@@ -341,18 +386,31 @@ $('#f245_i1').on('change', function () {
 
 $('#f245_i2').on('blur', function () {
         f245.i2 = $(this).val();
-        console.log('state of field 245i2: ' + f245.i2);
+        console.log('245i2: ' + f245.i2);
     });
 
 $('#f245_a').on('blur', function () {
         f245.a = $(this).val();
-        console.log('state of field 245#a: ' + f245.a);
+        console.log('245#a: ' + f245.a);
         findArticle(f245.a, 'f245_a');
     });
 
+$('#f245_b').on('blur', function () {
+        f245.b = $(this).val();
+        console.log('245#b: ' + f245.b);
+        if ($(this).val() == '') {
+            $('label[for=f245_b], #f245_b').hide();
+        }
+    });
+
+$('#f245_c').on('blur', function () {
+        f245.c = $(this).val();
+        console.log('245#c: ' + f245.c);
+    });
+
 /* ICEBEAN REQUEST */
-$(document).ready(function() {
-            $("#isbn_submit").click(function(event){
+// function
+function icebean_submit(){
                console.log('click: to icebean');
                $.post( 
                     "icebean_api.php",
@@ -360,21 +418,39 @@ $(document).ready(function() {
                     function(data) {
                     //$('#ib').html(data);
                     var icebean_data = data.split('~');
-                    //console.log(icebean_data[2]);
+                    // f100a and f245c
                     f100.a = icebean_data[1];
                     var surname = f100.a.slice(f100.a.indexOf(' ')+1, f100.a.length);
                     var firstname = f100.a.slice(0, f100.a.indexOf(' '));
                     f100.a = surname + ', ' + firstname;
                     document.getElementById('f100_a').value = f100.a;
-                    f245.a = icebean_data[2];
+                    f245.c = icebean_data[1];
+                    document.getElementById('f245_c').value = f245.c;
+                    $('#ib').html(icebean_data);
+                    // f245a and f245b
+                    var full_title = icebean_data[2];
+                    if (full_title.indexOf(':') != -1) {
+                        f245.a = full_title.slice(0, full_title.indexOf(':'));
+                        f245.b = full_title.slice(full_title.indexOf(':')+2, full_title.length);
+                    }
+                    else { f245.a = icebean_data[2];}
                     document.getElementById('f245_a').value = f245.a;
                     findArticle(f245.a, 'f245_a');
-                    $('#ib').html(icebean_data);
+                    if (f245.b != undefined) {
+                        f245.b = lowerAll(f245.b);
+                        console.log(f245.b);
+                        $('label[for=f245_b], #f245_b').show();
+                        document.getElementById('f245_b').value = f245.b;
                     }
-               );
+               });
                     
+            }
+  
+// icebean submit button              
+$(document).ready(function() {
+            $("#isbn_submit").click(function(event){
+               icebean_submit();
             });
-                
          });
 
 /* SHOW HIDE FIELDS */
@@ -387,11 +463,9 @@ $(document).ready(function() {
                     reset('040', 'd');
                     }
                 else {
-                    $('label[for=f040_d], #f040_d').show();
-                    }
-                                   
-            });
-                
+                    $('label[for=f040_d], #f040_d').show().focus();
+                    }                  
+            });       
          });
 
 /* 100d */
@@ -404,29 +478,131 @@ $(document).ready(function() {
                     }
                 else {
                     $('label[for=f100_d], #f100_d').show().focus();
-                    }
-                                   
-            });
-                
+                    }                  
+            });      
          });
 
-// Alert if
+/* 100d */
+$(document).ready(function() { 
+            $("#add_f100_e").click(function(event){
+                console.log('click: add_f100_e');
+                if( $('#f100_e').is(':visible') ) {
+                    $('label[for=f100_e], #f100_e').hide();
+                    reset('100', 'e');
+                    }
+                else {
+                    $('label[for=f100_e], #f100_e').show().focus();
+                    }                   
+            });   
+         });
+
+/* 245b */
+$(document).ready(function() { 
+            $("#add_f245_b").click(function(event){
+                console.log('click: add_f245_b');
+                if( $('#f245_b').is(':visible') ) {
+                    $('label[for=f1245_b], #f245_b').hide();
+                    reset('245', 'b');
+                    }
+                else {
+                    $('label[for=f245_b], #f245_b').show().focus();
+                    }                 
+            });   
+         });
+
+// Alert if invalid
+// Check previously focused element
 $(function () {
-  $("input").blur(function () {
+  $("#main_form input, #main_form select").blur(function () {
     if ($(this).is(":invalid")) {
       alert('invalid value, please read the Marc documentation!');
     }
+    focus_previous = this.id;
+    //console.log('previously focused: ' + focus_previous);
   });
 });
 
+/* key press */
+/* CTRL + INS : insert field */
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 45 ) ) {
+        console.log( 'Field insertion (CTRL + INS)' );
+        if( $('.insert').is(':visible') ) {
+                    $('.insert').hide();
+                    insert = '';
+                    document.getElementById('field_insert').value = insert;
+                    //console.log('trying to refocus on: ' + focus_previous);
+                    //$('#f008_date_1').focus();
+                    $("#" + focus_previous ).focus();
+                    }
+                else {
+                    $('.insert').show();
+                    $('#field_insert').focus(); 
+                }      
+    }
+ });
 
 /* SUBMIT TO MARC */
+
+/* Preprocessing */
+
+/* function remove punctuation old punctation if applicable */
+/* subfield */
+function RemoveSubfieldPunc(subfield){
+    if (subfield != '') {
+        if (subfield.charAt(subfield.length-1) == '.'
+            || subfield.charAt(subfield.length-1) == ','
+            ) {
+            subfield = subfield.slice(0, subfield.length-1); 
+        }
+        else if (subfield.charAt(subfield.length-1) == '/'
+            || subfield.charAt(subfield.length-1) == ':'
+            ) {
+            subfield = subfield.slice(0, subfield.length-2); 
+        }
+    }
+    return subfield;
+}
+
+/* whole field */
+function RemoveFieldPunct(field, s1, s2, s3, s4, s5, s6) {
+    for (var i = 1, j = arguments.length; i < j; i++) {
+        window[field][arguments[i]] = RemoveSubfieldPunc(window[field][arguments[i]]);
+    }
+}
+
+/* function add punctuation to marc fields */
+function punct100() {
+    RemoveFieldPunct('f100', 'a', 'd' ,'e')
+    if (f100.a != '' && f100.d == '' && f100.e == '') { f100.a = f100.a + '.'; }
+    if (f100.a != '' && f100.d != '' && f100.e == '') { f100.a = f100.a + ','; f100.d = f100.d + '.'; }
+    if (f100.a != '' && f100.d == '' && f100.e != '') { f100.a = f100.a + ','; f100.e = f100.e + '.'; }
+    if (f100.a != '' && f100.d != '' && f100.e != '') { f100.a = f100.a + ','; f100.d = f100.d + ','; f100.e = f100.e + '.'; }
+}
+
+function punct240() {
+    RemoveFieldPunct('f240', 'a')
+    if (f240.a != '') { f240.a = f240.a + '.'; }
+}
+
+function punct245() {
+    RemoveFieldPunct('f245', 'a', 'b' ,'c')
+    if (f245.a != '' && f245.b == '' && f245.c == '') { f245.a = f245.a + '.'; }
+    if (f245.a != '' && f245.b != '' && f245.c == '') { f245.a = f245.a + ' :'; f245.b = f245.b + '.'; }
+    if (f245.a != '' && f245.b == '' && f245.c != '') { f245.a = f245.a + ' /'; f245.c = f245.c + '.'; }
+    if (f245.a != '' && f245.b != '' && f245.c != '') { f245.a = f245.a + ' :'; f245.b = f245.b + ' /'; f245.c = f245.c + '.'; }
+}
+
+/* Actual submission */
 
 $(document).ready(function() {
             
             $("#tomarc").click(function(event){
                console.log('click: to marc');
-               console.log(f008);
+               punct100();
+               punct240();
+               punct245();
+               console.log('adding punctuation to f100');
                $.post( 
                   "marc.php",
                   { f000: f000,
@@ -437,7 +613,10 @@ $(document).ready(function() {
                     f041: f041,
                     f100: f100,
                     f240: f240,
-                    f245: f245
+                    f245: f245, 
+                    f336: f336, 
+                    f337: f337,
+                    f338: f338
                   },
                   function(data) {
                      var marc_data = data.split('~');
