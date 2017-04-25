@@ -5,7 +5,9 @@ require 'File/MARC.php';
 	$f000 = $_POST[f000];
 	$f007 = $_POST[f007];
 	$f008 = $_POST[f008];
-	$f020 = $_POST[f020];
+
+// Obsolete> now handled by loop foreach ($_POST as $key => $value)
+	/*$f020 = $_POST[f020];
 	$f040 = $_POST[f040];
 	$f041 = $_POST[f041];
 	$f100 = $_POST[f100];
@@ -14,6 +16,7 @@ require 'File/MARC.php';
 	$f336 = $_POST[f336];
 	$f337 = $_POST[f337];
 	$f338 = $_POST[f338];
+	$f852 = $_POST[f852];*/
 
 // FUNCTION: CREATE FIELD FROM FIELD VARIABLE
 	function newField($field) {
@@ -50,7 +53,20 @@ require 'File/MARC.php';
 	    )
 	);
 
-// MARC FIELDS
+foreach ($_POST as $key => $value) {
+    $tmp = $value[id];
+    if ($tmp == '0' || $tmp == 't' || $tmp == '1') {
+    	continue;
+    }
+    else {
+    	${'f'.$tmp} = $value;
+	    $marc->appendField(newField(${'f'.$tmp}));
+    }
+    
+}
+
+// Obsolete> now handled by loop foreach ($_POST as $key => $value)
+/*// MARC FIELDS
 	$marc->appendField(newField($f020));
 	$marc->appendField(newField($f040));
 	$marc->appendField(newField($f041));
@@ -60,9 +76,9 @@ require 'File/MARC.php';
 	$marc->appendField(newField($f336));
 	$marc->appendField(newField($f337));
 	$marc->appendField(newField($f338));
+	$marc->appendField(newField($f852));*/
 
 // OUTPUT
-	//var_dump($f041);
 	echo '<BR>--------------<BR>';
 	echo 'Marc output: ';
 	echo '<BR>--------------<BR>';

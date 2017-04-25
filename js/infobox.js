@@ -138,7 +138,8 @@ var infobox_DB =    {
                         (hardback) etc..',
     f040_a: 'field 040 subfield a - Cataloging Source: Original cataloging agency<BR>\
                         MARC code for or the name of the organization(s) that created the original bibliographic record<BR>\
-                        (use to identify the cataloguer\'s name: non-standard)',
+                        (use to identify the cataloguer\'s name: non-standard)<BR>\
+                        Dynamic form: used to prefill 852a using the 1st four characters of this code (non-standard).',
     f040_b: 'field 040 subfield b - Cataloging Source: Language of cataloging<BR>\
                         MARC code for the language of cataloging in the record.<BR>\
                         Dynamic form: prefilled using value of 008 pos. 35-37.<BR>\
@@ -227,7 +228,13 @@ var infobox_DB =    {
     f245_b: 'field 245 subfield b - Remainder of title<BR>\
                         Data includes parallel titles, titles subsequent to the first (in items lacking a collective title), and other title information.',
     f245_c: 'field 245 subfield c - Statement of responsibility, etc.<BR>\
-                        First statement of responsibility and/or remaining data in the field that has not been subfielded by one of the other subfield codes.'
+                        First statement of responsibility and/or remaining data in the field that has not been subfielded by one of the other subfield codes.',
+    f852_i1: 'field 852 indicator 1',
+    f852_i2: 'field 852 indicator 2',
+    f852_a: 'field 852 subfield a.<BR>\
+                        Dynamic form: prefilled using value of 040a (1st four char.)',
+    f852_h: 'field 852 subfield h',
+    f852_i: 'field 852 subfield i'
             }
 
 /* infobox var assignment for field buttons */

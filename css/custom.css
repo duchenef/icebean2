@@ -28,7 +28,7 @@ background-color: white;
 }
 
 #f008_type_of_date {
-	margin-left:16px;
+	margin-left:15px;
 	width: 30px;
 	height: 21px
 }
@@ -192,6 +192,51 @@ label[for=f245_b] {
 	width: 200px;
 }
 
+.generic {
+ 	margin-top:5px;
+}
+
+.generic_i1, .generic_i2 {
+	width: 26px;
+}
+
+.g655_a {
+ 	width: 300px;
+}
+
+.g655_2 {
+ 	width: 50px;
+}
+
+.g655_i2 {
+ 	margin-top:5px;
+}
+
+.f852 {
+ 	margin-top:5px;
+}
+
+#f852_i1 {
+	width: 30px;
+	height: 21px
+}
+
+#f852_i2 {
+	width: 26px;
+}
+
+#f852_a {
+	width: 80px;
+}
+
+#f852_h {
+	width: 64px;
+}
+
+#f852_i {
+	width: 30px;
+}
+
 .actions {
  	margin-top:15px;
 }
@@ -205,12 +250,15 @@ label[for=field_insert] {
 }
 
 #field_insert {
-	margin-left:14px;
 	width: 30px;
 }
 
-#tomarc {
-	margin-left:14px;
+#subfield_insert {
+	width: 50px;
+}
+
+#show_insert {
+	margin-left:6px;
 }
 
 .infobox {

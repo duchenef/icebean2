@@ -124,48 +124,78 @@
     <label for="f245_c">c</label>
       <input type="text" id="f245_c" placeholder="responsibility">
   </div>
-  <div class="f246">
+  <div class="generic" id="f246">
   </div>
-  <div class="f264">
+  <div class="generic" id="g264">
   </div>
-  <div class="f300">
+  <div class="generic" id="f300">
   </div>
-  <div class="f490">
+  <div class="generic" id="f490">
   </div>
-  <div class="f500">
+  <div class="generic" id="g500">
   </div>
-  <div class="f505">
+  <div class="generic" id="f505">
   </div>
-  <div class="f520">
+  <div class="generic" id="f520">
   </div>
-  <div class="f521">
+  <div class="generic" id="g521">
   </div>
-  <div class="f586">
+  <div class="generic" id="g586">
   </div>
-  <div class="f6xx">
+  <div class="generic" id="g600">
   </div>
-  <div class="f700">
+  <div class="generic" id="g610">
+  </div>
+  <div class="generic" id="g611">
+  </div>
+  <div class="generic" id="g630">
+  </div>
+  <div class="generic" id="g650">
+  </div>
+  <div class="generic" id="g651">
+  </div>
+  <div class="generic" id="g655">
+  </div>
+  <div class="generic" id="g700">
+  </div>
+  <div class="generic" id="g710">
+  </div>
+  <div class="generic" id="g740">
+  </div>
+  <div class="f852">852
+    <label for="f852_i1">i1</label>
+      <select id="f852_i1" disabled="disabled">
+        <option value="1">1</option>
+      </select>
+    <label for="f852_i2">i2</label>
+      <select id="f852_i1" disabled="disabled">
+        <option value=" "> </option>
+      </select>
+    <label for="f852_a">a</label>
+      <input type='text' id='f852_a' placeholder='location' maxlength="8">
+    <label for="f852_h">h</label>
+      <input type='text' id='f852_h' placeholder='classific.' maxlength="12">
+    <label for="f852_i">i</label>
+      <input type='text' id='f852_i' placeholder='item part.' maxlength="3" pattern="([A-Z]| |'){3}">
   </div>
   <div class="actions">OPT
+    <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="Insert">
     <input type="button" id = 'tomarc' class="isbn_submit" value="ToMarc">
     <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">  
   </div>
   <div class="insert">INS
-    <label for="field_insert"></label>
+    <label for="field_insert">id</label>
       <input type='text' id='field_insert' placeholder='000' maxlength="3" pattern="[0-9]{3}">
+    <label for="i1_insert">i1</label>
+      <input type="checkbox" id='i1_insert' value="" checked>
+    <label for="i2_insert">i2</label>
+      <input type="checkbox" id='i2_insert' value="" checked>
+    <label for="subfields_insert">subfields</label>
+      <input type='text' id='subfields_insert' placeholder='subfields' maxlength="8">
+    <input type="button" id = 'submit_insert' class="add_buttons" value="submit">
   </div>
 
 </form>
-
-
-<script id='field-template' type='text/x-custom-template'>
-    <div>
-        <label>i1</label>
-            <select></select>
-        <label>i2</label>
-        <select></select>
-    </div>
-</script>
 
 <div class="infobox" id = "ib"></div>
 <div class="marc_download" id = "mrc_dl">

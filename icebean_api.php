@@ -125,7 +125,7 @@ $descr = str_replace("\xE2\x80\x99", "'", $descr);
 $descr = str_replace("\xE2\x80\xA6", "...", $descr); 
 $descr = "|".chr(30).chr(9)."520".chr(9)."8".chr(9).chr(32)."<BR>".chr(97).chr(9).$descr."|";
 
-$output_array = array($isbn, $author, $AMtitle, $GRtitle);
+$output_array = array($isbn, $author, $AMtitle, $GRtitle, $dewey);
 
 //echo $GBtitle.'<BR>';
 //echo $AMtitle.'<BR>';

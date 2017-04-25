@@ -7,7 +7,8 @@ if (mm<10) mm = '0'+String(mm);
 var yyyy = String(today.getFullYear());
 var yy = yyyy.substring(2, 4);
 
-var insert = '';
+var insert = {id: '', i1: '', i2: ''};
+var subfields = '';
 var focus_previous = '';
 
 // Marc fields Variables init and default values
@@ -42,9 +43,10 @@ var f041 = {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100 = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240 = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245 = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
-var f336 = {id: '336', i1: null, i2: null, a: 'text', b: 'txt', '2': 'rdacontent'}
-var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'}
-var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'}
+var f336 = {id: '336', i1: null, i2: null, a: 'text', b: 'txt', '2': 'rdacontent'};
+var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'};
+var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
+var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: ''};
 
 // Marc fields default value for reset
 var f020_default =  {id: '020', i1: null, i2: null, a: '', q: ''};
@@ -53,6 +55,12 @@ var f041_default =  {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240_default =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f600_default =  {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
+var f611_default =  {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
+var f630_default =  {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
+var f650_default =  {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
+var f651_default =  {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
+var f655_default =  {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 
 /* function to replace a substring at a given position of a string */
 function replaceAtPos(substring, string, position) {
@@ -156,16 +164,119 @@ function  pop240l() {
             }
 }
 
-var field_template = $('#field-template').html();
+/* functions: add field, subfield and indicator based on default field parameters */
+/* function:  add new field, param is a set of field default parameters, counter the number of the field for repeatable fields */
+function addField(param, counter) {
+    var field = undefined;
+    field = jQuery('<div/>', {
+        id: 'f'+ param.id + '_' + counter,
+        class: 'generic', /*'g'+ param.id,*/
+        text: param.id + ' '
+    });
+    // loop through the field's default elements, add them
+    for(var property in param) {
+        if (property == 2) {
+            var numerical_subfield = addSub(property, param.id, param[property], counter);
+        }
+        else if (property == 'i1') {
+            field.append(addInd(property, param.id, param.i1, counter));
+        }
+        else if (property == 'i2') {
+            field.append(addInd(property, param.id, param.i2, counter));
+        }
+        else if (property == 'id') {
+             continue;
+        }
+        else {
+            field.append(addSub(property, param.id, param[property], counter));
+        }
+    }
+    field.append(numerical_subfield);
+    field.append("<input type='button' id = 'del_" + param.id + "_" + counter + "' class='del_buttons' value='del'>");
+    //console.log("#g"+ param.id);
+    $("#g"+ param.id).append(field);
 
-/* function add field */
-function addField(id, pos) {
-    var field_div = {};
-    field_div.id = "f" + id;
-    console.log(field_div.id);
-    //field_div.html = 
+    // loop through the field's default elements, add an event handler for each of them
+    for(var prop in param) {
+        if (prop == 'id') {
+            continue;
+        }
+        else {
+            //console.log(prop);
+            eventHandler(param.id, counter, prop);
+        }
+    }
+    deleteField(param.id, counter);
+}
 
-    console.log(field_div.html);
+/* function: event handler for any new field, to be used from addField() */ 
+function eventHandler(id, counter, prop) {
+    $("#f"+ id + '_' + counter + '_' + prop).on('blur', function () {
+                window['f'+ id + '_' + counter][prop] =  $(this).val();
+                console.log('f'+ id + '_' + counter + '_' + prop + ': ' + window['f'+ id + '_' + counter][prop]);
+            });
+}
+
+/* function: event handler to trigger button that deletes any new field, to be used from addField() */ 
+function deleteField(id, counter) {
+    $("#del_"+ id + '_' + counter).click(function(event){
+                $('#f'+ id + '_' + counter).remove();
+                window['f'+ id + '_' + counter] =  undefined;
+                console.log('f'+ id + '_' + counter + ': removed');
+            });
+}
+
+/* function: add new indicator, to be used from addField() */ 
+function addInd(inum, field, val, counter) {
+    var id = 'f' + field + '_' + counter + '_' + inum;
+    //var cl = 'g' + field + '_' + inum;
+    var cl = 'generic' + '_' + inum;
+    var i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' placeholder='" + inum + "' value='" + val + "' maxlength='1' pattern='[0-9]{1}'>\n";
+    if (val == null) {
+        i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' disabled='disabled' maxlength='1' pattern='[0-9]{1}'></label>\n";
+    }  
+    return i;
+}
+
+/* function: add new subfield, to be used from addField() */ 
+function addSub(sub, field, val, counter) {
+    var id = 'f' + field + '_' + counter + '_' + sub;
+    var cl = 'g' + field + '_' + sub;
+    if (val == undefined) {
+        var i = "<label for='" + id + "'>" + sub + "</label>\n<input type='text' class='" + cl + "' id='" + id + "'>\n";
+    }
+    else {
+        var i = "<label for='" + id + "'>" + sub + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' value='" + val + "'>\n";
+    }
+    return i;
+} 
+
+/* function: insert new field added with addField functions, add DOM element */
+
+function insertField() {
+        var counter = 1;
+        var group_id = 'g' + insert.id;
+        if ($('#' + group_id).children().last().length) {
+            var group_div = $('#' + group_id).children().last().attr('id');
+            counter = parseInt(group_div.slice(-1))+1;
+            console.log('group id: ' + group_id + ', counter: ' + counter);
+        }
+        var field_id = 'f' + insert.id + '_' + counter;
+        if (subfields == '') {
+            console.log('insert field using default parameters: f' + insert.id);
+            console.log(field_id);
+            window[field_id] = $.extend( true, {}, window['f'+ insert.id + '_default'] );
+            addField(window[field_id], counter);
+        }
+        else {
+            console.log('insert field using manual parameters: f' + insert.id);
+            window[field_id] = $.extend( true, {}, insert );
+            console.log(insert);
+            addField(insert, counter);
+        }
+        $('.insert').hide();
+        insert = {id: '', i1: '', i2: ''};
+        document.getElementById('field_insert').value = insert.id;
 }
 
 // Form actions: f008
@@ -280,6 +391,9 @@ $('#f020_q').on('blur', function () {
 $('#f040_a').on('blur', function () {
         f040.a = $(this).val();
         console.log('040#a: ' + f040.a);
+        /* DYNAMIC FORM: prefill f852_a with 4 first char of f040_a's value' */
+        document.getElementById('f852_a').value = f040.a.substring(0, 4);
+        f852.a = f040.a.substring(0, 4);
     });
 
 $('#f040_b').on('blur', function () {
@@ -408,6 +522,48 @@ $('#f245_c').on('blur', function () {
         console.log('245#c: ' + f245.c);
     });
 
+$('#f852_a').on('blur', function () {
+        f852.a = $(this).val();
+        console.log('852#a: ' + f852.a);
+    });
+
+$('#f852_h').on('blur', function () {
+        f852.h = $(this).val();
+        console.log('852#h: ' + f852.h);
+    });
+
+$('#f852_i').on('blur', function () {
+        f852.i = $(this).val();
+        console.log('852#i: ' + f852.i);
+    });
+
+$('#field_insert').on('blur', function () {
+        insert.id = $(this).val();
+        console.log('field_insert: ' + insert.id);
+    });
+
+$('#i1_insert').click( function(){
+   if( $(this).is(':checked') ) { insert.i1 = ''; }
+   else { insert.i1 = null };
+   console.log(insert.i1);
+});
+
+$('#i2_insert').click( function(){
+   if( $(this).is(':checked') ) { insert.i2 = ''; }
+   else { insert.i2 = null };
+   console.log(insert.i2);
+});
+
+$('#subfields_insert').on('blur', function () {
+    subfields = $(this).val();
+    var sf = '';
+    for (var i = 0, len = subfields.length; i < len; i++) {
+        sf = subfields.charAt(i);
+        insert[sf] = '';
+        console.log('subfields_insert: ' + sf );
+    }
+});
+
 /* ICEBEAN REQUEST */
 // function
 function icebean_submit(){
@@ -441,6 +597,8 @@ function icebean_submit(){
                         console.log(f245.b);
                         $('label[for=f245_b], #f245_b').show();
                         document.getElementById('f245_b').value = f245.b;
+                    f852.h = icebean_data[4];
+                    document.getElementById('f852_h').value = f852.h;
                     }
                });
                     
@@ -522,30 +680,56 @@ $(function () {
   });
 });
 
-/* key press */
-/* CTRL + INS : insert field */
-$(document).keydown(function(e){
-    if ( e.ctrlKey && ( e.which === 45 ) ) {
-        console.log( 'Field insertion (CTRL + INS)' );
+/* FIELD INSERTION */
+/* show / hide field insertion */
+function showInsert() {
+    console.log( 'Field insertion (CTRL + INS)' );
         if( $('.insert').is(':visible') ) {
                     $('.insert').hide();
-                    insert = '';
-                    document.getElementById('field_insert').value = insert;
-                    //console.log('trying to refocus on: ' + focus_previous);
-                    //$('#f008_date_1').focus();
+                    insert = insert = {id: '', i1: '', i2: ''};
+                    document.getElementById('field_insert').value = insert.id;
                     $("#" + focus_previous ).focus();
                     }
                 else {
                     $('.insert').show();
                     $('#field_insert').focus(); 
-                }      
+                }     
+}
+
+/* Insert button : show insert field */
+$(document).ready(function() { 
+    $("#show_insert").click(function(event){
+        showInsert();
+    });
+}); 
+
+/* CTRL + INS : show insert field */
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 45 ) ) {
+         showInsert();
     }
  });
 
+/* actual field insertion, using submit button and form data */
+$(document).ready(function() { 
+    $("#submit_insert").click(function(event){
+        insertField();
+    }); 
+});
+
+    /* actual field insertion, using enter key from field ID input field */
+$(document).ready(function() { 
+    $("#field_insert").keyup(function(event){
+        if(event.keyCode == 13){
+            insert.id = $(this).val();
+            console.log('field_insert: ' + insert.id);
+            insertField();
+        }
+    });
+});
+
 /* SUBMIT TO MARC */
-
 /* Preprocessing */
-
 /* function remove punctuation old punctation if applicable */
 /* subfield */
 function RemoveSubfieldPunc(subfield){
@@ -596,28 +780,45 @@ function punct245() {
 /* Actual submission */
 
 $(document).ready(function() {
-            
             $("#tomarc").click(function(event){
-               console.log('click: to marc');
-               punct100();
-               punct240();
-               punct245();
-               console.log('adding punctuation to f100');
-               $.post( 
+                console.log('click: to marc');
+                // add punctuation
+                punct100();
+                punct240();
+                punct245();
+                console.log('adding punctuation to f100, f240, f245');
+                // post all the variables that match the following pattern (fxxx or fxxx_n) 
+                    var pattern = /^f[0-9]{3}(_[0-9])?$/;
+                    var post_to_marc2 = {};
+                    for (var varName in window) {
+                        if (pattern.test(varName)) {
+                            post_to_marc2[varName] = window[varName];
+                        }
+                    }
+                //console.log(post_to_marc2);
+
+                // obsolete: now handled by the for loop above
+                /*var post_to_marc = { 
+                                    f000: f000,
+                                    f007: f007,
+                                    f008: f008,
+                                    f020: f020,
+                                    f040: f040,
+                                    f041: f041,
+                                    f100: f100,
+                                    f240: f240,
+                                    f245: f245, 
+                                    f336: f336, 
+                                    f337: f337,
+                                    f338: f338,
+                                    f852: f852
+                                };
+                console.log(post_to_marc);*/       
+                
+                // actual post
+                $.post( 
                   "marc.php",
-                  { f000: f000,
-                    f007: f007,
-                    f008: f008,
-                    f020: f020,
-                    f040: f040,
-                    f041: f041,
-                    f100: f100,
-                    f240: f240,
-                    f245: f245, 
-                    f336: f336, 
-                    f337: f337,
-                    f338: f338
-                  },
+                  post_to_marc2,
                   function(data) {
                      var marc_data = data.split('~');
                      $('#ib').html(marc_data);
