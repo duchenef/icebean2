@@ -55,6 +55,7 @@ var f041_default =  {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240_default =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f246_default =  {id: '246', i1: 3, i2: 3, a: '', b: ''};
 var f600_default =  {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
 var f611_default =  {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default =  {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -62,11 +63,118 @@ var f650_default =  {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
 var f651_default =  {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
 var f655_default =  {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 
+var punctuation = {
+                    f100: {a:'', b:'', c:',', d:',', e:',', last:'.'},
+                    f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'}
+};
+
+var punctuation_undo = [];
+
+/* punctuate subfield dom element and variable using rules in punctuation variable */
+function punctuatesf(element, f, sf, last) {
+    var i = $('#' + element).attr('id');
+    var v = $('#' + element).val();
+    var i_up = $('#' + element).prevAll('input[type=text]').eq(0).attr('id');
+    var v_up = $('#' + element).prevAll('input[type=text]').eq(0).val();
+    var fi = ElemToVar(i)[1];
+    var sfi = ElemToVar(i)[2];
+    var f_up = ElemToVar(i_up)[1];
+    var sf_up = ElemToVar(i_up)[2];
+    // if last = 1 punctuate current element/field
+    if (last == '1') {
+        window[fi][sfi] = window[fi][sfi] + punctuation[f]['last'];
+        punctuation_undo.push([fi, sfi, punctuation[f]['last']]);
+        console.log('punctuation applied: ' + punctuation[f]['last'])
+    }
+    // if last = 0 punctuate previous element/field until i1 or i2 is found
+    else {
+        if (sf_up == 'i1' || sf_up == 'i2') {
+            return;
+        }
+        else if (v_up == '') {
+            return;
+        }
+        else {
+            window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f][sf];
+            punctuation_undo.push([f_up, sf_up, punctuation[f][sf]]);
+            console.log('current field: ' + fi + sfi);
+            console.log('punctuation applied: ' + punctuation[f][sf]);
+        }
+    }
+}
+
+/* punctuate a whole field using the punctuatesf function */
+function punctuate(element) {
+    var divID = "#" + element + " :input[type=text]";
+    var i = $(divID);
+    var last = 'not found yet';
+    for (var c = i.length-1; c >= 0; c = c-1) {
+        element = i[c]['id'];
+        f = ElemToVar(element)[1];
+        sf = ElemToVar(element)[2];
+        console.log(element);
+        if (sf == 'i1' || sf == 'i2') {
+            return;
+        }
+        if (window[f][sf] == '') {
+            punctuatesf(element, f, sf, '0');
+            console.log('punct ' + f + sf + ' 0');
+        }
+        else {
+            punctuatesf(element, f, sf, '0');
+            console.log('punct ' + f + sf + ' 0');
+            if (last == 'not found yet') {
+                punctuatesf(element, f, sf, '1')
+                console.log('punct ' + f + sf + ' 1');
+                last = 'already found';
+            }
+        }
+    }
+}
+
+/* undo last punctuation */
+function undoPunct() {
+    for (var i = 0, len = punctuation_undo.length; i < len; i++) {
+        if (punctuation_undo[i][0]) {
+            var f = punctuation_undo[i][0];
+            var sf = punctuation_undo[i][1];
+            var punct = punctuation_undo[i][2];
+            console.log(punctuation_undo[i][0]);
+            console.log(window[f][sf]);
+            window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
+            console.log(window[f][sf]);
+        }
+    }
+    punctuation_undo = [];
+}
+
+/* String functions */
+/* upper case first letter */
+function upFirst(string) {
+    string = string.toLowerCase();
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/* lower case all but first letter */
+function lowerAll(string) {
+    return string.toLowerCase();
+}
+
 /* function to replace a substring at a given position of a string */
 function replaceAtPos(substring, string, position) {
     var endpos = position + substring.length;
     string = string.slice(0, position) + substring + string.slice(endpos, string.length);
     return string;
+}
+
+/* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
+function ElemToVar(elementID) {
+    var position = elementID.indexOf("_", elementID.indexOf("_") + 1);
+    if (position == -1) position = elementID.indexOf("_");
+    var fullcode = replaceAtPos('.', elementID, position);
+    var fieldcode = elementID.substring(0, position);
+    var subfieldcode = elementID.substring(position+1, elementID.length);
+    return [fullcode, fieldcode, subfieldcode];
 }
 
 /* function:  calculates the presence of an article at the beginning of a string */
@@ -108,19 +216,6 @@ function findArticle(string, field) {
                     break;
             }
     });
-}
-
-/* String functions */
-
-/* upper case first letter */
-function upFirst(string) {
-    string = string.toLowerCase();
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-/* lower case all but first letter */
-function lowerAll(string) {
-    return string.toLowerCase();
 }
 
 /* function: reset field of subfield to default values */
@@ -252,7 +347,6 @@ function addSub(sub, field, val, counter) {
 } 
 
 /* function: insert new field added with addField functions, add DOM element */
-
 function insertField() {
         var counter = 1;
         var group_id = 'g' + insert.id;
@@ -264,17 +358,17 @@ function insertField() {
         var field_id = 'f' + insert.id + '_' + counter;
         if (subfields == '') {
             console.log('insert field using default parameters: f' + insert.id);
-            console.log(field_id);
             window[field_id] = $.extend( true, {}, window['f'+ insert.id + '_default'] );
             addField(window[field_id], counter);
         }
         else {
             console.log('insert field using manual parameters: f' + insert.id);
             window[field_id] = $.extend( true, {}, insert );
-            console.log(insert);
             addField(insert, counter);
         }
         $('.insert').hide();
+        console.log(field_id + '_i1');
+        $('#' + field_id + '_i1').focus();
         insert = {id: '', i1: '', i2: ''};
         document.getElementById('field_insert').value = insert.id;
 }
@@ -728,65 +822,32 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() { 
+    $("#subfields_insert").keyup(function(event){
+        if(event.keyCode == 13){
+            subfields = $(this).val();
+            console.log('field_insert: ' + insert.id);
+            var sf = '';
+        for (var i = 0, len = subfields.length; i < len; i++) {
+            sf = subfields.charAt(i);
+            insert[sf] = '';
+            console.log('subfields_insert: ' + sf );
+        }
+            insertField();
+        }
+    });
+});
+
 /* SUBMIT TO MARC */
-/* Preprocessing */
-/* function remove punctuation old punctation if applicable */
-/* subfield */
-function RemoveSubfieldPunc(subfield){
-    if (subfield != '') {
-        if (subfield.charAt(subfield.length-1) == '.'
-            || subfield.charAt(subfield.length-1) == ','
-            ) {
-            subfield = subfield.slice(0, subfield.length-1); 
-        }
-        else if (subfield.charAt(subfield.length-1) == '/'
-            || subfield.charAt(subfield.length-1) == ':'
-            ) {
-            subfield = subfield.slice(0, subfield.length-2); 
-        }
-    }
-    return subfield;
-}
-
-/* whole field */
-function RemoveFieldPunct(field, s1, s2, s3, s4, s5, s6) {
-    for (var i = 1, j = arguments.length; i < j; i++) {
-        window[field][arguments[i]] = RemoveSubfieldPunc(window[field][arguments[i]]);
-    }
-}
-
-/* function add punctuation to marc fields */
-function punct100() {
-    RemoveFieldPunct('f100', 'a', 'd' ,'e')
-    if (f100.a != '' && f100.d == '' && f100.e == '') { f100.a = f100.a + '.'; }
-    if (f100.a != '' && f100.d != '' && f100.e == '') { f100.a = f100.a + ','; f100.d = f100.d + '.'; }
-    if (f100.a != '' && f100.d == '' && f100.e != '') { f100.a = f100.a + ','; f100.e = f100.e + '.'; }
-    if (f100.a != '' && f100.d != '' && f100.e != '') { f100.a = f100.a + ','; f100.d = f100.d + ','; f100.e = f100.e + '.'; }
-}
-
-function punct240() {
-    RemoveFieldPunct('f240', 'a')
-    if (f240.a != '') { f240.a = f240.a + '.'; }
-}
-
-function punct245() {
-    RemoveFieldPunct('f245', 'a', 'b' ,'c')
-    if (f245.a != '' && f245.b == '' && f245.c == '') { f245.a = f245.a + '.'; }
-    if (f245.a != '' && f245.b != '' && f245.c == '') { f245.a = f245.a + ' :'; f245.b = f245.b + '.'; }
-    if (f245.a != '' && f245.b == '' && f245.c != '') { f245.a = f245.a + ' /'; f245.c = f245.c + '.'; }
-    if (f245.a != '' && f245.b != '' && f245.c != '') { f245.a = f245.a + ' :'; f245.b = f245.b + ' /'; f245.c = f245.c + '.'; }
-}
-
 /* Actual submission */
 
 $(document).ready(function() {
             $("#tomarc").click(function(event){
                 console.log('click: to marc');
-                // add punctuation
-                punct100();
-                punct240();
-                punct245();
-                console.log('adding punctuation to f100, f240, f245');
+                undoPunct();
+                punctuate('f100');
+                punctuate('f245');
+                console.log('adding punctuation to f100, f245');
                 // post all the variables that match the following pattern (fxxx or fxxx_n) 
                     var pattern = /^f[0-9]{3}(_[0-9])?$/;
                     var post_to_marc2 = {};
@@ -795,26 +856,6 @@ $(document).ready(function() {
                             post_to_marc2[varName] = window[varName];
                         }
                     }
-                //console.log(post_to_marc2);
-
-                // obsolete: now handled by the for loop above
-                /*var post_to_marc = { 
-                                    f000: f000,
-                                    f007: f007,
-                                    f008: f008,
-                                    f020: f020,
-                                    f040: f040,
-                                    f041: f041,
-                                    f100: f100,
-                                    f240: f240,
-                                    f245: f245, 
-                                    f336: f336, 
-                                    f337: f337,
-                                    f338: f338,
-                                    f852: f852
-                                };
-                console.log(post_to_marc);*/       
-                
                 // actual post
                 $.post( 
                   "marc.php",
