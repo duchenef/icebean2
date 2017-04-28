@@ -65,13 +65,17 @@ var f655_default =  {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', d:',', e:',', last:'.'},
-                    f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'}
+                    f240: {a:'', l:'.', last:''},
+                    f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'},
+                    f246: {a:'', b:' :', n: '.', p:'.', last:''},
+                    f264: {a:'', b:' :', c:',', last:'.'},
+                    f300: {a:'', b:' :', c:' ;', last:'.'}
 };
 
 var punctuation_undo = [];
 
 /* punctuate subfield dom element and variable using rules in punctuation variable */
-function punctuatesf(element, f, sf, last) {
+function punctuatesf(element, f, sf, lastID) {
     var i = $('#' + element).attr('id');
     var v = $('#' + element).val();
     var i_up = $('#' + element).prevAll('input[type=text]').eq(0).attr('id');
@@ -80,25 +84,50 @@ function punctuatesf(element, f, sf, last) {
     var sfi = ElemToVar(i)[2];
     var f_up = ElemToVar(i_up)[1];
     var sf_up = ElemToVar(i_up)[2];
-    // if last = 1 punctuate current element/field
-    if (last == '1') {
-        window[fi][sfi] = window[fi][sfi] + punctuation[f]['last'];
-        punctuation_undo.push([fi, sfi, punctuation[f]['last']]);
-        console.log('punctuation applied: ' + punctuation[f]['last'])
+    var fID_p = ElemIDtoStdElemID(i);
+    var f_p = ElemToVar(fID_p)[1];
+    console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
+    if (sf_up == 'i1') {
+            return;
     }
-    // if last = 0 punctuate previous element/field until i1 or i2 is found
     else {
-        if (sf_up == 'i1' || sf_up == 'i2') {
-            return;
-        }
-        else if (v_up == '') {
-            return;
+        if (v == '') {
+            if (v_up == '') {
+                return;
+            }
+            else {
+                if (Object.is(lastID, sf_up)) {
+                    console.log('last and up are the same: pass');
+                    return;
+                }
+                else {
+                    window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
+                    punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
+                    console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
+                }
+            }
         }
         else {
-            window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f][sf];
-            punctuation_undo.push([f_up, sf_up, punctuation[f][sf]]);
-            console.log('current field: ' + fi + sfi);
-            console.log('punctuation applied: ' + punctuation[f][sf]);
+            if (Object.is(lastID, sfi)) {
+                console.log('last and current are the same');
+                window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
+                punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
+                console.log('punctuation applied to current: ' + punctuation[f_p]['last'])
+            }
+            if (v_up == '') {
+                return;
+            }
+            else {
+                if (Object.is(lastID, sf_up)) {
+                    console.log('last and up are the same: pass');
+                    return;
+                }
+                else {
+                window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
+                punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
+                console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
+                }
+            }
         }
     }
 }
@@ -107,27 +136,25 @@ function punctuatesf(element, f, sf, last) {
 function punctuate(element) {
     var divID = "#" + element + " :input[type=text]";
     var i = $(divID);
-    var last = 'not found yet';
+    var lastID = 'xxx';
+    // look for last subfield with data in field
+    for (var e = i.length-1; e >= 0; e = e-1) {
+        element = i[e]['id'];
+        f = ElemToVar(element)[1];
+        sf = ElemToVar(element)[2];
+        if (window[f][sf] != '') { var newObj = jQuery.extend(true, {}, sf); lastID = newObj[0]}
+        if (lastID != 'xxx') {break;}
+    }
     for (var c = i.length-1; c >= 0; c = c-1) {
         element = i[c]['id'];
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
-        console.log(element);
         if (sf == 'i1' || sf == 'i2') {
             return;
         }
-        if (window[f][sf] == '') {
-            punctuatesf(element, f, sf, '0');
-            console.log('punct ' + f + sf + ' 0');
-        }
         else {
-            punctuatesf(element, f, sf, '0');
-            console.log('punct ' + f + sf + ' 0');
-            if (last == 'not found yet') {
-                punctuatesf(element, f, sf, '1')
-                console.log('punct ' + f + sf + ' 1');
-                last = 'already found';
-            }
+            punctuatesf(element, f, sf, lastID);
+            //console.log('punct ' + f + sf + ' 0', lastID);
         }
     }
 }
@@ -170,11 +197,17 @@ function replaceAtPos(substring, string, position) {
 /* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
 function ElemToVar(elementID) {
     var position = elementID.indexOf("_", elementID.indexOf("_") + 1);
-    if (position == -1) position = elementID.indexOf("_");
+    if (position == -1) {position = elementID.indexOf("_");}
     var fullcode = replaceAtPos('.', elementID, position);
     var fieldcode = elementID.substring(0, position);
     var subfieldcode = elementID.substring(position+1, elementID.length);
     return [fullcode, fieldcode, subfieldcode];
+}
+
+/* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
+function ElemIDtoStdElemID(elementID) {
+    var standardFieldID = elementID.replace(/_[0-9]/g, "");
+    return standardFieldID;
 }
 
 /* function:  calculates the presence of an article at the beginning of a string */
@@ -844,15 +877,17 @@ $(document).ready(function() {
 $(document).ready(function() {
             $("#tomarc").click(function(event){
                 console.log('click: to marc');
+                /* TO DO: integrate punctuation in export to marc loop */
                 undoPunct();
-                punctuate('f100');
-                punctuate('f245');
-                console.log('adding punctuation to f100, f245');
+                //unctuate('f245');
+                //punctuate('f246_1');
+                //console.log('adding punctuation to f100, f245, f246');
                 // post all the variables that match the following pattern (fxxx or fxxx_n) 
                     var pattern = /^f[0-9]{3}(_[0-9])?$/;
                     var post_to_marc2 = {};
                     for (var varName in window) {
                         if (pattern.test(varName)) {
+                            punctuate(varName);
                             post_to_marc2[varName] = window[varName];
                         }
                     }
