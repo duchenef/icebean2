@@ -87,7 +87,7 @@ function punctuatesf(element, f, sf, lastID) {
     var fID_p = ElemIDtoStdElemID(i);
     var f_p = ElemToVar(fID_p)[1];
     console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
-    if (sf_up == 'i1') {
+    if (sf_up == 'i1' || sf_up == 'i2') {
             return;
     }
     else {
