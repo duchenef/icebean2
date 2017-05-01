@@ -28,7 +28,7 @@ background-color: white;
 }
 
 #f008_type_of_date {
-	margin-left:15px;
+	margin-left:111px;
 	width: 30px;
 	height: 21px
 }
@@ -198,6 +198,92 @@ label[for=f245_b] {
 
 .generic_i1, .generic_i2 {
 	width: 26px;
+}
+
+.g246_a {
+ 	width: 300px;
+}
+
+.g246_b {
+ 	width: 300px;
+}
+
+.f264_i1 {
+	width: 26px;
+}
+
+.f264_i2 {
+	width: 26px;
+}
+
+#f300 {
+ 	margin-top:5px;
+}
+
+#f300_i1 {
+	width: 26px;
+}
+
+#f300_i2 {
+	width: 26px;
+}
+
+#f300_a {
+	width: 220px;
+}
+
+#f300_b {
+	width: 300px;
+}
+
+#f300_c {
+	width: 80px;
+}
+
+label[for=f300_e] {
+	display:none;
+}
+
+#f300_e {
+	display:none;
+	width: 150px;
+}
+
+.f500 {
+ 	margin-top:5px;
+}
+
+.f500_i1 {
+	width: 26px;
+}
+
+.f500_i2 {
+	width: 26px;
+}
+
+.f500_a {
+	width: 300px;
+}
+
+#f500_1 {
+	display:none;
+}
+
+#f504 {
+	display:none;
+ 	margin-top:5px;
+}
+
+#f504_i1 {
+	width: 26px;
+}
+
+#f504_i2 {
+	width: 26px;
+}
+
+#f504_a {
+	width: 300px;
 }
 
 .g655_a {

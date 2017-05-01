@@ -86,6 +86,7 @@ var infobox_DB =    {
                         s - Statistics',
     f008_index: 'field 008 position 31 - Index<BR>\
                         One-character numeric code that indicates whether the item includes an index to its own contents<BR>\
+                        (Dynamic form: value is used to display and prefill fields 500_1)<BR>\
                         0 - No index<BR>\
                         1 - Index present',
     f008_literary_form: 'field 008 position 33 - Literary form<BR>\
@@ -229,6 +230,42 @@ var infobox_DB =    {
                         Data includes parallel titles, titles subsequent to the first (in items lacking a collective title), and other title information.',
     f245_c: 'field 245 subfield c - Statement of responsibility, etc.<BR>\
                         First statement of responsibility and/or remaining data in the field that has not been subfielded by one of the other subfield codes.',
+    f246_1_i1: 'field 246 - Varying Form of Title (R)<BR>\
+                        Indicator 1 - Note/added entry controller<BR>\
+                        0 - Note, no added entry<BR>\
+                        1 - Note, added entry<BR>\
+                        2 - No note, no added entry<BR>\
+                        3 - No note, added entry',
+    f246_1_i2: 'field 246 - Varying Form of Title (R)<BR>\
+                        Indicator 2 - Type of title<BR>\
+                        # - No type specified<BR>\
+                        0 - Portion of title<BR>\
+                        1 - Parallel title<BR>\
+                        2 - Distinctive title<BR>\
+                        3 - Other title<BR>\
+                        4 - Cover title<BR>\
+                        5 - Added title page title<BR>\
+                        6 - Caption title<BR>\
+                        7 - Running title<BR>\
+                        8 - Spine title',
+    f246_1_a: 'field 246 - Varying Form of Title (R)<BR>\
+                        a - Title proper/short title (NR)<BR>\
+                        Title proper and alternative title, excluding the designation of the number or name of a part.',
+    f246_1_b: 'field 246 - Varying Form of Title (R)<BR>\
+                        b - Remainder of title (NR)<BR>\
+                        Data includes parallel titles, titles subsequent to the first (in items lacking a collective title), and other title information.',
+    f300_a: 'field 300 - Physical Description (R)<BR>\
+                        subfield a - Extent (R)<BR>\
+                        Number of physical pages, volumes etc. of each type of unit.',
+    f300_b: 'field 300 - Physical Description (R)<BR>\
+                        subfield b - Other physical details (NR)<BR>\
+                        Physical characteristics such as illustrative matter, coloration etc.',
+    f300_c: 'field 300 - Physical Description (R)<BR>\
+                        subfield c - Dimensions (R)<BR>\
+                        Expressed in centimeters, millimeters, or inches.',
+    f300_e: 'field 300 - Physical Description (R)<BR>\
+                        subfield e - Accompanying material (NR)<BR>\
+                        May include a parenthetical physical description of the accompanying material.',
     f852_i1: 'field 852 indicator 1',
     f852_i2: 'field 852 indicator 2',
     f852_a: 'field 852 subfield a.<BR>\
@@ -242,3 +279,4 @@ infobox_DB.add_f040_d = infobox_DB.f040_d;
 infobox_DB.add_f100_d = infobox_DB.f100_d;
 infobox_DB.add_f100_e = infobox_DB.f100_e;
 infobox_DB.add_f245_b = infobox_DB.f245_b;
+infobox_DB.add_f300_e = infobox_DB.f300_e;

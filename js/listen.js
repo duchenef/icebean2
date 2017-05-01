@@ -43,9 +43,14 @@ var f041 = {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100 = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240 = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245 = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f264_1 = {id: '264', i1: '', i2: 1, a: '', b: '', c:''};
+var f264_2 = {id: '264', i1: '', i2: 4, a: '', b: '', c:''};
+var f300 = {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
 var f336 = {id: '336', i1: null, i2: null, a: 'text', b: 'txt', '2': 'rdacontent'};
 var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'};
 var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
+var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
+var f504 =  {id: '500', i1: null, i2: null, a: ''};
 var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: ''};
 
 // Marc fields default value for reset
@@ -56,6 +61,10 @@ var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240_default =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 var f246_default =  {id: '246', i1: 3, i2: 3, a: '', b: ''};
+var f264_default =  {id: '264', i1: '', i2: '', a: '', b: '', c:''};
+var f300_default =  {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
+var f500_default =  {id: '500', i1: null, i2: null, a: ''};
+var f504_default =  {id: '504', i1: null, i2: null, a: ''};
 var f600_default =  {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
 var f611_default =  {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default =  {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -69,7 +78,9 @@ var punctuation = {
                     f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'},
                     f246: {a:'', b:' :', n: '.', p:'.', last:''},
                     f264: {a:'', b:' :', c:',', last:'.'},
-                    f300: {a:'', b:' :', c:' ;', last:'.'}
+                    f300: {a:'', b:' :', c:' ;', last:'.', e:'+'},
+                    f500: {a: '', last: '.'},
+                    f504: {a: '', last: '.'}
 };
 
 var punctuation_undo = [];
@@ -78,6 +89,7 @@ var punctuation_undo = [];
 function punctuatesf(element, f, sf, lastID) {
     var i = $('#' + element).attr('id');
     var v = $('#' + element).val();
+    console.log('i: ' + i + ' v: ' + v);
     var i_up = $('#' + element).prevAll('input[type=text]').eq(0).attr('id');
     var v_up = $('#' + element).prevAll('input[type=text]').eq(0).val();
     var fi = ElemToVar(i)[1];
@@ -88,7 +100,15 @@ function punctuatesf(element, f, sf, lastID) {
     var f_p = ElemToVar(fID_p)[1];
     console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
     if (sf_up == 'i1' || sf_up == 'i2') {
+        if (Object.is(lastID, sfi)) {
+                console.log('last and current are the same');
+                window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
+                punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
+                console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
+        }
+        else {
             return;
+        }
     }
     else {
         if (v == '') {
@@ -112,7 +132,7 @@ function punctuatesf(element, f, sf, lastID) {
                 console.log('last and current are the same');
                 window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
                 punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
-                console.log('punctuation applied to current: ' + punctuation[f_p]['last'])
+                console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
             }
             if (v_up == '') {
                 return;
@@ -253,10 +273,14 @@ function findArticle(string, field) {
 
 /* function: reset field of subfield to default values */
 /* reset('fieldnumber', 'subfield') */
-function reset(field_number, sub) {
+function reset(field_number, sub, count) {
         var field = 'f' + String(field_number);
+        if (count != undefined) {
+             field = 'f' + String(field_number) + '_' + count;
+        }
         var field_default = 'f' + field_number + '_default';
         var field_div_id = '';
+        console.log(field);
         var tmp = (JSON.parse(JSON.stringify(window[field_default])));
         if (sub == undefined) {
             window[field] = tmp;
@@ -272,6 +296,9 @@ function reset(field_number, sub) {
         else {
             window[field][sub] = tmp[sub];
             field_div_id = 'f' + String(field_number) + '_' + sub;
+            if (count != undefined) {
+                field_div_id = 'f' + String(field_number) + '_' + count  + '_' + sub;
+            }
             if (tmp[sub] == undefined) { tmp[sub] = '';}
             document.getElementById(field_div_id).value = '';
             console.log('subfield ' + field_div_id + ' has been reset');
@@ -362,7 +389,7 @@ function addInd(inum, field, val, counter) {
     var i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' placeholder='" + inum + "' value='" + val + "' maxlength='1' pattern='[0-9]{1}'>\n";
     if (val == null) {
         i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' disabled='disabled' maxlength='1' pattern='[0-9]{1}'></label>\n";
-    }  
+    }
     return i;
 }
 
@@ -404,6 +431,16 @@ function insertField() {
         $('#' + field_id + '_i1').focus();
         insert = {id: '', i1: '', i2: ''};
         document.getElementById('field_insert').value = insert.id;
+
+        // bad solution: updates inforbox (late on i1, only works with field count 1)
+        $("#main_form input, #main_form select").focusin(function() {
+            var ib = document.getElementById('ib');
+            id = this.id;
+            $(".infobox").show();
+            console.log(id);
+            ib.innerHTML = infobox_DB[id];
+        })
+
 }
 
 // Form actions: f008
@@ -474,6 +511,15 @@ $('#f008_index').on('change', function () {
         console.log('captured value: ' +f008_31);
         f008 = replaceAtPos(f008_31, f008, 31)
         console.log('008: ' + f008);
+        /* DYNAMIC FORM : Hide/show f500_1 - index note */
+        if ($(this).val() == '1') {
+            $('#f500_1').show();
+            f500_1.a = 'Includes index';
+            document.getElementById('f500_1_a').value = f500_1.a; 
+           } else {
+            $('#f500_1').hide();
+            reset('500', 'a', '1');
+        }
     });
 
 $('#f008_literary_form').on('blur', function () {
@@ -574,6 +620,8 @@ $('#f100_i1').on('change', function () {
 $('#f100_a').on('blur', function () {
         f100.a = $(this).val();
         console.log('100#a: ' + f100.a);
+        f852.i = f100.a.substring(0, 3).toUpperCase();
+        document.getElementById('f852_i').value = f852.i;
     });
 
 $('#f100_d').on('blur', function () {
@@ -649,6 +697,64 @@ $('#f245_c').on('blur', function () {
         console.log('245#c: ' + f245.c);
     });
 
+$('#f264_1_i1').on('blur', function () {
+        f264_1.i1 = $(this).val();
+        console.log('264_1i1: ' + f264_1.i1);
+    });
+
+$('#f264_1_i2').on('blur', function () {
+        f264_1.i2 = $(this).val();
+        console.log('264_1i2: ' + f264_1.i2);
+    });
+
+$('#f264_1_a').on('blur', function () {
+        f264_1.a = $(this).val();
+        console.log('264_1#a: ' + f264_1.a);
+    });
+
+$('#f264_1_b').on('blur', function () {
+        f264_1.b = $(this).val();
+        console.log('264_1#b: ' + f264_1.b);
+    });
+
+$('#f264_1_c').on('blur', function () {
+        f264_1.c = $(this).val();
+        console.log('264_1#c: ' + f264_1.c);
+    });
+
+$('#f300_a').on('blur', function () {
+        f300.a = $(this).val();
+        console.log('300#a: ' + f300.a);
+    });
+
+$('#f300_b').on('blur', function () {
+        f300.b = $(this).val();
+        console.log('300#b: ' + f300.b);
+    });
+
+$('#f300_c').on('blur', function () {
+        f300.c = $(this).val();
+        console.log('300#c: ' + f300.c);
+    });
+
+$('#f300_e').on('blur', function () {
+        f300.e = $(this).val();
+        console.log('300#e: ' + f100.e);
+        if ($(this).val() == '') {
+            $('label[for=f300_e], #f300_e').hide();
+        }
+    });
+
+$('#f500_1_a').on('blur', function () {
+        f500_1.a = $(this).val();
+        console.log('500_1#a: ' + f500_1.a);
+    });
+
+$('#f504_a').on('blur', function () {
+        f504.a = $(this).val();
+        console.log('504#a: ' + f504.a);
+    });
+
 $('#f852_a').on('blur', function () {
         f852.a = $(this).val();
         console.log('852#a: ' + f852.a);
@@ -707,6 +813,8 @@ function icebean_submit(){
                     var firstname = f100.a.slice(0, f100.a.indexOf(' '));
                     f100.a = surname + ', ' + firstname;
                     document.getElementById('f100_a').value = f100.a;
+                    f852.i = surname.substring(0, 3).toUpperCase();
+                    document.getElementById('f852_i').value = f852.i;
                     f245.c = icebean_data[1];
                     document.getElementById('f245_c').value = f245.c;
                     $('#ib').html(icebean_data);
@@ -726,6 +834,10 @@ function icebean_submit(){
                         document.getElementById('f245_b').value = f245.b;
                     f852.h = icebean_data[4];
                     document.getElementById('f852_h').value = f852.h;
+                    if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
+                        f852.j = 'DCX' + f852.h.substring(0, 3);
+                    }
+                    
                     }
                });
                     
@@ -767,7 +879,7 @@ $(document).ready(function() {
             });      
          });
 
-/* 100d */
+/* 100e */
 $(document).ready(function() { 
             $("#add_f100_e").click(function(event){
                 console.log('click: add_f100_e');
@@ -792,6 +904,20 @@ $(document).ready(function() {
                 else {
                     $('label[for=f245_b], #f245_b').show().focus();
                     }                 
+            });   
+         });
+
+/* 300e */
+$(document).ready(function() { 
+            $("#add_f300_e").click(function(event){
+                console.log('click: add_f300_e');
+                if( $('#f300_e').is(':visible') ) {
+                    $('label[for=f300_e], #f300_e').hide();
+                    reset('300', 'e');
+                    }
+                else {
+                    $('label[for=f300_e], #f300_e').show().focus();
+                    }                   
             });   
          });
 
@@ -887,6 +1013,7 @@ $(document).ready(function() {
                     var post_to_marc2 = {};
                     for (var varName in window) {
                         if (pattern.test(varName)) {
+                            console.log(varName);
                             punctuate(varName);
                             post_to_marc2[varName] = window[varName];
                         }
