@@ -49,7 +49,7 @@ var infobox_DB =    {
                         wlk - Wales',  
     f008_illustrations: 'field 008 position 18-21 - Illustrations<BR>\
                         Up to four (4) one-character alphabetic codes (recorded in alphabetical order)<BR>\
-                        _ - No illustrations (leave blank or enter [space] to erase a value previously entered)\
+                        _ - No illustrations (leave blank (reset) or enter [spaces] to erase previously entered values)\
                         a - Illustrations<BR>\
                         b - Maps<BR>\
                         c - Portraits<BR>\

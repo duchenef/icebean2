@@ -35,6 +35,8 @@ var f008_34 = ' '; /* f008_biography */
 var f008_3537 = '   '; /* f008_language */
 
 var f008 = f008_0005 + f008_06 + f008_0710 + f008_1114 + f008_1517 + f008_1821 + f008_22 + f008_23 + f008_2427 + f008_2830 + f008_31 + f008_32 + f008_33 + f008_34 + f008_3537 + f008_3839;
+var plates = '';
+var added_by_f008_22 = {id: '', a: ''};
 
 // Main marc field variables
 var f020 = {id: '020', i1: null, i2: null, a: '', q: ''};
@@ -80,7 +82,9 @@ var punctuation = {
                     f264: {a:'', b:' :', c:',', last:'.'},
                     f300: {a:'', b:' :', c:' ;', last:'.', e:'+'},
                     f500: {a: '', last: '.'},
-                    f504: {a: '', last: '.'}
+                    f504: {a: '', last: '.'},
+                    f655: {a: '', last: '.'}
+
 };
 
 var punctuation_undo = [];
@@ -111,7 +115,10 @@ function punctuatesf(element, f, sf, lastID) {
         }
     }
     else {
-        if (v == '') {
+        if (sfi == '2' || sfi == '9') {
+            return;
+        }
+        else if (v == '') {
             if (v_up == '') {
                 return;
             }
@@ -162,7 +169,11 @@ function punctuate(element) {
         element = i[e]['id'];
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
-        if (window[f][sf] != '') { var newObj = jQuery.extend(true, {}, sf); lastID = newObj[0]}
+        if (window[f][sf] != '') {
+            var newObj = jQuery.extend(true, {}, sf);
+            lastID = newObj[0]}
+            console.log('lastID is: ' + lastID);
+        if (sf == '2' || sf == '9') {lastID == 'xxx'; continue;}
         if (lastID != 'xxx') {break;}
     }
     for (var c = i.length-1; c >= 0; c = c-1) {
@@ -174,7 +185,7 @@ function punctuate(element) {
         }
         else {
             punctuatesf(element, f, sf, lastID);
-            //console.log('punct ' + f + sf + ' 0', lastID);
+            console.log('punct ' + f + sf + ' 0', lastID);
         }
     }
 }
@@ -381,6 +392,13 @@ function deleteField(id, counter) {
             });
 }
 
+/* function remove field. Parameter is the full div id including the counter, for ex: f655_1 */
+function removeField(divID) {
+    $('#'+ divID).remove();
+    window[divID] =  undefined;
+    console.log(divID +': removed');
+}
+
 /* function: add new indicator, to be used from addField() */ 
 function addInd(inum, field, val, counter) {
     var id = 'f' + field + '_' + counter + '_' + inum;
@@ -427,7 +445,6 @@ function insertField() {
             addField(insert, counter);
         }
         $('.insert').hide();
-        console.log(field_id + '_i1');
         $('#' + field_id + '_i1').focus();
         insert = {id: '', i1: '', i2: ''};
         document.getElementById('field_insert').value = insert.id;
@@ -440,6 +457,7 @@ function insertField() {
             console.log(id);
             ib.innerHTML = infobox_DB[id];
         })
+        return field_id;
 
 }
 
@@ -488,8 +506,47 @@ $('#f008_place').on('blur', function () {
 $('#f008_illustrations').on('blur', function () {
         f008_1821 = $(this).val();
         console.log('captured value: ' +f008_1821);
-        f008 = replaceAtPos(f008_1821, f008, 18)
+        f008 = replaceAtPos(f008_1821, f008, 18);
+        if (f008_1821 == '') { f008 = replaceAtPos('    ', f008, 18); }
         console.log('008: ' + f008);
+        // Dynamic form: 300b (illuastrations)
+        var ill = [];
+        f300.b = '';
+        document.getElementById('f300_b').value = f300.b; 
+        if (f008_1821.indexOf("a") >= 0) {
+            ill.push('illustrations');    
+        }
+        if (f008_1821.indexOf("b") >= 0) {
+            ill.push('maps');    
+        }
+        if (f008_1821.indexOf("c") >= 0) {
+            ill.push('charts');
+        }
+        if (f008_1821.indexOf("e") >= 0) {
+            ill.push('plans');    
+        }
+        if (f008_1821.indexOf("g") >= 0) {
+            ill.push('music');    
+        }
+        if (f008_1821.indexOf("h") >= 0) {
+            ill.push('facsimiles');    
+        }
+        if (f008_1821.indexOf("o") >= 0) {
+            ill.push('photographs');    
+        }
+        f300.b = ill.join(', ');
+        document.getElementById('f300_b').value = f300.b; 
+        // Dynamic form: 300a (plates)
+        if (f008_1821.indexOf("f") >= 0) {
+            f300.a = ', n pages of plates';
+            plates = ', n pages of plates';
+            document.getElementById('f300_a').value = f300.a;
+        }
+        else {
+            f300.a = f300.a.replace(', n pages of plates', '');
+            document.getElementById('f300_a').value = f300.a;
+            plates = '';
+        }
     });
 
 $('#f008_target_audience').on('blur', function () {
@@ -497,6 +554,26 @@ $('#f008_target_audience').on('blur', function () {
         console.log('captured value: ' +f008_22);
         f008 = replaceAtPos(f008_22, f008, 22)
         console.log('008: ' + f008);
+        // Dynamic form: add 655 for juvenile and young adults works
+        if (window['added_by_f008_22'].id != '') {
+                removeField(window['added_by_f008_22'].id);
+            }
+        if (f008_22 == 'j') {
+            insert.id = '655';
+            window['added_by_f008_22'].id = insertField();
+            var field_id = window['added_by_f008_22'].id;
+            window[field_id].a = 'Juvenile works';
+            window['added_by_f008_22'].a = 'Juvenile works';
+            document.getElementById(field_id + '_a').value = window[field_id].a;
+        }
+        else if ((f008_22 == 'd' || f008_22 == 'c')) {
+            insert.id = '655';
+            window['added_by_f008_22'].id = insertField();
+            var field_id = window['added_by_f008_22'].id;
+            window[field_id].a = 'Young adult works';
+            window['added_by_f008_22'].a = 'Young adult works';
+            document.getElementById(field_id + '_a').value = window[field_id].a;
+        }
     });
 
 $('#f008_nature_of_content').on('blur', function () {
@@ -504,6 +581,15 @@ $('#f008_nature_of_content').on('blur', function () {
         console.log('captured value: ' +f008_2427);
         f008 = replaceAtPos(f008_2427, f008, 24)
         console.log('008: ' + f008);
+        if (f008_2427.indexOf("b") >= 0) {
+            $('#f504').show();
+            f504.a = 'Bibliography: pages';
+            document.getElementById('f504_a').value = f504.a; 
+        }
+        else {
+            $('#f504').hide();
+            reset('504', 'a');
+        }
     });
 
 $('#f008_index').on('change', function () {
@@ -807,6 +893,7 @@ function icebean_submit(){
                     function(data) {
                     //$('#ib').html(data);
                     var icebean_data = data.split('~');
+                    console.log (icebean_data);
                     // f100a and f245c
                     f100.a = icebean_data[1];
                     var surname = f100.a.slice(f100.a.indexOf(' ')+1, f100.a.length);
@@ -829,9 +916,16 @@ function icebean_submit(){
                     findArticle(f245.a, 'f245_a');
                     if (f245.b != undefined) {
                         f245.b = lowerAll(f245.b);
-                        console.log(f245.b);
                         $('label[for=f245_b], #f245_b').show();
                         document.getElementById('f245_b').value = f245.b;
+                    if (icebean_data[5] != undefined) { 
+                        f300.a = icebean_data[5] + ' pages' + plates;
+                        document.getElementById('f300_a').value = f300.a;
+                    }
+                    if (icebean_data[6] != undefined) { 
+                        f300.c = icebean_data[6] + ' cm';
+                        document.getElementById('f300_c').value = f300.c;
+                    }
                     f852.h = icebean_data[4];
                     document.getElementById('f852_h').value = f852.h;
                     if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
