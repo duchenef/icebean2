@@ -24,7 +24,7 @@ require 'File/MARC.php';
 		$new_field = new File_MARC_Data_Field($field[id], null, $field[i1], $field[i2]);
 		// append subfields if value is not empty
 		foreach($field as $key => $value) {
-			if ($key == 'id' || $key == 'i1' || $key == 'i2') {
+			if ($key == 'id' || $key == 'i1' || $key == 'i2' || $key == 'punct') {
 				continue;
 			}
 			else {
@@ -87,8 +87,8 @@ foreach ($_POST as $key => $value) {
 			echo $line.'<BR>';
 		}
 	echo '<BR>--------------<BR>';
-	print $marc;
-	echo '<BR>--------------<BR>';
+	//print $marc;
+	//echo '<BR>--------------<BR>';
 	print "Write MARC21: ";
 	$fh = fopen('marcy.mrc', 'w');
 	fwrite($fh, $marc->toRaw());

@@ -286,11 +286,71 @@ label[for=f300_e] {
 	width: 300px;
 }
 
-.g655_a {
+.g600_a {
+ 	width: 200px;
+}
+
+.g600_b {
+ 	width: 50px;
+}
+
+.g600_c {
+ 	width: 150px;
+}
+
+.g600_d {
+ 	width: 92px;
+}
+
+.g600_2 {
+ 	width: 50px;
+}
+
+.g610_a {
+ 	width: 200px;
+}
+
+.g610_2 {
+ 	width: 50px;
+}
+
+.g611_a {
+ 	width: 200px;
+}
+
+.g611_2 {
+ 	width: 50px;
+}
+
+.g630_a {
+ 	width: 200px;
+}
+
+.g630_2 {
+ 	width: 50px;
+}
+
+.g650_a {
+ 	width: 200px;
+}
+
+.g650_x {
  	width: 300px;
 }
 
-.g655_2 {
+.g650_2 {
+ 	width: 50px;
+}
+
+.g651_a {
+ 	width: 200px;
+}
+
+.g651_z {
+ 	width: 300px;
+}
+
+.g651_2 {
  	width: 50px;
 }
 
@@ -321,6 +381,14 @@ label[for=f300_e] {
 
 #f852_i {
 	width: 30px;
+}
+
+#f852_p {
+	width: 80px;
+}
+
+#f852_9 {
+	width: 80px;
 }
 
 .actions {

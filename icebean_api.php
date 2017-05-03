@@ -110,9 +110,9 @@ if ($author == '') {
 // retourne un tableau: [0]=fast format marc mandarin, [1]=fast format lisible, [2]=status, [3]=dewey, [4]= edition ddc
   include 'resources/function_fast.php';
   if ($isbn != '') {$fastresults = fast2mdr($isbn);}
-  $marcArray = $fastresults[0];
-  $readArray = $fastresults[1];
-  $classify_status = (string)$fastresults[2];
+  //$marcArray = $fastresults[0];
+  //$readArray = $fastresults[1];
+  //$classify_status = (string)$fastresults[2];
   $dewey = (string)$fastresults[3];
   $ddced = (string)$fastresults[4];
 
@@ -125,11 +125,8 @@ $descr = str_replace("\xE2\x80\x99", "'", $descr);
 $descr = str_replace("\xE2\x80\xA6", "...", $descr); 
 $descr = "|".chr(30).chr(9)."520".chr(9)."8".chr(9).chr(32)."<BR>".chr(97).chr(9).$descr."|";
 
-$output_array = array($isbn, $author, $AMtitle, $GRtitle, $dewey, $pages, $heightcm);
-
-//echo $GBtitle.'<BR>';
-//echo $AMtitle.'<BR>';
-
+$output_array = array($isbn, $author, $AMtitle, $GRtitle, $dewey, $pages, $heightcm, $swissprice);
+//                    0      1        2         3         4       5       6          7            8
 //echo json_encode($output_array);
 echo implode('~',$output_array);
 //echo "<SCRIPT LANGUAGE='javascript'> gettemplate('$output_array');</SCRIPT>\n";

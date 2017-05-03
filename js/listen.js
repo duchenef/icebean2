@@ -53,26 +53,27 @@ var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamed
 var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
 var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
 var f504 =  {id: '500', i1: null, i2: null, a: ''};
-var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: ''};
+var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 // Marc fields default value for reset
-var f020_default =  {id: '020', i1: null, i2: null, a: '', q: ''};
-var f040_default =  {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
-var f041_default =  {id: '041', i1: 0, i2: null, a: '', h: ''};
-var f100_default =  {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
-var f240_default =  {id: '240', i1: 1, i2: 0, a: '', l: ''};
-var f245_default =  {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
-var f246_default =  {id: '246', i1: 3, i2: 3, a: '', b: ''};
-var f264_default =  {id: '264', i1: '', i2: '', a: '', b: '', c:''};
-var f300_default =  {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
-var f500_default =  {id: '500', i1: null, i2: null, a: ''};
-var f504_default =  {id: '504', i1: null, i2: null, a: ''};
-var f600_default =  {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
-var f611_default =  {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
-var f630_default =  {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
-var f650_default =  {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
-var f651_default =  {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
-var f655_default =  {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
+var f020_default = {id: '020', i1: null, i2: null, a: '', q: ''};
+var f040_default = {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
+var f041_default = {id: '041', i1: 0, i2: null, a: '', h: ''};
+var f100_default = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
+var f240_default = {id: '240', i1: 1, i2: 0, a: '', l: ''};
+var f245_default = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
+var f246_default = {id: '246', i1: 3, i2: 3, a: '', b: ''};
+var f264_default = {id: '264', i1: '', i2: '', a: '', b: '', c:''};
+var f300_default = {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
+var f500_default = {id: '500', i1: null, i2: null, a: ''};
+var f504_default = {id: '504', i1: null, i2: null, a: ''};
+var f600_default = {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
+var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
+var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
+var f650_default = {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
+var f651_default = {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
+var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
+var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', d:',', e:',', last:'.'},
@@ -83,8 +84,13 @@ var punctuation = {
                     f300: {a:'', b:' :', c:' ;', last:'.', e:'+'},
                     f500: {a: '', last: '.'},
                     f504: {a: '', last: '.'},
+                    f600: {a: '', b: ',', c: ',', d: ',', q: '', last: '.'},
+                    f610: {a: '', b: '.', last: '.'},
+                    f611: {a: '', last: '.'},
+                    f630: {a: '', p: '.', last: '.'},
+                    f650: {a: '', x: '', last: '.'},
+                    f651: {a: '', z: '', last: '.'},
                     f655: {a: '', last: '.'}
-
 };
 
 var punctuation_undo = [];
@@ -856,6 +862,16 @@ $('#f852_i').on('blur', function () {
         console.log('852#i: ' + f852.i);
     });
 
+$('#f852_p').on('blur', function () {
+        f852.p = $(this).val();
+        console.log('852#p: ' + f852.p);
+    });
+
+$('#f852_9').on('blur', function () {
+        f852['9'] = $(this).val();
+        console.log('852#9: ' + f852['9']);
+    });
+
 $('#field_insert').on('blur', function () {
         insert.id = $(this).val();
         console.log('field_insert: ' + insert.id);
@@ -888,12 +904,26 @@ $('#subfields_insert').on('blur', function () {
 function icebean_submit(){
                console.log('click: to icebean');
                $.post( 
-                    "icebean_api.php",
-                    { isbn: f020.a },
-                    function(data) {
+                "fast_api.php",
+                { isbn: f020.a },
+                   function(data) {
+                        //$('#ib').html(data);
+                        var fast_data = data.split('~');
+                        // console.log(fast_data);
+                        // Fast headings
+                        for (var i = 1; i < fast_data.length; i++) {
+                            console.log(fast_data[i]);
+                            parseFast(fast_data[i]);
+                        }
+                    }
+               );    
+               $.post( 
+                "icebean_api.php",
+                { isbn: f020.a },
+                function(data) {
                     //$('#ib').html(data);
                     var icebean_data = data.split('~');
-                    console.log (icebean_data);
+                    //console.log (icebean_data);
                     // f100a and f245c
                     f100.a = icebean_data[1];
                     var surname = f100.a.slice(f100.a.indexOf(' ')+1, f100.a.length);
@@ -918,6 +948,7 @@ function icebean_submit(){
                         f245.b = lowerAll(f245.b);
                         $('label[for=f245_b], #f245_b').show();
                         document.getElementById('f245_b').value = f245.b;
+                    // f300
                     if (icebean_data[5] != undefined) { 
                         f300.a = icebean_data[5] + ' pages' + plates;
                         document.getElementById('f300_a').value = f300.a;
@@ -926,16 +957,64 @@ function icebean_submit(){
                         f300.c = icebean_data[6] + ' cm';
                         document.getElementById('f300_c').value = f300.c;
                     }
+                    // f852
                     f852.h = icebean_data[4];
+                    if (f852.h == 'FIC') { f852.h = 'F'};
                     document.getElementById('f852_h').value = f852.h;
                     if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
                         f852.j = 'DCX' + f852.h.substring(0, 3);
                     }
-                    
-                    }
+                    f852['9'] = icebean_data[7];
+                    document.getElementById('f852_9').value = f852['9'];
+                }
                });
-                    
             }
+
+function parseFast(fast_data) {
+    var fast = {id: '', i1: '', i2: '', punct: 'no'};
+    var indexes = [];
+    for(var i=0; i<fast_data.length;i++) {
+        if (fast_data[i] === '$') indexes.push(i);
+    }
+    fast.id = fast_data.substring(0, 3);
+    fast.i1 = fast_data.substring(4, 5).replace('_', '');
+    fast.i2 = fast_data.substring(5, 6).replace('_', '');
+    for (var i=0; i<indexes.length;i++) {
+        sf_id = fast_data.charAt(indexes[i]+1);
+        var beg = indexes[i]+3;
+        if (!indexes[i+1]) {
+            var end = fast_data.length+1;
+        }
+        else {
+            var end = indexes[i+1];
+        }
+        sf_val = fast_data.substring(beg, end);
+        //console.log(sf_id + ' --- ' + sf_val);
+        fast[sf_id] = sf_val;
+    }
+    insert = jQuery.extend(true, {}, fast);
+    fieldID = insertField();
+    populateField(fieldID, fast);
+
+}
+
+function populateField(fieldID, data) {
+    for(var property in data) {
+            if (property == 'id') {
+                 continue;
+            }
+            else {
+                console.log(data);
+                console.log(data[property]);
+                window[fieldID][property] = data[property]
+                if (property != 'punct') {
+                    document.getElementById(fieldID +  '_' + property).value = data[property];
+                }
+            }
+    }
+
+}
+
   
 // icebean submit button              
 $(document).ready(function() {
@@ -1020,7 +1099,7 @@ $(document).ready(function() {
 $(function () {
   $("#main_form input, #main_form select").blur(function () {
     if ($(this).is(":invalid")) {
-      alert('invalid value, please read the Marc documentation!');
+      console.log('invalid value, please read the Marc documentation!');
     }
     focus_previous = this.id;
     //console.log('previously focused: ' + focus_previous);
@@ -1106,9 +1185,13 @@ $(document).ready(function() {
                     var pattern = /^f[0-9]{3}(_[0-9])?$/;
                     var post_to_marc2 = {};
                     for (var varName in window) {
+                        if ('undefined' === typeof window[varName]) { continue; }
                         if (pattern.test(varName)) {
                             console.log(varName);
-                            punctuate(varName);
+                            //console.log(window[varName].punct);
+                            if (window[varName].punct != 'no') {
+                                punctuate(varName);
+                            }
                             post_to_marc2[varName] = window[varName];
                         }
                     }
