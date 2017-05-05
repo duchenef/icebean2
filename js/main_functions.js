@@ -51,7 +51,7 @@ function insertFieldAuto() {
         }
         var field_id = 'f' + insert.id + '_' + counter;
         
-        console.log('insert field using imported parameters: f' + insert.id);
+        console.log('insert field using automatic parameters: f' + insert.id);
         window[field_id] = $.extend( true, {}, insert );
         addField(insert, counter);
         insert = {id: '', i1: '', i2: ''};
@@ -119,8 +119,8 @@ function populateField(fieldID, data) {
                  continue;
             }
             else {
-                console.log(data);
-                console.log(data[property]);
+                //console.log(data);
+                //console.log(data[property]);
                 window[fieldID][property] = data[property]
                 if (property != 'punct') {
                     //console.log(fieldID +  '_' + property);
@@ -128,7 +128,6 @@ function populateField(fieldID, data) {
                 }
             }
     }
-
 }
 
 /* function: event handler for any new field, to be used from addField() */ 

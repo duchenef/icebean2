@@ -79,7 +79,6 @@ $asin=$amazon[4];
 $language=$amazon[5];
 $amreviewa=$amazon[6];
 $amreviewb=$amazon[7];
-$descrurlam = "Description 1. ".$amreviewa." Description 2. ".$amreviewb;
 $formattedprice=$amazon[8];
 $swissprice="p".$amazon[9]."chf";
 $publisher=$amazon[10];
@@ -116,6 +115,8 @@ if ($author == '') {
   $dewey = (string)$fastresults[3];
   $ddced = (string)$fastresults[4];
 
+$f520a = $amreviewa;
+
 // choix de la description à afficher en fonction du choix dans le formulaire
     
 $descr = $GRdescr;
@@ -125,7 +126,7 @@ $descr = str_replace("\xE2\x80\x99", "'", $descr);
 $descr = str_replace("\xE2\x80\xA6", "...", $descr); 
 $descr = "|".chr(30).chr(9)."520".chr(9)."8".chr(9).chr(32)."<BR>".chr(97).chr(9).$descr."|";
 
-$output_array = array($isbn, $author, $AMtitle, $GRtitle, $dewey, $pages, $heightcm, $swissprice);
+$output_array = array($isbn, $author, $AMtitle, $GRtitle, $dewey, $pages, $heightcm, $swissprice, $f520a);
 //                    0      1        2         3         4       5       6          7            8
 //echo json_encode($output_array);
 echo implode('~',$output_array);

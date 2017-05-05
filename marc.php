@@ -6,17 +6,7 @@ require 'File/MARC.php';
 	$f007 = $_POST[f007];
 	$f008 = $_POST[f008];
 
-// Obsolete> now handled by loop foreach ($_POST as $key => $value)
-	/*$f020 = $_POST[f020];
-	$f040 = $_POST[f040];
-	$f041 = $_POST[f041];
-	$f100 = $_POST[f100];
-	$f240 = $_POST[f240];
-	$f245 = $_POST[f245];
-	$f336 = $_POST[f336];
-	$f337 = $_POST[f337];
-	$f338 = $_POST[f338];
-	$f852 = $_POST[f852];*/
+ksort($_POST);
 
 // FUNCTION: CREATE FIELD FROM FIELD VARIABLE
 	function newField($field) {
@@ -27,11 +17,25 @@ require 'File/MARC.php';
 			if ($key == 'id' || $key == 'i1' || $key == 'i2' || $key == 'punct') {
 				continue;
 			}
+			elseif ($key == '2') {
+				$two = $key;
+				$two_val = $value;
+			}
+			elseif ($key == '9') {
+				$nine = $key;
+				$nine_val = $value;
+			}
 			else {
 				if ($value != '') {
 				$new_field->appendSubfield(new File_MARC_Subfield($key, $value));
 				}
 			}
+		}
+		if (isset($two)) {
+			$new_field->appendSubfield(new File_MARC_Subfield($two, $two_val));
+		}
+		if (isset($nine)) {
+			$new_field->appendSubfield(new File_MARC_Subfield($nine, $nine_val));
 		}
 		return $new_field;
 	}
@@ -64,19 +68,6 @@ foreach ($_POST as $key => $value) {
     }
     
 }
-
-// Obsolete> now handled by loop foreach ($_POST as $key => $value)
-/*// MARC FIELDS
-	$marc->appendField(newField($f020));
-	$marc->appendField(newField($f040));
-	$marc->appendField(newField($f041));
-	$marc->appendField(newField($f100));
-	$marc->appendField(newField($f240));
-	$marc->appendField(newField($f245));
-	$marc->appendField(newField($f336));
-	$marc->appendField(newField($f337));
-	$marc->appendField(newField($f338));
-	$marc->appendField(newField($f852));*/
 
 // OUTPUT
 	echo '<BR>--------------<BR>';

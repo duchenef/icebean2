@@ -57,6 +57,7 @@ var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamed
 var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
 var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
 var f504 =  {id: '500', i1: null, i2: null, a: ''};
+var f520 = {id: '520', i1: '8', i2: null, a: ''};
 var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 // Marc fields default value for reset
@@ -67,11 +68,14 @@ var f100_default = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
 var f240_default = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 var f246_default = {id: '246', i1: 3, i2: 3, a: '', b: ''};
+var f250_default = {id: '250', i1: null, i2: null, a: ''};
 var f264_default = {id: '264', i1: '', i2: '', a: '', b: '', c:''};
 var f300_default = {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
 var f380;
 var f500_default = {id: '500', i1: null, i2: null, a: ''};
 var f504_default = {id: '504', i1: null, i2: null, a: ''};
+var f520_default = {id: '520', i1: '8', i2: null, a: ''};
+var f586_default = {id: '586', i1: '8', i2: null, a: ''};
 var f600_default = {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
 var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -84,11 +88,14 @@ var punctuation = {
                     f100: {a:'', b:'', c:',', d:',', e:',', last:'.'},
                     f240: {a:'', l:'.', last:''},
                     f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'},
+                    f250: {a: '', last: '.'},
                     f246: {a:'', b:' :', n: '.', p:'.', last:''},
                     f264: {a:'', b:' :', c:',', last:'.'},
                     f300: {a:'', b:' :', c:' ;', last:'.', e:'+'},
                     f500: {a: '', last: '.'},
                     f504: {a: '', last: '.'},
+                    f520: {a: '', last: '.'},
+                    f586: {a: '', last: ''},
                     f600: {a: '', b: ',', c: ',', d: ',', q: '', last: '.'},
                     f610: {a: '', b: '.', last: '.'},
                     f611: {a: '', last: '.'},
@@ -129,6 +136,9 @@ $('#f008_date_1').on('change', function () {
         console.log('captured value: ' +f008_0710);
         f008 = replaceAtPos(f008_0710, f008, 7)
         console.log('008: ' + f008);
+        // add publication date to 264_1c
+        f264_1.c = f008_0710;
+        document.getElementById('f264_1_c').value = f264_1.c;
     });
 
 $('#f008_date_2').on('blur', function () {
@@ -141,6 +151,7 @@ $('#f008_date_2').on('blur', function () {
             removeField(added_by_f008_1114);
             added_by_f008_1114 = '';
         }
+        // add copyright date to 264_2_c
         if (f008_06 == 't') {
                 insert = {id: '264', i1: '', i2: '4', c: '©'+f008_1114 };
                 var fieldID = insertFieldAuto();
@@ -536,6 +547,19 @@ $('#f504_a').on('blur', function () {
         console.log('504#a: ' + f504.a);
     });
 
+$('#f520_i1').on('blur', function () {
+        f520.i1 = $(this).val();
+        console.log('520_i1: ' + f520.i1);
+    });
+
+
+$('#f520_a').on('blur', function () {
+        f520.a = $(this).val();
+        f520.a = f520.a.replace(/(\r\n|\n|\r)/gm," ");
+        document.getElementById('f520_a').value = f520.a;
+        console.log('520#a: summary recorded');
+    });
+
 $('#f852_a').on('blur', function () {
         f852.a = $(this).val();
         console.log('852#a: ' + f852.a);
@@ -598,7 +622,7 @@ function icebean_submit(){
                    function(data) {
                         //$('#ib').html(data);
                         var fast_data = data.split('~');
-                        console.log(fast_data);
+                        //console.log(fast_data);
                         // Fast headings
                         for (var i = 1; i < fast_data.length; i++) {
                             console.log(fast_data[i]);
@@ -646,6 +670,19 @@ function icebean_submit(){
                         f300.c = icebean_data[6] + ' cm';
                         document.getElementById('f300_c').value = f300.c;
                     }
+                    // f520
+                    if (icebean_data[8] != undefined) { 
+                        f520.a = icebean_data[8];
+                        f520.a = f520.a.replace(/(<br \/>)/g," ");
+                        f520.a = f520.a.replace(/(<p>)/g," ");
+                        f520.a = f520.a.replace(/(<b>)/g," ");
+                        f520.a = f520.a.replace(/(<i>)/g," ");
+                        f520.a = f520.a.replace(/(<\/p>)/g," ");
+                        f520.a = f520.a.replace(/(<\/b>)/g," ");
+                        f520.a = f520.a.replace(/(<\/i>)/g," ");
+                        f520.a = f520.a.replace(" . . .","...");
+                        document.getElementById('f520_a').value = f520.a;
+                    }
                     // f852
                     f852.h = icebean_data[4];
                     if (f852.h == 'FIC') { f852.h = 'F'};
@@ -665,13 +702,7 @@ function parseFast(fast_data) {
     for(var i=0; i<fast_data.length;i++) {
         if (fast_data[i] === '$') indexes.push(i);
     }
-    if (fast_data.substring(0, 3) == '<ME') {
-        fast.id = fast_data.substring(fast_data.indexOf('↵↵'+1, 3));
-        console.log(fast.id);
-    }
-    else {
-        fast.id = fast_data.substring(0, 3);
-    }
+    fast.id = fast_data.substring(0, 3);
     fast.i1 = fast_data.substring(4, 5).replace('_', '');
     fast.i2 = fast_data.substring(5, 6).replace('_', '');
     for (var i=0; i<indexes.length;i++) {

@@ -52,6 +52,7 @@ $isbn10 = ISBN13toISBN10($isbn);
   if ($isbn != '') {$fastresults = fast2mdr($isbn);}
   //$marcArray = $fastresults[0];
   $readArray = $fastresults[1];
+  array_unshift($readArray , '');
   //$classify_status = (string)$fastresults[2];
   //$dewey = (string)$fastresults[3];
   //$ddced = (string)$fastresults[4];
