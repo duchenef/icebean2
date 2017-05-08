@@ -279,4 +279,5 @@ infobox_DB.add_f040_d = infobox_DB.f040_d;
 infobox_DB.add_f100_d = infobox_DB.f100_d;
 infobox_DB.add_f100_e = infobox_DB.f100_e;
 infobox_DB.add_f245_b = infobox_DB.f245_b;
+infobox_DB.add_f300_b = infobox_DB.f300_b;
 infobox_DB.add_f300_e = infobox_DB.f300_e;

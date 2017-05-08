@@ -178,6 +178,14 @@ $('#f008_illustrations').on('blur', function () {
         var ill = [];
         f300.b = '';
         document.getElementById('f300_b').value = f300.b; 
+        if( $('#f300_b').is(':visible') ) {
+                    $('label[for=f300_b], #f300_b').hide();
+                    reset('300', 'b');
+        }
+        else {
+            $('label[for=f300_b], #f300_b').show().focus();
+        }  
+
         if (f008_1821.indexOf("a") >= 0) {
             ill.push('illustrations');    
         }
@@ -316,10 +324,29 @@ $('#f008_biography').on('blur', function () {
             removeField(added_by_f008_34);
             added_by_f008_34 = '';
         }
-        if (f008_34 == 'b' || f008_34 == 'a') {
+        if (f008_34 == 'a') {
+            if (f008_33 == '1') {
+                insert = {id: '655', i1: '', i2: '7', a: 'Autobiographical fiction', '2': 'fast' };
+                var fieldID = insertFieldAuto();
+                added_by_f008_34 = fieldID;
+            }
+            else {
                 insert = {id: '655', i1: '', i2: '7', a: 'Biography', '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_34 = fieldID;
+            }
+        }
+        else if (f008_34 == 'b') {
+            if (f008_33 == '1') {
+                insert = {id: '655', i1: '', i2: '7', a: 'Biographical fiction', '2': 'fast' };
+                var fieldID = insertFieldAuto();
+                added_by_f008_34 = fieldID;
+            }
+            else {
+                insert = {id: '655', i1: '', i2: '7', a: 'Biography', '2': 'fast' };
+                var fieldID = insertFieldAuto();
+                added_by_f008_34 = fieldID;
+            }
         }
         else if (f008_34 == 'c') {
                 insert = {id: '655', i1: '', i2: '7', a: 'Biographies', '2': 'fast' };
@@ -684,8 +711,18 @@ function icebean_submit(){
                         document.getElementById('f520_a').value = f520.a;
                     }
                     // f852
-                    f852.h = icebean_data[4];
-                    if (f852.h == 'FIC') { f852.h = 'F'};
+                    // bypass action on 852h if 008 is set to Fiction or Short Stories
+                    if (f008_33 == '1') {
+                        f852.h = 'F';
+                    }
+                    else if (f008_33 == 'j') {
+                        f852.h = 'FS';
+                    }
+                    else {
+                        f852.h = icebean_data[4];
+                        if (f852.h == 'FIC') { f852.h = 'F'};
+                        
+                    }
                     document.getElementById('f852_h').value = f852.h;
                     if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
                         f852.j = 'DCX' + f852.h.substring(0, 3);
@@ -784,6 +821,20 @@ $(document).ready(function() {
                 else {
                     $('label[for=f245_b], #f245_b').show().focus();
                     }                 
+            });   
+         });
+
+/* 300b */
+$(document).ready(function() { 
+            $("#add_f300_b").click(function(event){
+                console.log('click: add_f300_b');
+                if( $('#f300_b').is(':visible') ) {
+                    $('label[for=f300_b], #f300_b').hide();
+                    reset('300', 'b');
+                    }
+                else {
+                    $('label[for=f300_b], #f300_b').show().focus();
+                    }                   
             });   
          });
 

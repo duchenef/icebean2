@@ -261,7 +261,12 @@ label[for=f245_b] {
 	width: 220px;
 }
 
+label[for=f300_b] {
+	display:none;
+}
+
 #f300_b {
+	display:none;
 	width: 250px;
 }
 
