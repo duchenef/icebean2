@@ -45,7 +45,7 @@ var added_by_f008_34 = '';
 var f020 = {id: '020', i1: null, i2: null, a: '', q: ''};
 var f040 = {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
 var f041 = {id: '041', i1: 0, i2: null, a: '', h: ''};
-var f100 = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
+var f100 = {id: '100', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f240 = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245 = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 var f264_1 = {id: '264', i1: '', i2: 1, a: '', b: '', c:''};
@@ -58,13 +58,16 @@ var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrie
 var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
 var f504 =  {id: '500', i1: null, i2: null, a: ''};
 var f520 = {id: '520', i1: '8', i2: null, a: ''};
+var f520_gr = '';
+var f520_am = '';
+
 var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 // Marc fields default value for reset
 var f020_default = {id: '020', i1: null, i2: null, a: '', q: ''};
 var f040_default = {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
 var f041_default = {id: '041', i1: 0, i2: null, a: '', h: ''};
-var f100_default = {id: '100', i1: 1, i2: null, a: '', d: '', e: ''};
+var f100_default = {id: '100', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f240_default = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 var f246_default = {id: '246', i1: 3, i2: 3, a: '', b: ''};
@@ -85,7 +88,7 @@ var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
-                    f100: {a:'', b:'', c:',', d:',', e:',', last:'.'},
+                    f100: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
                     f240: {a:'', l:'.', last:''},
                     f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'},
                     f250: {a: '', last: '.'},
@@ -183,7 +186,7 @@ $('#f008_illustrations').on('blur', function () {
                     reset('300', 'b');
         }
         else {
-            $('label[for=f300_b], #f300_b').show().focus();
+            $('label[for=f300_b], #f300_b').show();
         }  
 
         if (f008_1821.indexOf("a") >= 0) {
@@ -443,6 +446,14 @@ $('#f100_a').on('blur', function () {
         document.getElementById('f852_i').value = f852.i;
     });
 
+$('#f100_q').on('blur', function () {
+        f100.q = $(this).val();
+        console.log('100#q: ' + f100.q);
+        if ($(this).val() == '') {
+            $('label[for=f100_q], #f100_q').hide();
+        }
+    });
+
 $('#f100_d').on('blur', function () {
         f100.d = $(this).val();
         console.log('100#d: ' + f100.d);
@@ -639,6 +650,17 @@ $('#subfields_insert').on('blur', function () {
     }
 });
 
+$('#t520_a').on('change', function() {
+    if (f520_gr == f520.a) {
+        document.getElementById('f520_a').value = f520_am;
+        f520.a = document.getElementById('f520_a').value;
+    }
+    else {
+        document.getElementById('f520_a').value = f520_gr;
+        f520.a = document.getElementById('f520_a').value;
+    }
+});
+
 /* ICEBEAN REQUEST */
 // function
 function icebean_submit(){
@@ -646,17 +668,49 @@ function icebean_submit(){
                $.post( 
                 "fast_api.php",
                 { isbn: f020.a },
-                   function(data) {
-                        //$('#ib').html(data);
-                        var fast_data = data.split('~');
-                        //console.log(fast_data);
-                        // Fast headings
-                        for (var i = 1; i < fast_data.length; i++) {
-                            console.log(fast_data[i]);
-                            parseFast(fast_data[i]);
-                        }
+                function(data) {
+                    //$('#ib').html(data);
+                    var fast_data = data.split('~');
+                    // Fast headings
+                    for (var i = 2; i < fast_data.length; i++) {
+                        //console.log(fast_data[i]);
+                        parseFast(fast_data[i]);
                     }
-               );    
+                    // Dewey classification
+                    // bypass action on 852h if 008 is set to Fiction or Short Stories
+                    // f852h
+                    if (f008_33 == '1') {
+                        f852.h = 'F';
+                    }
+                    else if (f008_33 == 'j') {
+                        f852.h = 'FS';
+                    }
+                    else {
+                        f852.h = fast_data[1];
+                        if (f852.h == 'FIC') { f852.h = 'F'};  
+                    }
+                    document.getElementById('f852_h').value = f852.h;
+                    // f852j
+                    if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
+                        f852.j = 'DCX' + f852.h.substring(0, 3);
+                    }
+                }
+               );
+               $.post( 
+                "images_api.php",
+                { isbn: f020.a },
+                function(data) {
+                    //$('#ib').html(data);
+                    var images_url_data = data.split('~');
+                    var lab = {'0':'AM', '1':'GR', '2':'GB'};
+                    // Fast headings
+                    for (var i = 0; i < images_url_data.length; i++) {
+                        console.log(images_url_data[i]);
+                        $('#pic'+i).html("<a download='"+f020.a+lab[i]+".jpg' href='images/' title='"+lab[0]+"''><img align='middle' src='resources/resizer.php?url="+images_url_data[i]+"&h=120&fn="+f020.a+lab[i]+".jpg'></a>");
+                        $("<input type='button' id = 'picbut"+i+"' class='insert_show_insert_submit' value='"+lab[i]+"'>'" ).appendTo( "#pic"+i );
+                    }
+                }
+               );        
                $.post( 
                 "icebean_api.php",
                 { isbn: f020.a },
@@ -675,7 +729,7 @@ function icebean_submit(){
                     f245.c = icebean_data[1];
                     document.getElementById('f245_c').value = f245.c;
                     $('#ib').html(icebean_data);
-                    // f245a and f245b
+                    // f245
                     var full_title = icebean_data[2];
                     if (full_title.indexOf(':') != -1) {
                         f245.a = full_title.slice(0, full_title.indexOf(':'));
@@ -688,6 +742,11 @@ function icebean_submit(){
                         f245.b = lowerAll(f245.b);
                         $('label[for=f245_b], #f245_b').show();
                         document.getElementById('f245_b').value = f245.b;
+                    // f264
+                    if (icebean_data[9] != undefined) { 
+                        f264_1.b = icebean_data[9];
+                        document.getElementById('f264_1_b').value = f264_1.b;
+                    }
                     // f300
                     if (icebean_data[5] != undefined) { 
                         f300.a = icebean_data[5] + ' pages' + plates;
@@ -698,35 +757,33 @@ function icebean_submit(){
                         document.getElementById('f300_c').value = f300.c;
                     }
                     // f520
+                    if (icebean_data[10] != undefined) { 
+                        f520_gr = icebean_data[10];
+                        f520_gr = f520_gr.replace(/(<br \/>)/g," ");
+                        f520_gr = f520_gr.replace(/(<p>)/g," ");
+                        f520_gr = f520_gr.replace(/(<b>)/g," ");
+                        f520_gr = f520_gr.replace(/(<i>)/g," ");
+                        f520_gr = f520_gr.replace(/(<\/p>)/g," ");
+                        f520_gr = f520_gr.replace(/(<\/b>)/g," ");
+                        f520_gr = f520_gr.replace(/(<\/i>)/g," ");
+                        f520_gr = f520_gr.replace(" . . .","...");
+                        console.log('f520_gr ' + f520_gr);
+                    }
                     if (icebean_data[8] != undefined) { 
-                        f520.a = icebean_data[8];
-                        f520.a = f520.a.replace(/(<br \/>)/g," ");
-                        f520.a = f520.a.replace(/(<p>)/g," ");
-                        f520.a = f520.a.replace(/(<b>)/g," ");
-                        f520.a = f520.a.replace(/(<i>)/g," ");
-                        f520.a = f520.a.replace(/(<\/p>)/g," ");
-                        f520.a = f520.a.replace(/(<\/b>)/g," ");
-                        f520.a = f520.a.replace(/(<\/i>)/g," ");
-                        f520.a = f520.a.replace(" . . .","...");
-                        document.getElementById('f520_a').value = f520.a;
+                        f520_am = icebean_data[8];
+                        f520_am = f520_am.replace(/(<br \/>)/g," ");
+                        f520_am = f520_am.replace(/(<p>)/g," ");
+                        f520_am = f520_am.replace(/(<b>)/g," ");
+                        f520_am = f520_am.replace(/(<i>)/g," ");
+                        f520_am = f520_am.replace(/(<\/p>)/g," ");
+                        f520_am = f520_am.replace(/(<\/b>)/g," ");
+                        f520_am = f520_am.replace(/(<\/i>)/g," ");
+                        f520_am = f520_am.replace(" . . .","...");
+                        console.log('f520_am ' + f520_am);
                     }
+                    document.getElementById('f520_a').value = f520_gr;
+                    f520.a = document.getElementById('f520_a').value;
                     // f852
-                    // bypass action on 852h if 008 is set to Fiction or Short Stories
-                    if (f008_33 == '1') {
-                        f852.h = 'F';
-                    }
-                    else if (f008_33 == 'j') {
-                        f852.h = 'FS';
-                    }
-                    else {
-                        f852.h = icebean_data[4];
-                        if (f852.h == 'FIC') { f852.h = 'F'};
-                        
-                    }
-                    document.getElementById('f852_h').value = f852.h;
-                    if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
-                        f852.j = 'DCX' + f852.h.substring(0, 3);
-                    }
                     f852['9'] = icebean_data[7];
                     document.getElementById('f852_9').value = f852['9'];
                 }
@@ -780,6 +837,20 @@ $(document).ready(function() {
                     $('label[for=f040_d], #f040_d').show().focus();
                     }                  
             });       
+         });
+
+/* 100q */
+$(document).ready(function() { 
+            $("#add_f100_q").click(function(event){
+                console.log('click: add_f100_q');
+                if( $('#f100_q').is(':visible') ) {
+                    $('label[for=f100_q], #f100_q').hide();
+                    reset('100', 'q');
+                    }
+                else {
+                    $('label[for=f100_q], #f100_q').show().focus();
+                    }                  
+            });      
          });
 
 /* 100d */
@@ -930,7 +1001,6 @@ $(document).ready(function() {
 
 /* SUBMIT TO MARC */
 /* Actual submission */
-
 $(document).ready(function() {
             $("#tomarc").click(function(event){
                 console.log('click: to marc');
@@ -964,3 +1034,20 @@ $(document).ready(function() {
             });
                 
          });
+
+function diacritics(object) {
+    for (var property in object) {
+        if (property == 'id' || property == 'i1' || property == 'i2' || property == 'punct') {
+            continue;
+        }
+        else {
+            console.log(property + ', val: ' + object[property]);
+            var str = '';
+            str = object[property];
+            console.log(typeof str);
+            str = str.replace(/é/g, "&#233")
+            console.log(property + ', val: ' + str);
+        }
+
+    }
+}

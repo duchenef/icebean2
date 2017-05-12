@@ -4,6 +4,58 @@ body {
 	background-color: GhostWhite;
 }
 
+/* Screen layout */
+/* colors */
+	#header,
+	#footer {
+		background-color: #f1f1f1;
+	}
+	
+	#main-wrap {
+		background-color: #D9D9D9;
+	}
+	
+	#sidebar {
+		background-color: #d2d2d2;
+	}
+	
+	#content-wrap {
+		background-color: #c5c5c5;
+	}
+	
+/* sizes */
+	#main-wrap > div {
+		min-height: 600px;
+	}
+	
+	#header {
+		min-height: 20px;
+	}
+	
+	#footer {
+	    min-height: 20px;
+	}
+	
+/* layout */
+	#main-wrap {
+	    /* overflow to handle inner floating block */
+	    overflow: hidden;*/
+	}
+	#content-wrap {
+	    float: left;
+	    width: 60%;
+	} 
+	#sidebar {
+	    float: right;
+	    width: 40%;
+	}
+
+#main_form, #sidebar_wrapper {
+	margin: 5px 5px 5px 5px;
+}
+
+/* layout end */
+	
 textarea {
    font-family: inherit;
    font-size: inherit;
@@ -17,15 +69,21 @@ textarea {
 
 /* Red border for invalid inputs */
 input:invalid {
-  /*border: 1px solid black;*/
-  background: rgb(255, 0, 0);
+  	/*border: 1px solid black;*/
+  	background: rgb(255, 0, 0);
 }
 
 input[type=button] {
-background-color: white;
-    color: black;
-    border: 1px solid #4CAF50; /* Green */
-    border-radius: 4px;
+	background-color: #2196F3;
+    color: GhostWhite;
+    border: 0px solid #2196F3;
+    font-family: "Verdana";
+	font-size: 12px;
+    /*border-radius: 3px;*/
+}
+
+#main_title {
+	margin-left:5px;
 }
 
 .datefield_YYYY {
@@ -125,6 +183,15 @@ label[for=f041_h] {
 
 #f100_a {
 	width: 220px;
+}
+
+label[for=f100_q] {
+	display:none;
+}
+
+#f100_q {
+	display: none;
+	width: 180px;
 }
 
 label[for=f100_d] {
@@ -471,10 +538,6 @@ label[for=f520_i2] {
 	width: 80px;
 }
 
-.actions {
- 	margin-top:15px;
-}
-
 .insert {
  	margin-top:15px;
  	display:none;
@@ -495,12 +558,102 @@ label[for=field_insert] {
 	margin-left:6px;
 }
 
-.infobox {
- 	margin-top:10px;
-	margin-left:40px;
+#options {
+	margin-bottom:10px;
+}
+
+.actions {
+ 	margin-top:5px;
+ 	margin-left:10px;
+}
+
+.o520_a {
+	margin-top:5px;
+	margin-left:10px;
+}
+
+#t520_a_left {
+	display:inline;
+	margin-left:5px;
+}
+
+#pictures {
+	margin-top:5px;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+
+#pic0, #pic1, #pic2 {
+	display:inline;
+	margin-left:5px;
+	margin-bottom:5px;
+}
+
+#picbut0, #picbut1, #picbut2 {
+	display:inline;
+	margin-left:0px;
+	margin-right:0px;
+	margin-bottom:0px;
+	vertical-align: bottom;
+}
+
+#ib {
+ 	margin-top:5px;
+	margin-left:10px;
 }
 
 .marc_download {
  	margin-top:5px;
-	margin-left:40px;
+	margin-left:10px;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 12px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2196F3;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }

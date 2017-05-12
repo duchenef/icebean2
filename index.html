@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <title>Icebean 2</title>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="js/main_functions.js"></script>
@@ -10,6 +10,11 @@
 </head>
 
 <body>
+<div id="header">
+  <div id = 'main_title'>The Icebean 2, v0.95 - 20170512</div>
+</div>
+<div id="main-wrap">
+<div id="content-wrap">
 <form id='main_form' action='marc.php' method='post'>
 	<div class="f008">008
    		<select name="type_of_date" id="f008_type_of_date" autofocus>
@@ -87,6 +92,9 @@
       <input type= 'text' id='f100_i2' class='ind_placeholder' disabled="disabled">
     <label for="f100_a">a</label>
     <input type="text" id="f100_a" placeholder="author">
+    <input type="button" id = 'add_f100_q' class="add_buttons" value="100q">
+    <label for="f100_q">d</label>
+      <input type="text" id="f100_q" placeholder="fuller form">
     <input type="button" id = 'add_f100_d' class="add_buttons" value="100d">
     <label for="f100_d">d</label>
       <input type="text" id="f100_d" placeholder="dates" maxlength="16">
@@ -233,11 +241,6 @@
     <label for="f852_9">9</label>
       <input type='text' id='f852_9' placeholder='price' maxlength="10" pattern="^p(\d{1,4})(.\d{1,2})?chf">
   </div>
-  <div class="actions">OPT
-    <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="Insert">
-    <input type="button" id = 'tomarc' class="isbn_submit" value="ToMarc">
-    <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">  
-  </div>
   <div class="insert">INS
     <label for="field_insert">id</label>
       <input type='text' id='field_insert' placeholder='000' maxlength="3" pattern="[0-9]{3}">
@@ -251,11 +254,46 @@
   </div>
 
 </form>
-
-<div class="infobox" id = "ib"></div>
-<div class="marc_download" id = "mrc_dl">
-  <a href="marcy.mrc">marc file</a>
 </div>
+
+<div id="sidebar">
+  <div id = 'sidebar_wrapper'>
+
+  <div id='pictures'>
+    <div id=pic0></div>
+    <div id=pic1></div>
+    <div id=pic2></div>
+  </div>
+
+  <label for="options">options</label>
+  <div id = 'options'>
+  <div class = 'o520_a'>520
+    <p id="t520_a_left">Amazon</p>
+    <label class="switch">
+        <input type="checkbox" id="t520_a">
+        <div class="slider"></div>
+      </label>
+    <label>Goodreads</label>
+  </div>
+
+  <div class="actions">ACT
+    <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="Insert">
+    <input type="button" id = 'tomarc' class="isbn_submit" value="ToMarc">
+    <input type="button" id = 'isbn_submit' class="isbn_submit" value="Icebean">  
+  </div>
+
+  </div>
+  <label for="ib">infobox</label>
+  <div id = "ib"></div>
+  <div class="marc_download" id = "mrc_dl">
+    <a href="marcy.mrc">marc file</a>
+  </div>
+
+</div>
+</div>
+
+
+<div id="footer">Footer</div>
 
 <script src="js/func.js"></script>
 <script src="js/infobox.js"></script>

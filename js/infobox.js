@@ -190,6 +190,12 @@ var infobox_DB =    {
                         100 1#$aMorgan, John Pierpont,$d1837-1913,$ecollector.<BR>\
                         100 3#$aFarquhar family.<BR>\
                         100 0#$aJohn,$cthe Baptist, Saint.',
+    f100_q: 'field 100 subfield q - Fuller form of name<BR>\
+                        More complete form of part of the name that is in subfield $a.<BR>\
+                        Examples: <BR>\
+                        100 1#$aMorgan, John Pierpont,$d1837-1913,$ecollector.<BR>\
+                        100 1#$aBeeton,$cMrs.$q(Isabella Mary),$d1836-1865.<BR>\
+                        100 0#$aJohn,$cthe Baptist, Saint.',
     f100_d: 'field 100 subfield d - Dates associated with a name<BR>\
                         Dates of birth, death, or flourishing or any other date used with a name. A qualifier used with the date (e.g., b., d., ca., fl., ?, cent.) is also contained in subfield $d.<BR>\
                         Examples: <BR>\
@@ -276,6 +282,7 @@ var infobox_DB =    {
 
 /* infobox var assignment for field buttons */
 infobox_DB.add_f040_d = infobox_DB.f040_d;
+infobox_DB.add_f100_q = infobox_DB.f100_q;
 infobox_DB.add_f100_d = infobox_DB.f100_d;
 infobox_DB.add_f100_e = infobox_DB.f100_e;
 infobox_DB.add_f245_b = infobox_DB.f245_b;

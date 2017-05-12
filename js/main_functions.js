@@ -47,7 +47,7 @@ function insertFieldAuto() {
         if ($('#' + group_id).children().last().length) {
             var group_div = $('#' + group_id).children().last().attr('id');
             counter = parseInt(group_div.slice(-1))+1;
-            console.log('group id: ' + group_id + ', counter: ' + counter);
+            //console.log('group id: ' + group_id + ', counter: ' + counter);
         }
         var field_id = 'f' + insert.id + '_' + counter;
         
