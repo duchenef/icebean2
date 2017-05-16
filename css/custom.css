@@ -583,13 +583,13 @@ label[for=field_insert] {
 	margin-bottom:10px;
 }
 
-#pic0, #pic1, #pic2 {
+#pic1, #pic2, #pic3 {
 	display:inline;
 	margin-left:5px;
 	margin-bottom:5px;
 }
 
-#picbut0, #picbut1, #picbut2 {
+#picbut1, #picbut2, #picbut3 {
 	display:inline;
 	margin-left:0px;
 	margin-right:0px;

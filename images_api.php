@@ -58,11 +58,15 @@ include 'resources/function_amazon.php';
 include 'resources/function_goodreads.php';
   $goodreads = goodreads($isbn);
   $imageGR_url = $goodreads[6];
+
+
+// Empty var to be used as pos 0 of array (javascript always find meta information in pos 0)
+$Id0 = '';
    
 // choix de la description à afficher en fonction du choix dans le formulaire
 
-$output_array = array($imageAM_url, $imageGR_url, $imageGB_url);
-//                    0             1             2
+$output_array = array($Id0, $imageAM_url, $imageGR_url, $imageGB_url);
+//                    0     1             2             3
 //echo json_encode($output_array);
 echo implode('~',$output_array);
 //echo "<SCRIPT LANGUAGE='javascript'> gettemplate('$output_array');</SCRIPT>\n";

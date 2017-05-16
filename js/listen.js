@@ -156,7 +156,7 @@ $('#f008_date_2').on('blur', function () {
         }
         // add copyright date to 264_2_c
         if (f008_06 == 't') {
-                insert = {id: '264', i1: '', i2: '4', c: '©'+f008_1114 };
+                insert = {id: '264', i1: '', i2: '4', c: '\u00A9'+f008_1114 };
                 var fieldID = insertFieldAuto();
                 added_by_f008_1114 = fieldID;
         }
@@ -293,6 +293,8 @@ $('#f008_literary_form').on('blur', function () {
                 insert = {id: '655', i1: '', i2: '7', a: 'Fiction', '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_33 = fieldID;
+                f852.h = 'F';
+                document.getElementById('f852_h').value = f852.h;
         }
         else if (f008_33 == 'c') {
                 insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
@@ -310,6 +312,8 @@ $('#f008_literary_form').on('blur', function () {
                 insert = {id: '655', i1: '', i2: '7', a: 'Short stories',  '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_33 = fieldID;
+                f852.h = 'FS';
+                document.getElementById('f852_h').value = f852.h;
         }
         else if (f008_33 == 'p') {
                 insert = {id: '655', i1: '', i2: '7', a: 'Poetry',  '2': 'fast' };
@@ -606,6 +610,13 @@ $('#f852_a').on('blur', function () {
 $('#f852_h').on('blur', function () {
         f852.h = $(this).val();
         console.log('852#h: ' + f852.h);
+        // f852j
+        if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
+            f852.j = 'DCX' + f852.h.substring(0, 3);
+        }
+        else {
+            f852.j = '';
+        }
     });
 
 $('#f852_i').on('blur', function () {
@@ -702,11 +713,11 @@ function icebean_submit(){
                 function(data) {
                     //$('#ib').html(data);
                     var images_url_data = data.split('~');
-                    var lab = {'0':'AM', '1':'GR', '2':'GB'};
+                    var lab = {'1':'AM', '2':'GR', '3':'GB'};
                     // Fast headings
-                    for (var i = 0; i < images_url_data.length; i++) {
+                    for (var i = 1; i < images_url_data.length; i++) {
                         console.log(images_url_data[i]);
-                        $('#pic'+i).html("<a download='"+f020.a+lab[i]+".jpg' href='images/' title='"+lab[0]+"''><img align='middle' src='resources/resizer.php?url="+images_url_data[i]+"&h=120&fn="+f020.a+lab[i]+".jpg'></a>");
+                        $('#pic'+i).html("<a download='"+f020.a+lab[i]+".jpg' href='images/"+f020.a+lab[i]+".jpg' title='"+lab[1]+"''><img align='middle' src='resources/resizer.php?url="+images_url_data[i]+"&h=120&fn="+f020.a+lab[i]+".jpg'></a>");
                         $("<input type='button' id = 'picbut"+i+"' class='insert_show_insert_submit' value='"+lab[i]+"'>'" ).appendTo( "#pic"+i );
                     }
                 }
@@ -767,7 +778,7 @@ function icebean_submit(){
                         f520_gr = f520_gr.replace(/(<\/b>)/g," ");
                         f520_gr = f520_gr.replace(/(<\/i>)/g," ");
                         f520_gr = f520_gr.replace(" . . .","...");
-                        console.log('f520_gr ' + f520_gr);
+                        //console.log('f520_gr ' + f520_gr);
                     }
                     if (icebean_data[8] != undefined) { 
                         f520_am = icebean_data[8];
@@ -779,7 +790,7 @@ function icebean_submit(){
                         f520_am = f520_am.replace(/(<\/b>)/g," ");
                         f520_am = f520_am.replace(/(<\/i>)/g," ");
                         f520_am = f520_am.replace(" . . .","...");
-                        console.log('f520_am ' + f520_am);
+                        //console.log('f520_am ' + f520_am);
                     }
                     document.getElementById('f520_a').value = f520_gr;
                     f520.a = document.getElementById('f520_a').value;
@@ -1013,7 +1024,7 @@ $(document).ready(function() {
                     for (var varName in window) {
                         if ('undefined' === typeof window[varName]) { continue; }
                         if (pattern.test(varName)) {
-                            console.log(varName);
+                            //console.log(varName);
                             //console.log(window[varName].punct);
                             if (window[varName].punct != 'no') {
                                 punctuate(varName);
@@ -1021,6 +1032,7 @@ $(document).ready(function() {
                             post_to_marc2[varName] = window[varName];
                         }
                     }
+                    console.log('punctuation has been applied');
                 // actual post
                 $.post( 
                   "marc.php",
@@ -1035,6 +1047,7 @@ $(document).ready(function() {
                 
          });
 
+/* not used */
 function diacritics(object) {
     for (var property in object) {
         if (property == 'id' || property == 'i1' || property == 'i2' || property == 'punct') {

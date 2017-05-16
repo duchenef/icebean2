@@ -308,7 +308,7 @@ function  pop240l() {
 function punctuatesf(element, f, sf, lastID) {
     var i = $('#' + element).attr('id');
     var v = $('#' + element).val();
-    console.log('i: ' + i + ' v: ' + v);
+    //console.log('i: ' + i + ' v: ' + v);
     var i_up = $('#' + element).prevAll('input[type=text]').eq(0).attr('id');
     var v_up = $('#' + element).prevAll('input[type=text]').eq(0).val();
     var fi = ElemToVar(i)[1];
@@ -317,13 +317,14 @@ function punctuatesf(element, f, sf, lastID) {
     var sf_up = ElemToVar(i_up)[2];
     var fID_p = ElemIDtoStdElemID(i);
     var f_p = ElemToVar(fID_p)[1];
-    console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
+    //console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
     if (sf_up == 'i1' || sf_up == 'i2') {
         if (Object.is(lastID, sfi)) {
-                console.log('last and current are the same');
+                //console.log('last and current are the same');
                 window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
+
                 punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
-                console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
+                //console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
         }
         else {
             return;
@@ -339,35 +340,35 @@ function punctuatesf(element, f, sf, lastID) {
             }
             else {
                 if (Object.is(lastID, sf_up)) {
-                    console.log('last and up are the same: pass');
+                    //console.log('last and up are the same: pass');
                     return;
                 }
                 else {
                     window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
                     punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
-                    console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
+                    //console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
                 }
             }
         }
         else {
             if (Object.is(lastID, sfi)) {
-                console.log('last and current are the same');
+                //console.log('last and current are the same');
                 window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
                 punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
-                console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
+                //console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
             }
             if (v_up == '') {
                 return;
             }
             else {
                 if (Object.is(lastID, sf_up)) {
-                    console.log('last and up are the same: pass');
+                    //console.log('last and up are the same: pass');
                     return;
                 }
                 else {
                 window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
                 punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
-                console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
+                //console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
                 }
             }
         }
@@ -379,6 +380,7 @@ function punctuate(element) {
     var divID = "#" + element + " :input[type=text]";
     var i = $(divID);
     var lastID = 'xxx';
+    // console.log('punctuate ' + element);
     // look for last subfield with data in field
     for (var e = i.length-1; e >= 0; e = e-1) {
         element = i[e]['id'];
@@ -387,7 +389,7 @@ function punctuate(element) {
         if (window[f][sf] != '') {
             var newObj = jQuery.extend(true, {}, sf);
             lastID = newObj[0]}
-            console.log('lastID is: ' + lastID);
+            //console.log('lastID is: ' + lastID);
         if (sf == '2' || sf == '9') {lastID == 'xxx'; continue;}
         if (lastID != 'xxx') {break;}
     }
@@ -400,7 +402,7 @@ function punctuate(element) {
         }
         else {
             punctuatesf(element, f, sf, lastID);
-            console.log('punct ' + f + sf + ' 0', lastID);
+            //console.log('punct ' + f + sf + ' 0', lastID);
         }
     }
 }
@@ -412,13 +414,20 @@ function undoPunct() {
             var f = punctuation_undo[i][0];
             var sf = punctuation_undo[i][1];
             var punct = punctuation_undo[i][2];
-            console.log(punctuation_undo[i][0]);
+            console.log('punct undo. f: '+ punctuation_undo[i][0] + ', sf: ' + punctuation_undo[i][1] + ', punct: ' + punctuation_undo[i][2]);
             console.log(window[f][sf]);
             if (window[f][sf] != 'undefined') {
-         	   	window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
-            	console.log(window[f][sf]);
+                var punct_len = punct.length;
+                var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
+                console.log('field_match: ' + field_match);
+                if (punct == field_match) {
+         	   	  window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
+               }
+            	console.log('field after punct undo: ' + window[f][sf]);
         	}
         }
     }
-    punctuation_undo = [];
+    window.punctuation_undo = [];
+    console.log('punctuation_undo has been cleared');
+    console.log(punctuation_undo);
 }
