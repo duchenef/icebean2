@@ -68,6 +68,7 @@ var f020_default = {id: '020', i1: null, i2: null, a: '', q: ''};
 var f040_default = {id: '040', i1: null, i2: null, a: '', b: 'eng', d: '', e: 'rda'};
 var f041_default = {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100_default = {id: '100', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
+var f110_default = {id: '110', i1: 2, i2: '', a: ''};
 var f240_default = {id: '240', i1: 1, i2: 0, a: '', l: ''};
 var f245_default = {id: '245', i1: 1, i2: 0, a: '', b: '', c: ''};
 var f246_default = {id: '246', i1: 3, i2: 3, a: '', b: ''};
@@ -75,6 +76,7 @@ var f250_default = {id: '250', i1: null, i2: null, a: ''};
 var f264_default = {id: '264', i1: '', i2: '', a: '', b: '', c:''};
 var f300_default = {id: '300', i1: null, i2: null, a: '', b: '', c:'', e:''};
 var f380;
+var f490_default = {id: '490', i1: '0', i2: null, a: '', v: ''};
 var f500_default = {id: '500', i1: null, i2: null, a: ''};
 var f504_default = {id: '504', i1: null, i2: null, a: ''};
 var f520_default = {id: '520', i1: '8', i2: null, a: ''};
@@ -85,16 +87,20 @@ var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
 var f650_default = {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
 var f651_default = {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
 var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
+var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
+var f710_default = {id: '710', i1: 2, i2: '', a: ''};
 var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
+                    f110: {a: '', last: '.'},
                     f240: {a:'', l:'.', last:''},
                     f245: {a:'', b:' :', c: ' /', n: '.', p:'.', last:'.'},
                     f250: {a: '', last: '.'},
                     f246: {a:'', b:' :', n: '.', p:'.', last:''},
                     f264: {a:'', b:' :', c:',', last:'.'},
                     f300: {a:'', b:' :', c:' ;', last:'.', e:'+'},
+                    f490: {a: '.', v:' ;', x: ',', last: ''},
                     f500: {a: '', last: '.'},
                     f504: {a: '', last: '.'},
                     f520: {a: '', last: '.'},
@@ -105,7 +111,9 @@ var punctuation = {
                     f630: {a: '', p: '.', last: '.'},
                     f650: {a: '', x: '', last: '.'},
                     f651: {a: '', z: '', last: '.'},
-                    f655: {a: '', last: '.'}
+                    f655: {a: '', last: '.'},
+                    f700: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
+                    f710: {a: '', last: '.'}
 };
 
 var punctuation_undo = [];
@@ -952,6 +960,10 @@ function showInsert() {
     console.log( 'Field insertion (CTRL + INS)' );
         if( $('.insert').is(':visible') ) {
                     $('.insert').hide();
+                    $('#i1_insert').prop('checked', true);
+                    $('#i2_insert').prop('checked', true);
+                    document.getElementById('subfields_insert').value = '';
+                    subfields = '';
                     insert = insert = {id: '', i1: '', i2: ''};
                     document.getElementById('field_insert').value = insert.id;
                     $("#" + focus_previous ).focus();

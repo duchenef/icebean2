@@ -24,8 +24,14 @@ function insertField() {
         }
         $('.insert').hide();
         $('#' + field_id + '_i1').focus();
-        insert = {id: '', i1: '', i2: ''};
-        document.getElementById('field_insert').value = insert.id;
+            insert = {id: '', i1: '', i2: ''};
+            document.getElementById('field_insert').value = insert.id;
+                $('#i1_insert').prop('checked', true);
+                $('#i2_insert').prop('checked', true);
+                document.getElementById('subfields_insert').value = '';
+                subfields = '';
+                insert = insert = {id: '', i1: '', i2: ''};
+            document.getElementById('field_insert').value = insert.id;
 
         // bad solution: updates infobox (late on i1, only works with field count 1)
         $("#main_form input, #main_form select").focusin(function() {
@@ -321,10 +327,17 @@ function punctuatesf(element, f, sf, lastID) {
     if (sf_up == 'i1' || sf_up == 'i2') {
         if (Object.is(lastID, sfi)) {
                 //console.log('last and current are the same');
-                window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
-
-                punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
-                //console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
+                // This is for 490 when a is alone: a is punctuated, last is not
+                if (punctuation[f_p]['last'] == '') {
+                    window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['a'];
+                    punctuation_undo.push([fi, sfi, punctuation[f_p]['a']]);
+                    //console.log('punctuation applied to current using current field\'s value: ' + punctuation[f_p]['a']);
+                }
+                else {
+                    window[fi][sfi] = window[fi][sfi] + punctuation[f_p]['last'];
+                    punctuation_undo.push([fi, sfi, punctuation[f_p]['last']]);
+                    //console.log('punctuation applied to current: ' + punctuation[f_p]['last']);
+                }
         }
         else {
             return;
