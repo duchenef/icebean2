@@ -1,19 +1,15 @@
 <?php
 header('Content-type: text/plain; charset=utf-8');
 require 'File/MARC.php';
-
 // VARIABLES FROM POST
 	$f000 = $_POST[f000];
 	$f007 = $_POST[f007];
 	$f008 = $_POST[f008];
-
 ksort($_POST);
-
 /*function char_encode($string) {
 	$string = str_replace('é', 'âe', $string);
 	return $string;
 }*/
-
 /*$a = 'é---';
 $b = bin2hex ($a);
 $c = hex2bin ('65e2');
@@ -21,7 +17,6 @@ echo $b;
 echo '<BR>';
 echo $c;
 echo '<BR>';*/
-
 /*$value = $_POST[f100][a];
 $a = utf8_encode($value);
 $b = unpack('C*', $a); 
@@ -33,7 +28,6 @@ for( $i = 0; $i <= strlen($value); $i++ ) {
 	echo substr($value, $i, 1);
 	echo "<BR>";
 }
-
 echo "Value of 100a<BR>";
 echo $value;*/
 /*$a = html_entity_decode($value);
@@ -42,8 +36,6 @@ echo ord(substr($a, 0));
 echo "<BR>Encoding of 100a<BR>";
 echo mb_detect_encoding(substr($a, 0));
 echo "<BR>";*/
-
-
 // FUNCTION: CREATE FIELD FROM FIELD VARIABLE
 	function newField($field) {
 		// Create new field
@@ -76,24 +68,20 @@ echo "<BR>";*/
 		}
 		return $new_field;
 	}
-
 // RECORD INIT
 	$marc = new File_MARC_Record();
 	$marc->setLeader($f000);
-
 // CONTROL FIELDS
 	$marc->appendField(
 	    new File_MARC_Control_Field(
 	        '007', $f007
 	    )
 	);
-
 	$marc->appendField(
 	    new File_MARC_Control_Field(
 	        '008', $f008
 	    )
 	);
-
 foreach ($_POST as $key => $value) {
     $tmp = $value[id];
     if ($tmp == '0' || $tmp == 't' || $tmp == '1') {
@@ -118,9 +106,8 @@ foreach ($_POST as $key => $value) {
 	print $marc;
 	echo '<BR>--------------<BR>';
 	print "Write MARC21: ";
-	$fh = fopen('marcy.mrc', 'w');
+	$fh = fopen('./batch/marcy.mrc', 'w');
 	fwrite($fh, $marc->toRaw());
 	fclose($fh);
 	print " ...written.\n\n";
-
 ?>

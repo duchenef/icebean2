@@ -45,9 +45,8 @@ include 'resources/function_google.php';
     if ($GBtitle == '') {
        $gbtitle_status = "Google Books Title: not found";
     }
-    else { $gbtitle_status = "Google Books Title: ".$gbtitle; }
-  $f100a = $arrayGB[2];
-  $author_status = "100a: Google";
+    else { $gbtitle_status = "Google Books Title: ".$GBtitle; }
+  $GBauthor = $arrayGB[2];
   $descrurlgb = $arrayGB[3];
   $otherpathsGB = $arrayGB[5];
 
@@ -73,10 +72,7 @@ include 'resources/function_amazon.php';
   // Utiliser le titre amazon par defaut, sauf si vide
   $AMtitle = $amazon[15];
   $review_status=$amazon[17];
-  if ($f100a == '') {
-    $f100a = $amazon[18];
-    $author_status = "100a: Amazon";
-  }
+  $AMauthor = $amazon[18];
 
 // Requete Goodreads
 // retourne un tableau: [0]=status, [1]=title, [2]=author, [3]=description, [4]=url de la requete, [5]=donnees brutes xml, [6]=chemin image goodreads
@@ -87,10 +83,6 @@ include 'resources/function_goodreads.php';
   $GRauthor = $goodreads[2];
   $f520aGR = $goodreads[3];
     $f520aGR = str_replace("\xE2\x80\x99", "'",  $f520aGR);
-  if ($f100a == '') {
-   $f100a = $GRauthor;
-   $author_status = "100a: Goodreads";
-  }
  
 // appel fonction fast
 // retourne un tableau: [0]=fast format marc mandarin, [1]=fast format lisible, [2]=status, [3]=dewey, [4]= edition ddc
@@ -100,8 +92,8 @@ include 'resources/function_goodreads.php';
 
 // choix de la description à afficher en fonction du choix dans le formulaire
 
-$output_array = array($isbn, $f100a, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $f520aAM, $f264b, $f520aGR);
-//                    0      1       2         3         4       5       6       7            8       9         10
+$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $f520aAM, $f264b, $f520aGR, $GBtitle, $GRauthor, $GBauthor);
+//                    0      1          2         3         4       5       6       7            8       9         10        11        12         13
 //echo json_encode($output_array);
 echo implode('~',$output_array);
 //echo "<SCRIPT LANGUAGE='javascript'> gettemplate('$output_array');</SCRIPT>\n";

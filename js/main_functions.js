@@ -444,3 +444,55 @@ function undoPunct() {
     console.log('punctuation_undo has been cleared');
     console.log(punctuation_undo);
 }
+
+/* Proper nouns */
+function properNouns(f, sf, sf_string) {
+    $.get('resources/proper_nouns.txt', function(data) {
+        var words = sf_string.split(/ |\'/);
+        //console.log(words);
+        //console.log(data);
+        for (var i = 0; i< words.length; i++) {
+            if (data.toLowerCase().indexOf(' '+words[i]+',')>-1) {
+                //console.log(' '+words[i]+',');
+                //console.log(data.toLowerCase().indexOf(' '+words[i]+','));
+                var capWord = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                //console.log(capWord);
+                sf_string = sf_string.replace(words[i], capWord);
+            }
+        }
+    //console.log(sf_string);
+    window[f][sf] = sf_string;
+    document.getElementById(f+'_'+sf).value = sf_string;
+    console.log('Proper nouns check has been applied to '+f+sf);
+    }, 'text');
+}
+
+function parseTitle(full_title) {
+    if (full_title.indexOf(':') != -1) {
+        f245.a = full_title.slice(0, full_title.indexOf(':'));
+        f245.b = full_title.slice(full_title.indexOf(':')+2, full_title.length);
+    }
+    else { f245.a = f245.a;}
+    f245.a = lowerAll(f245.a);
+    f245.a = f245.a.charAt(0).toUpperCase() + f245.a.slice(1);
+    findArticle(f245.a, 'f245_a');
+    properNouns('f245', 'a', f245.a)
+    document.getElementById('f245_a').value = f245.a;
+    if (f245.b != undefined) {
+        f245.b = lowerAll(f245.b);
+        properNouns('f245', 'b', f245.b);
+        $('label[for=f245_b], #f245_b').show();
+        document.getElementById('f245_b').value = f245.b;
+    }
+}
+
+function parseAuthor(author) {
+    var surname = author.slice(author.indexOf(' ')+1, author.length);
+    var firstname = author.slice(0, author.indexOf(' '));
+    f100.a = surname + ', ' + firstname;
+    document.getElementById('f100_a').value = f100.a;
+    f852.i = surname.substring(0, 3).toUpperCase();
+    document.getElementById('f852_i').value = f852.i;
+    f245.c = author;
+    document.getElementById('f245_c').value = f245.c;
+}

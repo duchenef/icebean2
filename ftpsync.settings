@@ -4,7 +4,7 @@
 
 	"default": {
 
-		"host": "dietpifred.noip.me",
+		"host": "fredulonious.ddns.net",
 		"username": "root",  // or null for anonymous loginic
 		"password": "Charl0tte",
 		"path": "/icebean2",
