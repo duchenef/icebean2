@@ -47,7 +47,7 @@ include 'resources/function_google.php';
     }
     else { $gbtitle_status = "Google Books Title: ".$GBtitle; }
   $GBauthor = $arrayGB[2];
-  $descrurlgb = $arrayGB[3];
+  $GBsummary = $arrayGB[3];
   $otherpathsGB = $arrayGB[5];
 
 // Requete Amazon images avec ASIN titre
@@ -60,7 +60,7 @@ include 'resources/function_amazon.php';
   $AmRequest_status = $amazon[2];
   $asin=$amazon[4];
   $language=$amazon[5];
-  $f520aAM=$amazon[6];
+  $AMsummary=$amazon[6];
     $f520aAM = str_replace("\xE2\x80\x99", "'", $f520aAM);
   $formattedprice=$amazon[8];
   $swissprice="p".$amazon[9]."chf";
@@ -81,8 +81,8 @@ include 'resources/function_goodreads.php';
   $GRstatus = $goodreads[0];
   $GRtitle = $goodreads[1];
   $GRauthor = $goodreads[2];
-  $f520aGR = $goodreads[3];
-    $f520aGR = str_replace("\xE2\x80\x99", "'",  $f520aGR);
+  $GRsummary = $goodreads[3];
+    $GRsummary = str_replace("\xE2\x80\x99", "'",  $GRsummary);
  
 // appel fonction fast
 // retourne un tableau: [0]=fast format marc mandarin, [1]=fast format lisible, [2]=status, [3]=dewey, [4]= edition ddc
@@ -92,8 +92,8 @@ include 'resources/function_goodreads.php';
 
 // choix de la description à afficher en fonction du choix dans le formulaire
 
-$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $f520aAM, $f264b, $f520aGR, $GBtitle, $GRauthor, $GBauthor);
-//                    0      1          2         3         4       5       6       7            8       9         10        11        12         13
+$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $AMsummary, $f264b, $GRsummary, $GBtitle, $GRauthor, $GBauthor, $GBsummary);
+//                    0      1          2         3         4       5       6       7            8           9       10          11        12         13         14
 //echo json_encode($output_array);
 echo implode('~',$output_array);
 //echo "<SCRIPT LANGUAGE='javascript'> gettemplate('$output_array');</SCRIPT>\n";

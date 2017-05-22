@@ -55,7 +55,7 @@ body {
 	}
 	
 	#sidebar_bottom {
-		height: 270px;
+		height: 264px;
 		margin-bottom:5px;
 		margin-right:5px;
 
@@ -575,37 +575,48 @@ label[for=field_insert] {
 	width: 50px;
 }
 
-#show_insert {
-	margin-left:6px;
+#options, #images {
+	margin-top:5px;
+	margin-bottom:8px;
 }
 
-#options, #images {
+#actions {
+	margin-top:20px;
 	margin-bottom:10px;
 }
 
-.actions {
- 	margin-top:5px;
- 	margin-left:10px;
-}
+	#row1 {
+		margin-top:5px;
+		margin-left:20px;
+	}
+
+		#show_insert {
+			margin-left:0px;
+		}
+
+	#row2 {
+		margin-top:5px;
+		margin-left:20px;
+	}
+
+	#row3 {
+		margin-top:5px;
+		margin-left:20px;
+	}
 
 .o100 {
-	margin-top:5px;
+	margin-top:2px;
 	margin-left:10px;
 }
 
 .o245 {
-	margin-top:5px;
+	margin-top:2px;
 	margin-left:10px;
 }
 
-.o520_a {
-	margin-top:5px;
+.o520 {
+	margin-top:2px;
 	margin-left:10px;
-}
-
-#t520_a_left {
-	display:inline;
-	margin-left:5px;
 }
 
 #pictures {
@@ -686,6 +697,7 @@ input:checked + .slider:before {
 
 /* tri-state */
 
+/* common */
 .toggle_radio{
   margin:0px;
   padding:0px;
@@ -699,8 +711,8 @@ input:checked + .slider:before {
   -moz-border-radius: 0px;
   border-radius: 0px;
   position: relative;
-  height: 28px;
-  width: 258px;
+  height: 18px;
+  width: 210px;
 }
 .toggle_radio > * {
   margin:0px;
@@ -714,34 +726,33 @@ input:checked + .slider:before {
   /*position: fixed;*/
 }
 .toggle_radio label{
+  font: 96%/1.618 "Source Sans Pro";
   background: #2196F3;
-  /*color: GhostWhite;*/
+  color: GhostWhite;
   z-index: 0;
   display: block;
-  width: 80px;
-  height: 13px;
-  margin: 5px 5px;
+  width: 66px;
+  height: 18px;
+  margin: 2px 2px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
   cursor: pointer;
   z-index: 1;
-  /*background: rgba(0,0,0,.1);*/
   text-align: center;
   margin: 0 2px;
-  /*background: blue;*/ /*make it blue*/
 }
 
-
+/* specific:245; */
 .toggle_option_slider{
   margin:0px;
   padding:0px;
   /*display: none;*/
   /*background: red;*/
-  width: 74px;
-  height: 7px;
+  width: 60px;
+  height: 18px;
   position: absolute;
-  top: 3px;
+  top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 00px;
   border-radius: 0px;
@@ -755,33 +766,32 @@ input:checked + .slider:before {
 #toggle_1_245:checked ~ .toggle_option_slider{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
+  background: rgba(255,255,255,.3);
   left: 5px;
 }
 #toggle_2_245:checked ~ .toggle_option_slider{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
-  left: 89px;
+  background: rgba(255,255,255,.3);
+  left: 75px;
 }
 #toggle_3_245:checked ~ .toggle_option_slider{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
-  left: 173px;
+  background: rgba(255,255,255,.3);
+  left: 145px;
 }
 
-
-
+/* specific:100; */
 .toggle_option_slider_100{
   margin:0px;
   padding:0px;
   /*display: none;*/
   /*background: red;*/
-  width: 74px;
-  height: 7px;
+  width: 60px;
+  height: 18px;
   position: absolute;
-  top: 3px;
+  top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 00px;
   border-radius: 0px;
@@ -795,18 +805,57 @@ input:checked + .slider:before {
 #toggle_1_100:checked ~ .toggle_option_slider_100{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
+  background: rgba(255,255,255,.3);
   left: 5px;
 }
 #toggle_2_100:checked ~ .toggle_option_slider_100{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
-  left: 89px;
+  background: rgba(255,255,255,.3);
+  left: 75px;
 }
 #toggle_3_100:checked ~ .toggle_option_slider_100{
   margin:0px;
   padding:0px;
-  background: GhostWhite;
-  left: 173px;
+  background: rgba(255,255,255,.3);
+  left: 145px;
+}
+
+/* specific:520; */
+.toggle_option_slider_520{
+  margin:0px;
+  padding:0px;
+  /*display: none;*/
+  /*background: red;*/
+  width: 60px;
+  height: 18px;
+  position: absolute;
+  top: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 00px;
+  border-radius: 0px;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+#toggle_1_520:checked ~ .toggle_option_slider_520{
+  margin:0px;
+  padding:0px;
+  background: rgba(255,255,255,.3);
+  left: 5px;
+}
+#toggle_2_520:checked ~ .toggle_option_slider_520{
+  margin:0px;
+  padding:0px;
+  background: rgba(255,255,255,.3);
+  left: 75px;
+}
+#toggle_3_520:checked ~ .toggle_option_slider_520{
+  margin:0px;
+  padding:0px;
+  background: rgba(255,255,255,.3);
+  left: 145px;
 }

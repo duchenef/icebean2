@@ -118,17 +118,17 @@ else {
     if($title=='') {$title="title not found";}
     if($asin=='') {$asin="ASIN not found";}
     if($language=='') {$language="language not found";}
-    if($reviewa=='') {$reviewa="review 1 not found";$review_status="Not found";}
+    if($reviewa=='') {$reviewa="summary not found";$review_status="Not found";}
     if($reviewb=='') {$reviewb="review 2 not found";}
     if($formattedprice=='') {
       $formattedprice="formatted price not found";
-      $swissprice="swiss price could not be calculated";
+      $swissprice="p ??? ch";
     }
     if($publisher=='') {$publisher="publisher not found";}
     if($pages=='') {$pages="number of pages not found";}
     if($heightinches=='') {
       $heightinches="height not found";
-      $heightcm="height in cm could not be calculated";
+      $heightcm="??? cm";
     }
     if($publicationdate=='') {$publicationdate="publication date not found";}
     if($pageurl=='') {$pageurl="Detailed page URL not found";}

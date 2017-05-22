@@ -19,6 +19,10 @@ var full_title_AM = '';
 var full_title_GR = '';
 var full_title_GB = '';
 
+var full_summary_AM = '';
+var full_summary_GR = '';
+var full_sumamry_GB = '';
+
 // Marc fields Variables init and default values
 var f000 = '00000nam  2200000 i 4500';
 var f007 = 'ta';
@@ -66,8 +70,6 @@ var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrie
 var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
 var f504 =  {id: '500', i1: null, i2: null, a: ''};
 var f520 = {id: '520', i1: '8', i2: null, a: ''};
-var f520_gr = '';
-var f520_am = '';
 
 var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
@@ -707,20 +709,20 @@ $("input[name = 'toggle_245']").on('change', function() {
     }
 });
 
-
-$('#t520_a').on('change', function() {
-    if (f520_gr == f520.a) {
-        document.getElementById('f520_a').value = f520_am;
+$("input[name = 'toggle_520']").on('change', function() {
+    if ($("#toggle_1_520").is(":checked")) { 
+        document.getElementById('f520_a').value = full_summary_AM;
         f520.a = document.getElementById('f520_a').value;
     }
-    else {
-        document.getElementById('f520_a').value = f520_gr;
+    if ($("#toggle_2_520").is(":checked")) { 
+        document.getElementById('f520_a').value = full_summary_GR;
+        f520.a = document.getElementById('f520_a').value;
+    }
+    if ($("#toggle_3_520").is(":checked")) { 
+        document.getElementById('f520_a').value = full_summary_GB;
         f520.a = document.getElementById('f520_a').value;
     }
 });
-
-
-
 
 /* ICEBEAN REQUEST */
 // function
@@ -832,30 +834,39 @@ function icebean_submit(){
                     }
                     // f520
                     if (icebean_data[10] != undefined) { 
-                        f520_gr = icebean_data[10];
-                        f520_gr = f520_gr.replace(/(<br \/>)/g," ");
-                        f520_gr = f520_gr.replace(/(<p>)/g," ");
-                        f520_gr = f520_gr.replace(/(<b>)/g," ");
-                        f520_gr = f520_gr.replace(/(<i>)/g," ");
-                        f520_gr = f520_gr.replace(/(<\/p>)/g," ");
-                        f520_gr = f520_gr.replace(/(<\/b>)/g," ");
-                        f520_gr = f520_gr.replace(/(<\/i>)/g," ");
-                        f520_gr = f520_gr.replace(" . . .","...");
-                        //console.log('f520_gr ' + f520_gr);
+                        full_summary_GR = icebean_data[10];
+                        full_summary_GR = full_summary_GR.replace(/(<br \/>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<p>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<b>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<i>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<\/p>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<\/b>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(/(<\/i>)/g," ");
+                        full_summary_GR = full_summary_GR.replace(" . . .","...");
                     }
                     if (icebean_data[8] != undefined) { 
-                        f520_am = icebean_data[8];
-                        f520_am = f520_am.replace(/(<br \/>)/g," ");
-                        f520_am = f520_am.replace(/(<p>)/g," ");
-                        f520_am = f520_am.replace(/(<b>)/g," ");
-                        f520_am = f520_am.replace(/(<i>)/g," ");
-                        f520_am = f520_am.replace(/(<\/p>)/g," ");
-                        f520_am = f520_am.replace(/(<\/b>)/g," ");
-                        f520_am = f520_am.replace(/(<\/i>)/g," ");
-                        f520_am = f520_am.replace(" . . .","...");
-                        //console.log('f520_am ' + f520_am);
+                        full_summary_AM = icebean_data[8];
+                        full_summary_AM = full_summary_AM.replace(/(<br \/>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<p>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<b>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<i>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<\/p>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<\/b>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(/(<\/i>)/g," ");
+                        full_summary_AM = full_summary_AM.replace(" . . .","...");
                     }
-                    document.getElementById('f520_a').value = f520_gr;
+                     if (icebean_data[14] != undefined) { 
+                        full_summary_GB = icebean_data[14];
+                        full_summary_GB = full_summary_GB.replace(/(<br \/>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<p>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<b>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<i>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<\/p>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<\/b>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(/(<\/i>)/g," ");
+                        full_summary_GB = full_summary_GB.replace(" . . .","...");
+                    }
+                    document.getElementById('f520_a').value = full_summary_GR;
                     f520.a = document.getElementById('f520_a').value;
                     // f852
                     f852['9'] = icebean_data[7];

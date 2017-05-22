@@ -6,36 +6,7 @@ require 'File/MARC.php';
 	$f007 = $_POST[f007];
 	$f008 = $_POST[f008];
 ksort($_POST);
-/*function char_encode($string) {
-	$string = str_replace('é', 'âe', $string);
-	return $string;
-}*/
-/*$a = 'é---';
-$b = bin2hex ($a);
-$c = hex2bin ('65e2');
-echo $b;
-echo '<BR>';
-echo $c;
-echo '<BR>';*/
-/*$value = $_POST[f100][a];
-$a = utf8_encode($value);
-$b = unpack('C*', $a); 
-echo $a.'<BR>';
-var_dump($b);
-echo '<BR>';
-echo '<BR>';
-for( $i = 0; $i <= strlen($value); $i++ ) {
-	echo substr($value, $i, 1);
-	echo "<BR>";
-}
-echo "Value of 100a<BR>";
-echo $value;*/
-/*$a = html_entity_decode($value);
-echo "<BR>Ord of 1st char in 100a<BR>";
-echo ord(substr($a, 0));
-echo "<BR>Encoding of 100a<BR>";
-echo mb_detect_encoding(substr($a, 0));
-echo "<BR>";*/
+
 // FUNCTION: CREATE FIELD FROM FIELD VARIABLE
 	function newField($field) {
 		// Create new field
