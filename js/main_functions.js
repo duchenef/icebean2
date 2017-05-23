@@ -496,3 +496,7 @@ function parseAuthor(author) {
     f245.c = author;
     document.getElementById('f245_c').value = f245.c;
 }
+
+function IDGenerator() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+     }

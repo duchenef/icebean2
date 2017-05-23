@@ -11,7 +11,7 @@
 
 <body>
 <div id="header">
-  <div id = 'main_title'>The Icebean 2, v0.972- 20170522</div>
+  <div id = 'main_title'>The Icebean 2, v0.973- 20170523</div>
 </div>
 <div id="main-wrap">
 <div id="content-wrap">
@@ -262,7 +262,7 @@
       <label for="options">options</label>
       <div id = 'options'>
         <div class = 'o100'>
-          <label for="o100">100</label>
+          <label for="o100">author</label>
           <div class="toggle_radio" id = 't100'>
             <input type="radio" checked class="toggle_option" id="toggle_1_100" name="toggle_100">
             <input type="radio" class="toggle_option" id="toggle_2_100" name="toggle_100">
@@ -274,7 +274,7 @@
          </div>
         </div>  
         <div class = 'o245'>
-          <label for="t245">245</label>
+          <label for="t245">title</label>
           <div class="toggle_radio" id = 't245'>
             <input type="radio" checked class="toggle_option" id="toggle_1_245" name="toggle_245">
             <input type="radio" class="toggle_option" id="toggle_2_245" name="toggle_245">
@@ -286,7 +286,7 @@
          </div>
         </div>
         <div class = 'o520'>
-          <label for="o520">520</label>
+          <label for="o520">summary</label>
           <div class="toggle_radio" id = 't520'>
             <input type="radio" class="toggle_option" id="toggle_1_520" name="toggle_520">
             <input type="radio" checked class="toggle_option" id="toggle_2_520" name="toggle_520">
@@ -305,15 +305,18 @@
             <input type="button" id = 'isbn_submit' class="isbn_submit" value="call icebean">  
           </div>
           <div id='row2'>
-            <input type="button" id = 'tomarc' class="isbn_submit" value="write marc">
+            <input type="button" id = 'tomarc' class="isbn_submit" value="create marc">
             <a href="./batch/marcy.mrc"><input type="button" id = 'downloadmarc' class="isbn_submit" value="download"></a>
           </div>
           <div id='row3'>
-            <input type="button" id = 'tobatch' class="batch_submit" value="add to batch">
+            <input type="button" id = 'read' class="batch_submit" value="read batch">
+            <input type="button" id = 'tobatch' class="batch_submit" value="add">
             <input type="button" id = 'remove' class="batch_submit" value="remove">
             <a href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
           </div>
-          </div>
+          <div id='row4'>
+            <span id ='console_topic'></span>
+            <span id ='console_data'></span>
         </div>
 
       <label for="images">images</label>

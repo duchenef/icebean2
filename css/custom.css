@@ -575,13 +575,13 @@ label[for=field_insert] {
 	width: 50px;
 }
 
-#options, #images {
+#options, {
 	margin-top:5px;
 	margin-bottom:8px;
 }
 
 #actions {
-	margin-top:20px;
+	margin-top:10px;
 	margin-bottom:10px;
 }
 
@@ -604,6 +604,17 @@ label[for=field_insert] {
 		margin-left:20px;
 	}
 
+	#row4 {
+		margin-top:5px;
+		margin-left:20px;
+		margin-bottom:10px;
+	}
+
+		#console_data {
+			margin-top:5px;
+			font-size: 10px;
+		}
+
 .o100 {
 	margin-top:2px;
 	margin-left:10px;
@@ -618,6 +629,12 @@ label[for=field_insert] {
 	margin-top:2px;
 	margin-left:10px;
 }
+
+#images, {
+	margin-top:10px;
+	margin-bottom:8px;
+}
+
 
 #pictures {
 	margin-top:5px;

@@ -68,6 +68,8 @@ foreach ($_POST as $key => $value) {
 // OUTPUT
 	//echo '<BR>--------------<BR>';
 	echo 'Marc output: ';
+	//echo '<BR>--------------<BR>';
+	//echo $f020[a];
 	echo '<BR>--------------<BR>';
 	//$exploded_marc = explode("\n", $marc);
 	//	foreach($exploded_marc as $line) {

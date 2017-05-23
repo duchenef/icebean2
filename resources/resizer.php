@@ -23,9 +23,13 @@ die("INVALID URL");
 else
 {
 $imagepath = urldecode($_GET["url"]);
-   $size = getimagesize($imagepath);
-   if ($size[0] < 2) {
-   $imagepath = "no_image.jpg";}
+    $size = getimagesize($imagepath);
+    if ($size[0] < 2) {
+   		$imagepath = "no_image.jpg";
+	}
+	if (substr($imagepath, -3) == 'png') {
+   		$imagepath = "no_image.jpg";
+	}
 }
 
 // calcul des nouvelles dimensions;
@@ -35,7 +39,6 @@ $r = $height / $nh;
 $nw = $width / $r;
 
 // resample de l'image;
-
 $image_p = imagecreatetruecolor($nw, $nh);
 $image=imagecreatefromjpeg($imagepath);
 imagecopyresampled($image_p, $image, 0, 0, 0, 0, $nw, $nh, $width, $height);
