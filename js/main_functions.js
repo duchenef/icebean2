@@ -165,9 +165,9 @@ function addInd(inum, field, val, counter) {
     var id = 'f' + field + '_' + counter + '_' + inum;
     //var cl = 'g' + field + '_' + inum;
     var cl = 'generic' + '_' + inum;
-    var i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' placeholder='" + inum + "' value='" + val + "' maxlength='1' pattern='[0-9]{1}'>\n";
+    var i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' placeholder='" + inum + "' value='" + val + "' maxlength='1' pattern='[0-9 ]{1}'>\n";
     if (val == null) {
-        i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' disabled='disabled' maxlength='1' pattern='[0-9]{1}'></label>\n";
+        i = "<label for='" + id + "'>" + inum + "</label>\n<input type='text' class='" + cl + "' id='" + id + "' disabled='disabled' maxlength='1' pattern='[0-9 ]{1}'></label>\n";
     }
     return i;
 }

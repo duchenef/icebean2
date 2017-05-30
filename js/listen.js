@@ -23,10 +23,6 @@ var full_summary_AM = '';
 var full_summary_GR = '';
 var full_sumamry_GB = '';
 
-var status_console_topic = '';
-var status_console_data = '';
-
-
 // Marc fields Variables init and default values
 var f000 = '00000nam  2200000 i 4500';
 var f007 = 'ta';
@@ -164,6 +160,10 @@ function eraseCookie(name) {
 }
 
 user_id = readCookie('name');
+f040.a = user_id;
+document.getElementById('f040_a').value = f040.a;
+document.getElementById("rec_link").href = "./batch/marcy"+user_id+".mrc";
+document.getElementById("bat_link").href = "./batch/batch"+user_id+".mrc";
 
 // Form actions: f008
 /* capture the change of value in each field and adjust field 008 value with it */
@@ -434,24 +434,15 @@ $('#f020_a').on('blur', function () {
         f020.a = $(this).val();
         console.log('020#a: ' + f020.a);
         if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a) && f020.a != '0000000000') {
-            status_console_topic = 'icebean: ';
-            status_console_data = 'calling with '+f020.a;
-            $('#console_topic').html(status_console_topic);
-            $('#console_data').html(status_console_data);
+            $('#footer').html('the icebean has been triggered');
             console.log('calling the icebean');
             icebean_submit(); 
         }
-        else if (f020.a = '0000000000') {
-            status_console_topic = 'icebean: ';
-            status_console_data = 'ready to remove blank records';
-            $('#console_topic').html(status_console_topic);
-            $('#console_data').html(status_console_data);
+        else if (f020.a == '0000000000') {
+            $('#footer').html('ISBN set to remove blank records (<= batch)');
         }
         else {
-            status_console_topic = 'icebean: ';
-            status_console_data = 'nothing to submit';
-            $('#console_topic').html(status_console_topic);
-            $('#console_data').html(status_console_data);
+            $('#footer').html('the icebean has not been triggered: nothing to submit');
         }
     });
 
@@ -964,24 +955,15 @@ function parseFast(fast_data) {
 $(document).ready(function() {
             $("#isbn_submit").click(function(event){
                 if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a) && f020.a != '0000000000') {
-                    status_console_topic = 'icebean: ';
-                    status_console_data = 'calling with '+f020.a;
-                    $('#console_topic').html(status_console_topic);
-                    $('#console_data').html(status_console_data);
+                    $('#footer').html('the icebean has been triggered: '+f020.a);
                     console.log('calling the icebean');
                     icebean_submit();
                 }
-                else if (f020.a = '0000000000') {
-                    status_console_topic = 'icebean: ';
-                    status_console_data = 'ready to remove blank records';
-                    $('#console_topic').html(status_console_topic);
-                    $('#console_data').html(status_console_data);
+                else if (f020.a == '0000000000') {
+                    $('#footer').html('ISBN set to remove blank records (<= batch)');
                 }
                 else {
-                    status_console_topic = 'icebean: ';
-                    status_console_data = 'nothing to submit';
-                    $('#console_topic').html(status_console_topic);
-                    $('#console_data').html(status_console_data);
+                    $('#footer').html('the icebean has not been triggered: nothing to submit');
                 }
             });
          });
@@ -1165,6 +1147,18 @@ $(document).ready(function() {
     });
 });
 
+/* RESET using either reset button or CTRL+R */
+$(document).ready(function() { 
+    $("#reset").click(function(event){
+        location.reload();
+    }); 
+    $(document).keydown(function(e){
+        if ( e.shiftKey && ( e.which === 82 ) ) {
+            location.reload();
+        }
+    });
+});
+
 /* SUBMIT TO MARC */
 /* Actual submission */
 $(document).ready(function() {
@@ -1177,10 +1171,7 @@ $(document).ready(function() {
                   function(data) {
                      var read_data = data;
                      $('#ib').html(read_data);
-                     status_console_topic = 'batch read: ';
-                     status_console_data = 'see infobox';
-                     $('#console_topic').html(status_console_topic);
-                     $('#console_data').html(status_console_data);
+                     $('#footer').html('file inspector has been launched');
                   }
                );      
             });
@@ -1203,32 +1194,27 @@ $(document).ready(function() {
                             post_to_marc2[varName] = window[varName];
                         }
                     }
+                    post_to_marc2.usr = {id: user_id};
+                    document.getElementById("rec_link").href = "./batch/marcy"+user_id+".mrc";
+                    document.getElementById("bat_link").href = "./batch/batch"+user_id+".mrc";
+                    //console.log(post_to_marc2);
                     console.log('punctuation has been applied');
                 // actual post
                 if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a)) {
-                    status_console_topic = 'marc: ';
-                    status_console_data = 'writing current: '+f020.a;
-                    $('#console_topic').html(status_console_topic);
-                    $('#console_data').html(status_console_data);
+                    $('#footer').html('marc record has been created and saved (isbn: '+f020.a+')');
                     console.log('writing marc');
                     $.post( 
-                      "marc.php",
-                      post_to_marc2,
-                      function(data) {
-                     var marc_data = data.split('~');
-                     $('#ib').html(marc_data);
-                     status_console_topic = 'active record: ';
-                     status_console_data = f020.a + " " + f245.a + " " + f245.b + " " + f245.c;
-                     $('#console_topic').html(status_console_topic);
-                     $('#console_data').html(status_console_data);
+                        "marc_record.php",
+                        post_to_marc2,
+                        function(data) {
+                        var marc_data = data.split('~');
+                        $('#ib').html(marc_data);
+                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );    
                 }
                 else {
-                    status_console_topic = 'marc: ';
-                    status_console_data = 'no isbn for marc writing';
-                    $('#console_topic').html(status_console_topic);
-                    $('#console_data').html(status_console_data);
+                    $('#footer').html('isbn not set, marc record was not created');
                 }
             });
             /* SUBMIT TO BATCH */
@@ -1236,14 +1222,11 @@ $(document).ready(function() {
                 console.log('click: to batch');
                 $.post( 
                   "marc_batch.php",
-                  { isbn: f020.a },
+                  { isbn: f020.a, user_id: user_id},
                   function(data) {
                      var marc_batch = data;
                      $('#ib').html(marc_batch);
-                     status_console_topic = 'requesting addition of: ';
-                     status_console_data = f020.a + " " + f245.a + " " + f245.b + " " + f245.c;
-                     $('#console_topic').html(status_console_topic);
-                     $('#console_data').html(status_console_data);
+                     $('#footer').html('adding record to batch: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );        
             });
@@ -1252,17 +1235,30 @@ $(document).ready(function() {
                 console.log('click: to batch');
                 $.post( 
                   "marc_batch_remove.php",
-                  { isbn: f020.a },
+                  { isbn: f020.a, user_id: user_id },
                   function(data) {
                      var remove_data = data;
                      $('#ib').html(remove_data);
-                     status_console_topic = 'requesting removal of: ';
-                     status_console_data = f020.a + " " + f245.a + " " + f245.b + " " + f245.c;
-                     $('#console_topic').html(status_console_topic);
-                     $('#console_data').html(status_console_data);
+                     $('#footer').html('removing record from batch: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );    
-            });    
+            }); 
+            /* CLEAR BATCH */
+            $("#clearbatch").click(function(event){
+                console.log('click: clear batch');
+                if (window.confirm("Are you sure?")) {
+                    $.post( 
+                        "marc_batch_clear.php",
+                        { isbn: f020.a, user_id: user_id },
+                        function(data) {
+                         var clear_data = data;
+                         $('#ib').html(clear_data);
+                         $('#footer').html('clearing batch');
+                        }
+                    );    
+                }
+                
+            });      
          });
 
 

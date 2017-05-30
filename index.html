@@ -4,14 +4,19 @@
   <title>Icebean 2</title>
   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="js/main_functions.js"></script>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/assignFASTGadget.js" type="text/javascript"></script>
+  <script src="js/assignFASTExample.js" type="text/javascript"></script>
+  <script src="js/assignFASTComplete.js" type="text/javascript"></script>
 </head>
 
-<body>
+<body onload="setUpPage()">
 <div id="header">
-  <div id = 'main_title'>The Icebean 2, v0.973- 20170523</div>
+  <div id = 'main_title'>The Icebean 2, v0.98- 20170530</div>
 </div>
 <div id="main-wrap">
 <div id="content-wrap">
@@ -252,7 +257,10 @@
       <input type='text' id='subfields_insert' placeholder='subfields' maxlength="8">
     <input type="button" id = 'submit_insert' class="add_buttons" value="submit">
   </div>
-
+  <div class="ui-widget">FAST
+      <span id="exampleXtra"></span>
+      <input id="fastLookup" type="text" size="60" value=""></input>
+  </div>
 </form>
 </div>
 
@@ -302,23 +310,24 @@
         <label for="actions">actions</label>
           <div id='row1'>
             <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
-            <input type="button" id = 'isbn_submit' class="isbn_submit" value="call icebean">  
+            <input type="button" id = 'isbn_submit' class="isbn_submit" value="icebean">
+            <input type="button" id = 'reset' value="reset">
           </div>
-          <div id='row2'>
-            <input type="button" id = 'tomarc' class="isbn_submit" value="create marc">
-            <a href="./batch/marcy.mrc"><input type="button" id = 'downloadmarc' class="isbn_submit" value="download"></a>
+          <div id='row2'> 
+            <input type="button" id = 'tomarc' class="isbn_submit" value="save record">
+            <a id = 'rec_link' href="./batch/marcy.mrc"><input type="button" id = 'downloadmarc' class="isbn_submit" value="download"></a>
+            
           </div>
           <div id='row3'>
-            <input type="button" id = 'read' class="batch_submit" value="read batch">
-            <input type="button" id = 'tobatch' class="batch_submit" value="add">
-            <input type="button" id = 'remove' class="batch_submit" value="remove">
-            <a href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
+            <input type="button" id = 'tobatch' class="batch_submit" value="copy to batch">
+            <input type="button" id = 'remove' class="batch_submit" value="remove from batch">
+            <a id = 'bat_link' href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
           </div>
           <div id='row4'>
-            <span id ='console_topic'></span>
-            <span id ='console_data'></span>
+            <input type="button" id = 'read' class="batch_submit" value="inspect files">
+            <input type="button" id = 'clearbatch' class="batch_submit" value="clear batch">
+          </div>
         </div>
-
       <label for="images">images</label>
       <div id = 'images'>
         <div id='pictures'>
@@ -327,8 +336,6 @@
           <div id=pic3></div>
         </div>
       </div>
-
-
     </div>
   </div>
   <div id="sidebar_bottom">
@@ -337,12 +344,15 @@
     </div>
   </div>
 </div>
+</div>
 
 <div id="footer">Footer</div>
 
 <script src="js/func.js"></script>
 <script src="js/infobox.js"></script>
 <script src="js/listen.js"></script>
+
+
 </body>
 </html>
 
