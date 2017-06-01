@@ -1,6 +1,6 @@
 /* TFunction infobox update */
 $(function() {
-    $("#main_form input, #main_form select").focusin(function() {
+    $("#main_form input, #main_form select, #f520_a").focusin(function() {
     	var ib = document.getElementById('ib');
         id = this.id;
         $(".infobox").show();
@@ -260,6 +260,45 @@ var infobox_DB =    {
     f246_1_b: 'field 246 - Varying Form of Title (R)<BR>\
                         b - Remainder of title (NR)<BR>\
                         Data includes parallel titles, titles subsequent to the first (in items lacking a collective title), and other title information.',
+    f250_1_a: 'field 250 - 250 - Edition Statement (R)<BR>\
+                        subfield a - Edition Statement<BR>\
+                        Edition statement that usually consists of numeric and alphabetic characters and accompanying words and/or abbreviations.',
+    f264_1_i1: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 1 -  Sequence of statements<BR>\
+                        # - Not applicable/No information provided/Earliest (Used when a resource is first cataloged.)<BR>\
+                        2 - Intervening (Used when the place or publisher changes)<BR>\
+                        3 - Current/Latest (Same as 2, but use for the current or latest statement only',
+    f264_1_i2: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 2 -  Function of entity<BR>\
+                        0 - Production<BR>\
+                        1 - Publication<BR>\
+                        2 - Distribution<BR>\
+                        3 - Manufacture<BR>\
+                        4 - Copyright notice date',
+    f264_1_a: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield a - Place of production, publication, distribution, manufacture',
+    f264_1_b: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield b - Name of producer, publisher, distributor, manufacturer',
+    f264_1_c: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield c - Date of production, publication, distribution, manufacture, or copyright notice',
+    f264_2_i1: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 1 -  Sequence of statements<BR>\
+                        # - Not applicable/No information provided/Earliest (Used when a resource is first cataloged.)<BR>\
+                        2 - Intervening (Used when the place or publisher changes)<BR>\
+                        3 - Current/Latest (Same as 2, but use for the current or latest statement only',
+    f264_2_i2: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 2 -  Function of entity<BR>\
+                        0 - Production<BR>\
+                        1 - Publication<BR>\
+                        2 - Distribution<BR>\
+                        3 - Manufacture<BR>\
+                        4 - Copyright notice date',
+    f264_2_a: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield a - Place of production, publication, distribution, manufacture',
+    f264_2_b: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield b - Name of producer, publisher, distributor, manufacturer',
+    f264_2_c: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield c - Date of production, publication, distribution, manufacture, or copyright notice',
     f300_a: 'field 300 - Physical Description (R)<BR>\
                         subfield a - Extent (R)<BR>\
                         Number of physical pages, volumes etc. of each type of unit.',
@@ -272,13 +311,78 @@ var infobox_DB =    {
     f300_e: 'field 300 - Physical Description (R)<BR>\
                         subfield e - Accompanying material (NR)<BR>\
                         May include a parenthetical physical description of the accompanying material.',
+    f490_1_i1: 'field 490 - Series Statement (R)<BR>\
+                        Indicator 1 - Series tracing policy<BR>\
+                        0 - Series not traced<BR>\
+                        1 - Series traced',
+    f490_1_a: 'field 490 - Series Statement (R)<BR>\
+                        Subfield a - Series statement<BR>\
+                        Series title that may also contain a statement of responsibility or other title information.',
+    f490_1_v: 'field 490 - Series Statement (R)<BR>\
+                        Subfield v - Volume/sequential designation<BR>\
+                        Volume number or other sequential designation used in a series statement.',
+    f490_1_x: 'field 490 - Series Statement (R)<BR>\
+                        Subfield x - International Standard Serial Number<BR>\
+                        International Standard Serial Number (ISSN) for a series title given in a series statement.',
+    f500_1_a: 'field 500 - General Note (R)<BR>\
+                        Subfield a - General note<BR>\
+                        Note that provides general information for which a specialized note field (i.e., a specific 5XX field) has not been defined.',
+    f500_2_a: 'field 500 - General Note (R)<BR>\
+                        Subfield a - General note<BR>\
+                        Note that provides general information for which a specialized note field (i.e., a specific 5XX field) has not been defined.',
+    f505_1_i1: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Indicator 1 - Display constant controller<BR>\
+                        Controls the generation of an introductory phrase.<BR>\
+                        0 - Contents<BR>\
+                        1 - Incomplete contents<BR>\
+                        2 - Partial contents<BR>\
+                        8 - No display constant generated',
+    f505_1_i2: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Indicator 2 - Level of content designation<BR>\
+                        Level of content designation that has been provided for the data recorded in the field.<BR>\
+                        _ - Basic<BR>\
+                        0 - Enhanced<BR>',
+    f505_1_a: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Subfield a - Formatted contents note<BR>\
+                        Formatted contents note, whether complete, incomplete, or partial when the second indicator is basic.<BR>',
+    f520_i1: "field 520 - Summary, Etc. (R)<BR>\
+                        indicator 1 - Display constant controller<BR>\
+                        Controls the generation of a display constant preceding the information.<BR>\
+                        0 - Subject <BR>\
+                        1 - Review <BR>\
+                        2 - Scope and content <BR>\
+                        3 - Abstract <BR>\
+                        4 - Content advice <BR>\
+                        8 - No display constant generated (default)<BR>\
+                        _ - Summary<BR>", 
+    f520_a: 'field 520 - Summary, Etc. (R)<BR>\
+                        sufbield a - Summary, etc<BR>\
+                        Text of the summary, abstract, review, etc.<BR>\
+                        Note: field 520 is normally repeatable, but this is not currently supported by the Icebean 2',
+    f521_1_i1: "field 521 - Target Audience Note (R)<BR>\
+                        Indicator 1 - Display constant controller<BR>Controls the generation of a display constant preceding the note.<BR>_ - Audience<BR>0 - Reading grade level<BR>1 - Interest age level<BR>2 - Interest grade level<BR>3 - Special audience characteristics<BR>    8 - No display constant generated (default)<BR>",
+    f521_1_a: "field 521 - Target Audience Note (R)<BR>\
+                        subfield a - Target audience note (R) <BR>\
+                        Text of the note.",
+    f586_1_i1: "field 586 - Awards Note (R)<BR>\
+                        Indicator 1 - Display constant controller<BR>\
+                        Controls the generation of an introductory phrase.<BR>\
+                        _ - Awards<BR>\
+                        8 - No display constant generated (default)<BR>",
+    f586_1_a: "field 586 - Awards Note (R)<BR>\
+                        subfield a - Display constant controller<BR>\
+                        Entire text of the note<BR>\
+                        Ex.: 586 __ $aNational Book Award, 1981<BR>",
     f852_i1: 'field 852 indicator 1',
     f852_i2: 'field 852 indicator 2',
-    f852_a: 'field 852 subfield a.<BR>\
-                        Dynamic form: prefilled using value of 040a (1st four char.)',
-    f852_h: 'field 852 subfield h',
-    f852_i: 'field 852 subfield i',
-    help: ' Fill in the blanks! Two important fields are 020#a, as the Icebean cannot look for data on the Internet if no valid ISBN is specified, and 040#a (or d), as the cataloger\'s code will be used to create and retrieve record and batch files\
+    f852_a: 'field 852 subfield a - Location (NR) <BR>\
+                        Dynamic form: pre-filled using value of 040a (1st four char.)',
+    f852_h: 'field 852 subfield h Classification part (NR) (Dewey) ',
+    f852_i: 'field 852 subfield i Item part (R)',
+    f852_p: 'field 852 subfield p Piece designation (NR) (Barcode)',
+    f852_9: 'field 852 subfield 9 Price',
+    help: ' Fill in the blanks! Two important fields are 020#a, as the Icebean cannot look for data on the Internet if no valid ISBN is specified,\
+                        and 040#a (or d), as the cataloger\'s code will be used to create and retrieve record and batch files<BR>\
                         Available shortcuts : <BR>\
                         CTRL + ENTER: submit the current ISBN to the Icebean<BR>\
                         CTRL + INS: insert a new field<BR>\

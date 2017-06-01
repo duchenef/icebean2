@@ -23,8 +23,17 @@ function insertField() {
             addField(insert, counter);
         }
         $('.insert').hide();
-        $('#' + field_id + '_i1').focus();
-            insert = {id: '', i1: '', i2: ''};
+        // FOCUS on a or c (for 264c)
+        if ($('#' + field_id + '_c').length > 0) {
+            $('#' + field_id + '_c').focus();
+            ib.innerHTML = infobox_DB[field_id + '_c'];
+        }
+        if ($('#' + field_id + '_a').length > 0) {
+            $('#' + field_id + '_a').focus();
+            ib.innerHTML = infobox_DB[field_id + '_a'];
+        }
+
+        insert = {id: '', i1: '', i2: ''};
             document.getElementById('field_insert').value = insert.id;
                 $('#i1_insert').prop('checked', true);
                 $('#i2_insert').prop('checked', true);

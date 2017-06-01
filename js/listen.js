@@ -89,7 +89,9 @@ var f380;
 var f490_default = {id: '490', i1: '0', i2: null, a: '', v: ''};
 var f500_default = {id: '500', i1: null, i2: null, a: ''};
 var f504_default = {id: '504', i1: null, i2: null, a: ''};
+var f505_default = {id: '505', i1: '8', i2: '', a: ''};
 var f520_default = {id: '520', i1: '8', i2: null, a: ''};
+var f521_default = {id: '521', i1: '8', i2: null, a: ''};
 var f586_default = {id: '586', i1: '8', i2: null, a: ''};
 var f600_default = {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
 var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -113,7 +115,9 @@ var punctuation = {
                     f490: {a: '.', v:' ;', x: ',', last: ''},
                     f500: {a: '', last: '.'},
                     f504: {a: '', last: '.'},
+                    f505: {a: '', last: '.'},
                     f520: {a: '', last: '.'},
+                    f521: {a: '', last: '.'},
                     f586: {a: '', last: ''},
                     f600: {a: '', b: ',', c: ',', d: ',', q: '', last: '.'},
                     f610: {a: '', b: '.', last: '.'},
@@ -1077,19 +1081,19 @@ $(function () {
 function showInsert() {
     console.log( 'Field insertion (CTRL + INS)' );
         if( $('.insert').is(':visible') ) {
-                    $('.insert').hide();
-                    $('#i1_insert').prop('checked', true);
-                    $('#i2_insert').prop('checked', true);
-                    document.getElementById('subfields_insert').value = '';
-                    subfields = '';
-                    insert = insert = {id: '', i1: '', i2: ''};
-                    document.getElementById('field_insert').value = insert.id;
-                    $("#" + focus_previous ).focus();
-                    }
-                else {
-                    $('.insert').show();
-                    $('#field_insert').focus(); 
-                }     
+            $('.insert').hide();
+            $('#i1_insert').prop('checked', true);
+            $('#i2_insert').prop('checked', true);
+            document.getElementById('subfields_insert').value = '';
+            subfields = '';
+            insert = insert = {id: '', i1: '', i2: ''};
+            document.getElementById('field_insert').value = insert.id;
+            $("#" + focus_previous ).focus();
+        }
+        else {
+            $('.insert').show();
+            $('#field_insert').focus(); 
+        }     
 }
 
 function showFast() {
