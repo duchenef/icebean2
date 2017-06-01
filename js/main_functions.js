@@ -500,3 +500,107 @@ function parseAuthor(author) {
 function IDGenerator() {
         return '_' + Math.random().toString(36).substr(2, 9);
      }
+
+// MARC and FILE MANAGEMENT FUNCTIONS
+function toMarc() {
+    console.log('click: to marc');
+                /* TO DO: integrate punctuation in export to marc loop */
+                undoPunct();
+                //console.log('adding punctuation to f100, f245, f246');
+                // post all the variables that match the following pattern (fxxx or fxxx_n) 
+                    var pattern = /^f[0-9]{3}(_[0-9])?$/;
+                    var post_to_marc2 = {};
+                    for (var varName in window) {
+                        if ('undefined' === typeof window[varName]) { continue; }
+                        if (pattern.test(varName)) {
+                            //console.log(varName);
+                            //console.log(window[varName].punct);
+                            if (window[varName].punct != 'no') {
+                                punctuate(varName);
+                            }
+                            post_to_marc2[varName] = window[varName];
+                        }
+                    }
+                    post_to_marc2.usr = {id: user_id};
+                    document.getElementById("rec_link").href = "./batch/marcy"+user_id+".mrc";
+                    document.getElementById("bat_link").href = "./batch/batch"+user_id+".mrc";
+                    //console.log(post_to_marc2);
+                    console.log('punctuation has been applied');
+                // actual post
+                if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a)) {
+                    $('#footer').html('marc record has been created and saved (isbn: '+f020.a+')');
+                    console.log('writing marc');
+                    $.post( 
+                        "marc_record.php",
+                        post_to_marc2,
+                        function(data) {
+                        var marc_data = data.split('~');
+                        $('#ib').html(marc_data);
+                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
+                  }
+               );    
+                }
+                else {
+                    $('#footer').html('isbn not set, marc record was not created');
+                }
+}
+
+function readMarc() {
+     console.log('click: read files');
+                $.post( 
+                  "marc_batch_read.php",
+                  { user_id: user_id },
+                  function(data) {
+                     var read_data = data;
+                     $('#ib').html(read_data);
+                     $('#footer').html('file inspector has been launched');
+                  }
+               );  
+}
+
+function toBatch() {
+    console.log('click: to batch');
+                $.post( 
+                  "marc_batch.php",
+                  { isbn: f020.a, user_id: user_id},
+                  function(data) {
+                     var marc_batch = data;
+                     $('#ib').html(marc_batch);
+                     $('#footer').html('the following record was added the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
+                  }
+               ); 
+}
+
+function removeFromBatch() {
+    console.log('click: remove from batch');
+                $.post( 
+                  "marc_batch_remove.php",
+                  { isbn: f020.a, user_id: user_id },
+                  function(data) {
+                     var remove_data = data;
+                     $('#ib').html(remove_data);
+                     $('#footer').html('the following record was removed from the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
+                  }
+               );    
+}
+
+function clearBatch() {
+    console.log('click: clear batch');
+                if (window.confirm("Are you sure?")) {
+                    $.post( 
+                        "marc_batch_clear.php",
+                        { isbn: f020.a, user_id: user_id },
+                        function(data) {
+                         var clear_data = data;
+                         $('#ib').html(clear_data);
+                         $('#footer').html('batch has been cleared');
+                        }
+                    );    
+                }
+}
+
+function helpIB() {
+    console.log('click: help')
+    ib.innerHTML = infobox_DB['help'];
+    $('#footer').html('Displaying help in the infobox');
+}

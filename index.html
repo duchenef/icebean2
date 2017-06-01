@@ -16,7 +16,10 @@
 
 <body onload="setUpPage()">
 <div id="header">
-  <div id = 'main_title'>The Icebean 2, v0.98- 20170530</div>
+  <div id = 'main_title'>The Icebean 2, v0.99- 20170601</div>
+  <div id = 'help'>
+    <input type="button" id = 'help' class="help_button" value="help">
+  </div>
 </div>
 <div id="main-wrap">
 <div id="content-wrap">
@@ -259,7 +262,7 @@
   </div>
   <div class="ui-widget">FAST
       <span id="exampleXtra"></span>
-      <input id="fastLookup" type="text" size="60" value=""></input>
+      <input id="fastLookup" type="text" size="60"></input>
   </div>
 </form>
 </div>
@@ -310,8 +313,9 @@
         <label for="actions">actions</label>
           <div id='row1'>
             <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
-            <input type="button" id = 'isbn_submit' class="isbn_submit" value="icebean">
+            <input type="button" id = 'showFast' class="insert_show_insert_submit" value="insert fast">
             <input type="button" id = 'reset' value="reset">
+            <input type="button" id = 'isbn_submit' class="isbn_submit" value="icebean">
           </div>
           <div id='row2'> 
             <input type="button" id = 'tomarc' class="isbn_submit" value="save record">
@@ -319,8 +323,8 @@
             
           </div>
           <div id='row3'>
-            <input type="button" id = 'tobatch' class="batch_submit" value="copy to batch">
-            <input type="button" id = 'remove' class="batch_submit" value="remove from batch">
+            <input type="button" id = 'tobatch' class="batch_submit" value="save to batch">
+            <input type="button" id = 'remove' class="batch_submit" value="delete from batch">
             <a id = 'bat_link' href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
           </div>
           <div id='row4'>
@@ -346,7 +350,7 @@
 </div>
 </div>
 
-<div id="footer">Footer</div>
+<div id="footer">&nbsp</div>
 
 <script src="js/func.js"></script>
 <script src="js/infobox.js"></script>

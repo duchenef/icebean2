@@ -433,17 +433,6 @@ $('#f008_language').on('change', function () {
 $('#f020_a').on('blur', function () {
         f020.a = $(this).val();
         console.log('020#a: ' + f020.a);
-        if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a) && f020.a != '0000000000') {
-            $('#footer').html('the icebean has been triggered');
-            console.log('calling the icebean');
-            icebean_submit(); 
-        }
-        else if (f020.a == '0000000000') {
-            $('#footer').html('ISBN set to remove blank records (<= batch)');
-        }
-        else {
-            $('#footer').html('the icebean has not been triggered: nothing to submit');
-        }
     });
 
 $('#f020_q').on('blur', function () {
@@ -966,11 +955,33 @@ $(document).ready(function() {
                     $('#footer').html('the icebean has not been triggered: nothing to submit');
                 }
             });
+            $("#isbn_submit").hover(
+                function(){document.getElementById('footer').innerHTML='click to submit the current ISBN to the Icebean (shortcut: CTRL+ENTER)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );
          });
 
+// Icebean using CTRL+ENTER
+$(document).keydown(function(e){
+    if ( e.ctrlKey &&( e.which === 13 ) ) {
+        console.log('youpi');
+        if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a) && f020.a != '0000000000') {
+            $('#footer').html('the icebean has been triggered: '+f020.a);
+            console.log('calling the icebean');
+            icebean_submit();
+        }
+        else if (f020.a == '0000000000') {
+            $('#footer').html('ISBN set to remove blank records (<= batch)');
+        }
+        else {
+            $('#footer').html('the icebean has not been triggered: nothing to submit');
+        }
+    }
+});
+
 /* SHOW HIDE FIELDS */
-/* 040d */
 $(document).ready(function() { 
+            /* 040d */
             $("#add_f040_d").click(function(event){
                 console.log('click: add_f040_d');
                 if( $('#f040_d').is(':visible') ) {
@@ -980,11 +991,8 @@ $(document).ready(function() {
                 else {
                     $('label[for=f040_d], #f040_d').show().focus();
                     }                  
-            });       
-         });
-
-/* 100q */
-$(document).ready(function() { 
+            });  
+            /* 100q */
             $("#add_f100_q").click(function(event){
                 console.log('click: add_f100_q');
                 if( $('#f100_q').is(':visible') ) {
@@ -994,11 +1002,8 @@ $(document).ready(function() {
                 else {
                     $('label[for=f100_q], #f100_q').show().focus();
                     }                  
-            });      
-         });
-
-/* 100d */
-$(document).ready(function() { 
+            });     
+            /* 100d */
             $("#add_f100_d").click(function(event){
                 console.log('click: add_f100_d');
                 if( $('#f100_d').is(':visible') ) {
@@ -1009,10 +1014,7 @@ $(document).ready(function() {
                     $('label[for=f100_d], #f100_d').show().focus();
                     }                  
             });      
-         });
-
-/* 100e */
-$(document).ready(function() { 
+            /* 100e */
             $("#add_f100_e").click(function(event){
                 console.log('click: add_f100_e');
                 if( $('#f100_e').is(':visible') ) {
@@ -1023,10 +1025,7 @@ $(document).ready(function() {
                     $('label[for=f100_e], #f100_e').show().focus();
                     }                   
             });   
-         });
-
-/* 245b */
-$(document).ready(function() { 
+            /* 245b */
             $("#add_f245_b").click(function(event){
                 console.log('click: add_f245_b');
                 if( $('#f245_b').is(':visible') ) {
@@ -1037,10 +1036,7 @@ $(document).ready(function() {
                     $('label[for=f245_b], #f245_b').show().focus();
                     }                 
             });   
-         });
-
-/* 300b */
-$(document).ready(function() { 
+            /* 300b */
             $("#add_f300_b").click(function(event){
                 console.log('click: add_f300_b');
                 if( $('#f300_b').is(':visible') ) {
@@ -1051,10 +1047,7 @@ $(document).ready(function() {
                     $('label[for=f300_b], #f300_b').show().focus();
                     }                   
             });   
-         });
-
-/* 300e */
-$(document).ready(function() { 
+            /* 300e */
             $("#add_f300_e").click(function(event){
                 console.log('click: add_f300_e');
                 if( $('#f300_e').is(':visible') ) {
@@ -1099,11 +1092,28 @@ function showInsert() {
                 }     
 }
 
+function showFast() {
+    console.log( 'Fast insertion (CTRL + HOME)' );
+        if( $('.ui-widget').is(':visible') ) {
+            $('.ui-widget').hide();
+            document.getElementById('fastLookup').value = '';
+            $("#" + focus_previous ).focus();
+        }
+        else {
+            $('.ui-widget').show();
+            $('#fastLookup').focus(); 
+        } 
+}
+
 /* Insert button : show insert field */
 $(document).ready(function() { 
     $("#show_insert").click(function(event){
         showInsert();
     });
+    $("#show_insert").hover(
+        function(){document.getElementById('footer').innerHTML='click to insert a new field (shortcut: CTRL+INS)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
 }); 
 
 /* CTRL + INS : show insert field */
@@ -1117,7 +1127,7 @@ $(document).keydown(function(e){
 $(document).ready(function() { 
     $("#submit_insert").click(function(event){
         insertField();
-    }); 
+    });
 });
 
     /* actual field insertion, using enter key from field ID input field */
@@ -1147,120 +1157,142 @@ $(document).ready(function() {
     });
 });
 
-/* RESET using either reset button or CTRL+R */
+/* Show INSERT FAST using either button or CTRL+HOME */
+$(document).ready(function() { 
+    $("#showFast").click(function(event){
+        showFast();
+    }); 
+    $("#showFast").hover(
+        function(){document.getElementById('footer').innerHTML='click to insert a new FAST heading field (shortcut: CTRL+HOME)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 36 ) ) {
+        showFast();
+    }
+});
+
+/* RESET using either reset button or CTRL+ALT+END */
 $(document).ready(function() { 
     $("#reset").click(function(event){
         location.reload();
-    }); 
-    $(document).keydown(function(e){
-        if ( e.shiftKey && ( e.which === 82 ) ) {
-            location.reload();
-        }
     });
+    $("#reset").hover(
+        function(){document.getElementById('footer').innerHTML='click to reset the cataloging form. All data will be lost (shortcut: CTRL+ALT+END)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+$(document).keydown(function(e){
+    if ( e.ctrlKey && e.altKey &&( e.which === 35 ) ) {
+        location.reload();
+    }
+});
+
+/* DOWNLOAD BUTTONS */
+$(document).ready(function() {
+    $("#downloadmarc").hover(
+        function(){document.getElementById('footer').innerHTML='click to download the last created MARC record';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#downloadbatch").hover(
+        function(){document.getElementById('footer').innerHTML='click to download the current batch file';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
 });
 
 /* SUBMIT TO MARC */
-/* Actual submission */
 $(document).ready(function() {
             /* READ FROM BATCH */
             $("#read").click(function(event){
-                console.log('click: to batch');
-                $.post( 
-                  "marc_batch_read.php",
-                  { user_id: user_id },
-                  function(data) {
-                     var read_data = data;
-                     $('#ib').html(read_data);
-                     $('#footer').html('file inspector has been launched');
-                  }
-               );      
+                readMarc();   
             });
+            $("#read").hover(
+                function(){document.getElementById('footer').innerHTML='click to inspect the content of current user\'s last saved record and batch file (shortcut: Ctrl + Alt + I)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );
+            /* SAVE TO MARC */
             $("#tomarc").click(function(event){
-                console.log('click: to marc');
-                /* TO DO: integrate punctuation in export to marc loop */
-                undoPunct();
-                //console.log('adding punctuation to f100, f245, f246');
-                // post all the variables that match the following pattern (fxxx or fxxx_n) 
-                    var pattern = /^f[0-9]{3}(_[0-9])?$/;
-                    var post_to_marc2 = {};
-                    for (var varName in window) {
-                        if ('undefined' === typeof window[varName]) { continue; }
-                        if (pattern.test(varName)) {
-                            //console.log(varName);
-                            //console.log(window[varName].punct);
-                            if (window[varName].punct != 'no') {
-                                punctuate(varName);
-                            }
-                            post_to_marc2[varName] = window[varName];
-                        }
-                    }
-                    post_to_marc2.usr = {id: user_id};
-                    document.getElementById("rec_link").href = "./batch/marcy"+user_id+".mrc";
-                    document.getElementById("bat_link").href = "./batch/batch"+user_id+".mrc";
-                    //console.log(post_to_marc2);
-                    console.log('punctuation has been applied');
-                // actual post
-                if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a)) {
-                    $('#footer').html('marc record has been created and saved (isbn: '+f020.a+')');
-                    console.log('writing marc');
-                    $.post( 
-                        "marc_record.php",
-                        post_to_marc2,
-                        function(data) {
-                        var marc_data = data.split('~');
-                        $('#ib').html(marc_data);
-                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
-                  }
-               );    
-                }
-                else {
-                    $('#footer').html('isbn not set, marc record was not created');
-                }
+                toMarc();
             });
+            $("#tomarc").hover(
+                function(){document.getElementById('footer').innerHTML='click to convert onscreen data to a MARC record (shortcut: Ctrl + Alt + R)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );
             /* SUBMIT TO BATCH */
             $("#tobatch").click(function(event){
-                console.log('click: to batch');
-                $.post( 
-                  "marc_batch.php",
-                  { isbn: f020.a, user_id: user_id},
-                  function(data) {
-                     var marc_batch = data;
-                     $('#ib').html(marc_batch);
-                     $('#footer').html('adding record to batch: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
-                  }
-               );        
+                toBatch();
             });
+            $("#tobatch").hover(
+                function(){document.getElementById('footer').innerHTML='click to copy the last saved MARC record the the batch file (shortcut: Ctrl + Alt + B)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );
             /* REMOVE FROM BATCH */
             $("#remove").click(function(event){
-                console.log('click: to batch');
-                $.post( 
-                  "marc_batch_remove.php",
-                  { isbn: f020.a, user_id: user_id },
-                  function(data) {
-                     var remove_data = data;
-                     $('#ib').html(remove_data);
-                     $('#footer').html('removing record from batch: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
-                  }
-               );    
+                removeFromBatch();
             }); 
+            $("#remove").hover(
+                function(){document.getElementById('footer').innerHTML='click to delete the current ISBN (as displayed in 020#a) from the batch file (shortcut: Ctrl + Alt + D)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );
             /* CLEAR BATCH */
             $("#clearbatch").click(function(event){
-                console.log('click: clear batch');
-                if (window.confirm("Are you sure?")) {
-                    $.post( 
-                        "marc_batch_clear.php",
-                        { isbn: f020.a, user_id: user_id },
-                        function(data) {
-                         var clear_data = data;
-                         $('#ib').html(clear_data);
-                         $('#footer').html('clearing batch');
-                        }
-                    );    
-                }
-                
-            });      
-         });
+                clearBatch();
+            });
+            $("#clearbatch").hover(
+                function(){document.getElementById('footer').innerHTML='click to clear the batch file. All saved data will be lost (shortcut: Ctrl + Alt + C)';},
+                function(){document.getElementById('footer').innerHTML='&nbsp';}
+            );      
+});
 
+// File management shortcuts
+    // £Inspect Marc files CTRL + ALT + I
+    $(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 73 ) ) {
+            readMarc();
+        }
+    });
+    // to Marc CTRL + ALT + R
+    $(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 82 ) ) {
+            toMarc();
+        }
+    });
+    // to Batch CTRL + ALT + B
+    $(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 66 ) ) {
+            toBatch();
+        }
+    });
+    // remove / delte from Batch CTRL + ALT + D
+    $(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 68 ) ) {
+            removeFromBatch();
+        }
+    });
+    // clear the Batch file  CTRL + ALT + C
+    $(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 67 ) ) {
+            clearBatch();
+        }
+    });
+
+/* HELP */
+$(document).ready(function() {
+    $("#help").click(function(event){
+        helpIB();   
+    });
+    $("#help").hover(
+        function(){document.getElementById('footer').innerHTML='click for help (shortcut: Ctrl + Alt + H)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+// help shortcut CTRL + ALT + H
+$(document).keydown(function(e){
+        if ( e.ctrlKey && e.altKey &&( e.which === 72 ) ) {
+            helpIB(); 
+        }
+    });
 
 /* not used */
 function diacritics(object) {

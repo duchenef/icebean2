@@ -1,26 +1,48 @@
 body {
 	font-family: "Verdana";
 	font-size: 12px;
-	background-color: GhostWhite;
+	/*background-color: GhostWhite;*/
+	background-color: #bbddff;
 }
 
 /* Screen layout */
 /* colors */
 	#header,
 	#footer {
-		background-color: #f1f1f1;
+		/*background-color: #f1f1f1;*/
+		background-color: #708499;
+		color:GhostWhite;
+		text-align:left;
 	}
 	
 	#main-wrap {
+		/*background-color: #D9D9D9;*/
 		background-color: #D9D9D9;
 	}
-	
+
+	#main_title {
+		margin-left:5px;
+		float: left;
+		height: 18px;
+  		line-height: 18px;
+		text-align: center;
+	}
+	#help {
+		margin-left:19px;
+		float: left;
+		height: 18px;
+  		line-height: 18px;
+		text-align: center;
+	}
+		
 	#sidebar {
+		/*background-color: #d2d2d2;*/
 		background-color: #d2d2d2;
 	}
 	
 	#content-wrap {
-		background-color: #c5c5c5;
+		/*background-color: #c5c5c5;*/
+		background-color: #d2d2d2;
 	}
 	
 /* sizes */
@@ -29,11 +51,12 @@ body {
 	}
 	
 	#header {
-		min-height: 20px;
+		min-height: 18px;
 	}
 	
 	#footer {
-	    min-height: 20px;
+	    min-height: 30px;
+
 	}
 	
 /* layout */
@@ -43,11 +66,12 @@ body {
 	}
 	#content-wrap {
 	    float: left;
-	    width: 67%;
+	    width: 75%;
 	} 
 	#sidebar {
 	    float: right;
-	    width: 33%;
+	    width: 25%;
+	    background-color: #bbddff;
 	}
 
 	#sidebar_top {
@@ -103,8 +127,8 @@ input[type=button] {
     /*border-radius: 3px;*/
 }
 
-#main_title {
-	margin-left:5px;
+input[type=button]:hover {
+	background: rgba(33,150,243,.3);
 }
 
 .datefield_YYYY {
@@ -566,7 +590,11 @@ label[for=f520_i2] {
 
 .ui-widget{
  	margin-top:15px;
- 	/*display:none;*/
+ 	display:none;
+}
+
+#fastLookup {
+	width: 342px;
 }
 
 label[for=field_insert] {
@@ -666,7 +694,6 @@ label[for=field_insert] {
 	margin-left:10px;
 }
 
-
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -718,7 +745,6 @@ input:checked + .slider:before {
 }
 
 /* tri-state */
-
 /* common */
 .toggle_radio{
   margin:0px;
@@ -866,7 +892,7 @@ input:checked + .slider:before {
 #toggle_1_520:checked ~ .toggle_option_slider_520{
   margin:0px;
   padding:0px;
-  background: rgba(255,255,255,.3);
+  background: rgba(255,255, 255,.3);
   left: 5px;
 }
 #toggle_2_520:checked ~ .toggle_option_slider_520{

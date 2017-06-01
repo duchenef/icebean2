@@ -277,7 +277,18 @@ var infobox_DB =    {
     f852_a: 'field 852 subfield a.<BR>\
                         Dynamic form: prefilled using value of 040a (1st four char.)',
     f852_h: 'field 852 subfield h',
-    f852_i: 'field 852 subfield i'
+    f852_i: 'field 852 subfield i',
+    help: ' Fill in the blanks! Two important fields are 020#a, as the Icebean cannot look for data on the Internet if no valid ISBN is specified, and 040#a (or d), as the cataloger\'s code will be used to create and retrieve record and batch files\
+                        Available shortcuts : <BR>\
+                        CTRL + ENTER: submit the current ISBN to the Icebean<BR>\
+                        CTRL + INS: insert a new field<BR>\
+                        CTRL + HOME: insert a new fast subject heading field<BR>\
+                        CTRL + ALT + END: reset the cataloging form (All data will be lost)<BR>\
+                        CTRL + ALT + I: inspect the content of current user\'s last saved record and batch file<BR>\
+                        CTRL + ALT + R: convert onscreen data to a MARC record<BR>\
+                        CTRL + ALT + B: copy the last saved MARC record the the batch file<BR>\
+                        CTRL + ALT + D: delete the current ISBN (as displayed in 020#a) from the batch file<BR>\
+                        CTRL + ALT + C: clear the batch file. All saved data will be lost'
             }
 
 /* infobox var assignment for field buttons */

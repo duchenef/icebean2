@@ -27,6 +27,7 @@ function setUpPage() {
               fast.i1 = ui.item.indicator;
               fast.i2 = '7';
               fast['2'] = 'fast';
+              fast.punct = 'no';
               var marcfield;
               if (ui.item.raw == '') {
                 var fastcontent = ui.item.auth;
