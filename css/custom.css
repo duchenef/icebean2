@@ -66,11 +66,11 @@ body {
 	}
 	#content-wrap {
 	    float: left;
-	    width: 75%;
+	    width: 70%;
 	} 
 	#sidebar {
 	    float: right;
-	    width: 25%;
+	    width: 30%;
 	    background-color: #bbddff;
 	}
 
@@ -236,7 +236,7 @@ label[for=f100_q] {
 
 #f100_q {
 	display: none;
-	width: 180px;
+	width: 120px;
 }
 
 label[for=f100_d] {
@@ -245,7 +245,7 @@ label[for=f100_d] {
 
 #f100_d {
 	display: none;
-	width: 90px;
+	width: 68px;
 }
 
 label[for=f100_e] {
@@ -254,7 +254,7 @@ label[for=f100_e] {
 
 #f100_e {
 	display: none;
-	width: 143px;
+	width: 114px;
 }
 
 #f240 {
@@ -293,7 +293,7 @@ label[for=f100_e] {
 }
 
 #f245_a {
-	width: 267px;
+	width: 220px;
 }
 
 label[for=f245_b] {
@@ -302,11 +302,11 @@ label[for=f245_b] {
 
 #f245_b {
 	display:none;
-	width: 253px;
+	width: 265px;
 }
 
 #f245_c {
-	width: 199px;
+	width: 152px;
 }
 
 .generic {
@@ -475,7 +475,7 @@ label[for=f520_i2] {
 
 #f520_a {
 	vertical-align: top;
-	width: 800px;
+	width: 720px;
 	height: 100px;
 }
 

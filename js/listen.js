@@ -771,36 +771,42 @@ $("input[name = 'toggle_520']").on('change', function() {
 // function
 function icebean_submit(){
                console.log('click: to icebean');
+               $.post(
+                    "./php/fd_images_cleanup.php",
+                    function(data) {
+                        console.log(data);
+                    }   
+               );
                $.post( 
-                "fast_api.php",
-                { isbn: f020.a },
-                function(data) {
-                    //$('#ib').html(data);
-                    var fast_data = data.split('~');
-                    // Fast headings
-                    for (var i = 2; i < fast_data.length; i++) {
-                        //console.log(fast_data[i]);
-                        parseFast(fast_data[i]);
-                    }
-                    // Dewey classification
-                    // bypass action on 852h if 008 is set to Fiction or Short Stories
-                    // f852h
-                    if (f008_33 == '1') {
-                        f852.h = 'F';
-                    }
-                    else if (f008_33 == 'j') {
-                        f852.h = 'FS';
-                    }
-                    else {
-                        f852.h = fast_data[1];
-                        if (f852.h == 'FIC') { f852.h = 'F'};  
-                    }
-                    document.getElementById('f852_h').value = f852.h;
-                    // f852j
-                    if (f852.h != undefined) {
-                        if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
-                            f852.j = 'DCX' + f852.h.substring(0, 3);
+                    "fast_api.php",
+                    { isbn: f020.a },
+                    function(data) {
+                        //$('#ib').html(data);
+                        var fast_data = data.split('~');
+                        // Fast headings
+                        for (var i = 2; i < fast_data.length; i++) {
+                            //console.log(fast_data[i]);
+                            parseFast(fast_data[i]);
                         }
+                        // Dewey classification
+                        // bypass action on 852h if 008 is set to Fiction or Short Stories
+                        // f852h
+                        if (f008_33 == '1') {
+                            f852.h = 'F';
+                        }
+                        else if (f008_33 == 'j') {
+                            f852.h = 'FS';
+                        }
+                        else {
+                            f852.h = fast_data[1];
+                            if (f852.h == 'FIC') { f852.h = 'F'};  
+                        }
+                        document.getElementById('f852_h').value = f852.h;
+                        // f852j
+                        if (f852.h != undefined) {
+                            if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
+                                f852.j = 'DCX' + f852.h.substring(0, 3);
+                            }
                     }
                 }
                );
@@ -1297,6 +1303,20 @@ $(document).keydown(function(e){
             helpIB(); 
         }
     });
+
+
+/*$("#content-wrap").resizable({
+    handles: 'e, w',
+    alsoResizeReverse: '#sidebar'
+});*/
+
+
+$("#content-wrap").resizable({
+  handles: 'e', //'East' draggable edge
+  resize: function() {
+    $("#sidebar").outerWidth($("#main-wrap").innerWidth() - $("#content-wrap").outerWidth());
+  }
+});
 
 /* not used */
 function diacritics(object) {

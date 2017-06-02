@@ -12,6 +12,13 @@ if( $_REQUEST["user_id"] ) {
 $record_path = './batch/marcy'.$user_id.'.mrc';
 $batch_path = './batch/batch'.$user_id.'.mrc';
 
+//if batch file doesn't exist, just create file
+if(!is_file($batch_path)) {
+      	$marc_to = fopen($batch_path,"x"); 
+      	fwrite($marc_to, "");
+        fclose($marc_to);
+}
+
 if( $_REQUEST["isbn"] ) {
    $current_isbn = $_REQUEST['isbn'];
 
@@ -55,9 +62,10 @@ if( $_REQUEST["isbn"] ) {
 
 	$marc_raw_sum = $marc_raw_existing.$marc_raw_new;
 
-	$marc_to = fopen($batch_path, 'wb') ;
+   	$marc_to = fopen($batch_path, 'wb') ;
 	fwrite($marc_to, $marc_raw_sum); //write the sum existing + new to the file
 	fclose($marc_to); //close the file handle
+
 
 	// control
 	$updated_batch = new File_MARC($batch_path);

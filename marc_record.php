@@ -73,9 +73,21 @@ foreach ($_POST as $key => $value) {
 }
 
 // OUTPUT
-	$fh = fopen($record_path, 'w');
-	fwrite($fh, $marc->toRaw());
-	fclose($fh);
+	if(!is_file($record_path)) {
+      	$marc_to = fopen($record_path,"x"); //just create file
+      	fwrite($marc_to, "");
+        fclose($marc_to); 
+        
+    } else {
+       	//file already exists
+		$fh = fopen($record_path, 'w');
+		fwrite($fh, $marc->toRaw());
+		fclose($fh);
+   }
+
+
+
+
 	echo 'user id: '.$user_id;
 	echo '<BR>--------------<BR>';
 	echo "record saved in ".$record_path;
