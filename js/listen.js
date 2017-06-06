@@ -94,6 +94,7 @@ var f520_default = {id: '520', i1: '8', i2: null, a: ''};
 var f521_default = {id: '521', i1: '8', i2: null, a: ''};
 var f586_default = {id: '586', i1: '8', i2: null, a: ''};
 var f600_default = {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
+var f610_default = {id: '610', i1: '', i2: 7, a: '', '2': 'fast'};
 var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
 var f650_default = {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -101,6 +102,8 @@ var f651_default = {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
 var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f710_default = {id: '710', i1: 2, i2: '', a: ''};
+var f730_default = {id: '730', i1: 0, i2: '', a: ''};
+var f740_default = {id: '740', i1: 0, i2: 2, a: ''};
 var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
@@ -127,7 +130,9 @@ var punctuation = {
                     f651: {a: '', z: '', last: '.'},
                     f655: {a: '', last: '.'},
                     f700: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
-                    f710: {a: '', last: '.'}
+                    f710: {a: '', last: '.'},
+                    f730: {a: '', last: '.'},
+                    f740: {a: '', last: '.'}
 };
 
 var punctuation_undo = [];
@@ -659,6 +664,8 @@ $('#f520_i1').on('blur', function () {
 $('#f520_a').on('blur', function () {
         f520.a = $(this).val();
         f520.a = f520.a.replace(/(\r\n|\n|\r)/gm," ");
+        f520.a = f520.a.replace(/ ,/g, ',');
+        f520.a = f520.a.replace(/\s+/g,' ').trim();
         document.getElementById('f520_a').value = f520.a;
         console.log('520#a: summary recorded');
     });
@@ -892,6 +899,9 @@ function icebean_submit(){
                         full_summary_GR = full_summary_GR.replace(/(<\/b>)/g," ");
                         full_summary_GR = full_summary_GR.replace(/(<\/i>)/g," ");
                         full_summary_GR = full_summary_GR.replace(" . . .","...");
+                        full_summary_GR = full_summary_GR.replace(/(\r\n|\n|\r)/gm," ");
+                        full_summary_GR = full_summary_GR.replace(/ ,/g, ',');
+                        full_summary_GR = full_summary_GR.replace(/\s+/g,' ').trim();
                     }
                     if (icebean_data[8] != undefined) { 
                         full_summary_AM = icebean_data[8];
@@ -903,6 +913,9 @@ function icebean_submit(){
                         full_summary_AM = full_summary_AM.replace(/(<\/b>)/g," ");
                         full_summary_AM = full_summary_AM.replace(/(<\/i>)/g," ");
                         full_summary_AM = full_summary_AM.replace(" . . .","...");
+                        full_summary_AM = full_summary_AM.replace(/(\r\n|\n|\r)/gm," ");
+                        full_summary_AM = full_summary_AM.replace(/ ,/g, ',');
+                        full_summary_AM = full_summary_AM.replace(/\s+/g,' ').trim();
                     }
                      if (icebean_data[14] != undefined) { 
                         full_summary_GB = icebean_data[14];
@@ -914,6 +927,9 @@ function icebean_submit(){
                         full_summary_GB = full_summary_GB.replace(/(<\/b>)/g," ");
                         full_summary_GB = full_summary_GB.replace(/(<\/i>)/g," ");
                         full_summary_GB = full_summary_GB.replace(" . . .","...");
+                        full_summary_GB = full_summary_GB.replace(/(\r\n|\n|\r)/gm," ");
+                        full_summary_GB = full_summary_GB.replace(/ ,/g, ',');
+                        full_summary_GB = full_summary_GB.replace(/\s+/g,' ').trim();
                     }
                     document.getElementById('f520_a').value = full_summary_GR;
                     f520.a = document.getElementById('f520_a').value;
