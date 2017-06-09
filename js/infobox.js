@@ -115,7 +115,8 @@ var infobox_DB =    {
                         d - Contains biographical information',
     f008_language: 'field 008 position 35-37 - Language<BR>\
                         Three-character alphabetic code that indicates the language of the item.<BR>\
-                        (Dynamic form: value is used to prefill fields 040b and 041a)<BR>\
+                        (Dynamic form: value is used to prefill fields 040b and 041a.\
+                        Attention: if value is set to fre - French, all the fields previously created when validating field 008 position will be translated to French. This cannot be automatically undone)<BR>\
                         Common codes (<a target=\'_blank\' href=\'https://www.loc.gov/marc/languages/\'>or full list</a>):<BR>\
                         ara - Arabic<BR>\
                         chi - Chinese<BR>\
@@ -384,9 +385,11 @@ var infobox_DB =    {
     help: ' Fill in the blanks! Two important fields are 020#a, as the Icebean cannot look for data on the Internet if no valid ISBN is specified,\
                         and 040#a (or d), as the cataloger\'s code will be used to create and retrieve record and batch files<BR>\
                         Available shortcuts : <BR>\
+                        CTRL + ALT + H: show this help sheet<BR>\
                         CTRL + ENTER: submit the current ISBN to the Icebean<BR>\
                         CTRL + INS: insert a new field<BR>\
                         CTRL + HOME: insert a new fast subject heading field<BR>\
+                        CTRL + END: display the tools<BR>\
                         CTRL + ALT + END: reset the cataloging form (All data will be lost)<BR>\
                         CTRL + ALT + I: inspect the content of current user\'s last saved record and batch file<BR>\
                         CTRL + ALT + R: convert onscreen data to a MARC record<BR>\

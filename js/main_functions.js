@@ -14,7 +14,12 @@ function insertField() {
         var field_id = 'f' + insert.id + '_' + counter;
         if (subfields == '') {
             console.log('insert field using default parameters: f' + insert.id);
-            window[field_id] = $.extend( true, {}, window['f'+ insert.id + '_default'] );
+            if (f008_3537 == 'fre' && insert.id.charAt(0) == '6') {
+                window[field_id] = $.extend( true, {}, window['f'+ insert.id + '_default_fr'] );
+            }
+            else {
+                window[field_id] = $.extend( true, {}, window['f'+ insert.id + '_default'] );
+            }
             addField(window[field_id], counter);
         }
         else {
@@ -271,7 +276,7 @@ function findArticle(string, field) {
     });
 }
 
-/* function: reset field of subfield to default values */
+/* function: reset field or subfield to default values */
 /* reset('fieldnumber', 'subfield') */
 function reset(field_number, sub, count) {
         var field = 'f' + String(field_number);
@@ -545,13 +550,18 @@ function toMarc() {
                         function(data) {
                         var marc_data = data.split('~');
                         $('#ib').html(marc_data);
-                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
+                        time_end = event.timeStamp;
+                        time_diff = time_end - time_start;
+                        console.log('Cataloguing finished at: ' + time_end);
+                        console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
+                        cat_stats = f020.a + "\t" + f245.a + "\t" + f245.b + "\t" + f245.c + "\t" + (parseInt(time_diff/1000)) + "s";
+                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                   }
-               );    
-                }
-                else {
-                    $('#footer').html('isbn not set, marc record was not created');
-                }
+               ); 
+               }
+               else {
+                   $('#footer').html('isbn not set, marc record was not created');
+               }
 }
 
 function readMarc() {
@@ -606,6 +616,19 @@ function clearBatch() {
                         }
                     );    
                 }
+}
+
+function stats() {
+    console.log('click: remove from batch');
+                $.post( 
+                  "./php/fd_marc_stats.php",
+                  { cat_stats: cat_stats, user_id: user_id },
+                  function(data) {
+                     var stats_data = data;
+                     console.log(stats_data);//$('#ib').html(stats_data);
+                     //$('#footer').html('the following record was removed from the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
+                  }
+               );    
 }
 
 function helpIB() {

@@ -67,6 +67,8 @@ body {
 	#content-wrap {
 	    float: left;
 	    width: 70%;
+	    min-width: 20%;
+	    max-width: 80%;
 	} 
 	#sidebar {
 	    float: right;
@@ -304,7 +306,8 @@ label[for=f245_b] {
 
 #f245_b {
 	display:none;
-	width: 265px;
+	width: 100%;
+	max-width: 152px;
 }
 
 #f245_c {
@@ -644,6 +647,11 @@ label[for=f520_i2] {
 #fastLookup {
 	width: 100%;
 	max-width: 342px;
+}
+
+.tools {
+ 	margin-top:15px;
+ 	display:none;
 }
 
 label[for=field_insert] {

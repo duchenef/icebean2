@@ -53,7 +53,7 @@ include 'resources/function_google.php';
 // Requete Amazon images avec ASIN titre
 // retourne un tableau: [0]= request, [1]= xml brut, [2]= request status, [3]= images urls (array), [4]= $asin, [5]= $language, [6]= $reviewa, [7]= $reviewb, [8]= formatted price, [9]= swissprice, [10]= publisher, [11]= pages, [12]= dimensions inches, [13]= dimensions cm, [14]= publication date, [15]= title, [16]= detailed amazon page url , [17]= $review_status, [18]= author
 
-$Amregion = "co.uk";
+$Amregion = "fr";
 
 include 'resources/function_amazon.php';
   $amazon = amazon($isbn, $Amregion);
@@ -92,7 +92,7 @@ include 'resources/function_goodreads.php';
 
 // choix de la description à afficher en fonction du choix dans le formulaire
 
-$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $AMsummary, $f264b, $GRsummary, $GBtitle, $GRauthor, $GBauthor, $GBsummary);
+$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $AMsummary, $f264b, $GRsummary, $GBtitle, $GRauthor, $GBauthor, $GBsummary, $pageurl);
 //                    0      1          2         3         4       5       6       7            8           9       10          11        12         13         14
 //echo json_encode($output_array);
 echo implode('~',$output_array);

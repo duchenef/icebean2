@@ -23,6 +23,13 @@ var full_summary_AM = '';
 var full_summary_GR = '';
 var full_sumamry_GB = '';
 
+var amazon_url = '';
+
+// clock variables
+var time_start, time_end, time_diff;
+// stats variable
+var cat_stats;
+
 // Marc fields Variables init and default values
 var f000 = '00000nam  2200000 i 4500';
 var f007 = 'ta';
@@ -93,13 +100,20 @@ var f505_default = {id: '505', i1: '8', i2: '', a: ''};
 var f520_default = {id: '520', i1: '8', i2: null, a: ''};
 var f521_default = {id: '521', i1: '8', i2: null, a: ''};
 var f586_default = {id: '586', i1: '8', i2: null, a: ''};
-var f600_default = {id: '600', i1: '', i2: 7, a: '', d: 'd', '2': 'fast'};
+var f600_default = {id: '600', i1: '', i2: 7, a: '', d: '', '2': 'fast'};
+var f600_default_fr = {id: '600', i1: '', i2: 7, a: '', d: '', '2': 'ram'};
 var f610_default = {id: '610', i1: '', i2: 7, a: '', '2': 'fast'};
+var f610_default_fr = {id: '610', i1: '', i2: 7, a: '', '2': 'ram'};
 var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
+var f611_default_fr = {id: '611', i1: '', i2: 7, a: '', '2': 'ram'};
 var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
-var f650_default = {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
-var f651_default = {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
+var f630_default_fr = {id: '630', i1: '', i2: 7, a: '', '2': 'ram'};
+var f650_default = {id: '650', i1: '', i2: 7, a: '', x: '', '2': 'fast'};
+var f650_default_fr = {id: '650', i1: '', i2: 7, a: '', x: '', z: '', y: '', '2': 'ram'};
+var f651_default = {id: '651', i1: '', i2: 7, a: '', z: '', '2': 'fast'};
+var f651_default_fr = {id: '651', i1: '', i2: 7, a: '', z: '', y: '', '2': 'ram'};
 var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
+var f655_default_fr = {id: '655', i1: '', i2: 7, a: '', '2': 'ram'};
 var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f710_default = {id: '710', i1: 2, i2: '', a: ''};
 var f730_default = {id: '730', i1: 0, i2: '', a: ''};
@@ -126,8 +140,8 @@ var punctuation = {
                     f610: {a: '', b: '.', last: '.'},
                     f611: {a: '', last: '.'},
                     f630: {a: '', p: '.', last: '.'},
-                    f650: {a: '', x: '', last: '.'},
-                    f651: {a: '', z: '', last: '.'},
+                    f650: {a: '', x: '', z: '', y: '', last: '.'},
+                    f651: {a: '', x: '', z: '', y: '', last: '.'},
                     f655: {a: '', last: '.'},
                     f700: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
                     f710: {a: '', last: '.'},
@@ -136,6 +150,8 @@ var punctuation = {
 };
 
 var punctuation_undo = [];
+
+// COOKIES for cataloguer's ID (040a) and Location (852a)
 
 function createCookie(name,value,days) {
     if (days) {
@@ -173,6 +189,8 @@ f040.a = user_id;
 document.getElementById('f040_a').value = f040.a;
 document.getElementById("rec_link").href = "./batch/marcy"+user_id+".mrc";
 document.getElementById("bat_link").href = "./batch/batch"+user_id+".mrc";
+f852.a = readCookie('location');
+document.getElementById('f852_a').value = f852.a;
 
 // Form actions: f008
 /* capture the change of value in each field and adjust field 008 value with it */
@@ -198,7 +216,7 @@ $('#f008_type_of_date').on('change', function () {
         }
     });
 
-$('#f008_date_1').on('change', function () {
+$('#f008_date_1').on('blur', function () {
         f008_0710 = $(this).val();
         console.log('captured value: ' +f008_0710);
         f008 = replaceAtPos(f008_0710, f008, 7)
@@ -206,6 +224,8 @@ $('#f008_date_1').on('change', function () {
         // add publication date to 264_1c
         f264_1.c = f008_0710;
         document.getElementById('f264_1_c').value = f264_1.c;
+        time_start = event.timeStamp;
+        console.log('Cataloguing began at: ' + time_start);
     });
 
 $('#f008_date_2').on('blur', function () {
@@ -245,11 +265,11 @@ $('#f008_illustrations').on('blur', function () {
         var ill = [];
         f300.b = '';
         document.getElementById('f300_b').value = f300.b; 
-        if( $('#f300_b').is(':visible') ) {
+        if( $('#f300_b').is(':visible') && f008_1821 == '' ) {
                     $('label[for=f300_b], #f300_b').hide();
                     reset('300', 'b');
         }
-        else {
+        else if ( f008_1821 != '') {
             $('label[for=f300_b], #f300_b').show();
         }  
 
@@ -397,7 +417,7 @@ $('#f008_biography').on('blur', function () {
         }
         if (f008_34 == 'a') {
             if (f008_33 == '1') {
-                insert = {id: '655', i1: '', i2: '7', a: 'Autobiographical fiction', '2': 'fast' };
+                insert = {id: '655', i1: '', i2: '7', a: 'Fictional autobiographies', '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_34 = fieldID;
             }
@@ -436,6 +456,103 @@ $('#f008_language').on('change', function () {
         f040.b = f008_3537;
         document.getElementById('f041_a').value = f008_3537;
         f041.a = f008_3537;
+        /* translate everythin in french if fre */
+            /* ill. */
+            if (f008_3537 == 'fre') {
+                f300.a = document.getElementById('f300_a').value.replace('of plates', 'de planches');
+                document.getElementById('f300_a').value = f300.a;
+                plates = document.getElementById('f300_a').value;
+                var mapObj = {maps:"cartes",charts:"tableaux",music:"musique",photographs:"photographies"};
+                var re = new RegExp(Object.keys(mapObj).join("|"),"gi");
+                f300.b = document.getElementById('f300_b').value.replace(re, function(matched){
+                  return mapObj[matched];
+                });
+                document.getElementById('f300_b').value = f300.b;
+            /* 655 audience */
+                if (window['added_by_f008_22'] != '') {
+                    removeField(added_by_f008_22);
+                    added_by_f008_22 = '';
+                }
+                if ( (f008_22 == 'j' || f008_22 == 'd' || f008_22 == 'c') && ( f008_33 == '1' || f008_33 == 'j' ) ) {
+                    insert = {id: '655', i1: '', i2: '7', a: 'Roman pour la jeunesse', '2': 'ram' };
+                    var fieldID = insertFieldAuto();
+                    added_by_f008_22 = fieldID;
+                }
+            /* Bibliographie */
+                f504.a = document.getElementById('f504_a').value.replace('Bibliography', 'Bibliographie');
+                document.getElementById('f504_a').value = f504.a; 
+            /* index */
+                f500_1.a = document.getElementById('f500_1_a').value.replace('Includes', 'Comprend un');
+                document.getElementById('f500_1_a').value = f500_1.a; 
+            /* forme */
+                if (window['added_by_f008_33'] != '') {
+                        removeField(added_by_f008_33);
+                        added_by_f008_33 = '';
+                }
+                if (f008_33 == '1' || f008_33 == 'f') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Roman', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_33 = fieldID;
+                        f852.h = 'R';
+                        document.getElementById('f852_h').value = f852.h;
+                }
+                else if (f008_33 == 'c') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Bandes dessin\xE9es',  '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_33 = fieldID;
+                }
+                else if (f008_33 == 'd') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Th\xE9\xE2tre',  '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_33 = fieldID;
+                }
+                else if (f008_33 == 'j') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Nouvelles',  '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_33 = fieldID;
+                        f852.h = 'R';
+                        document.getElementById('f852_h').value = f852.h;
+                }
+                else if (f008_33 == 'p') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Po\xE9sie',  '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_33 = fieldID;
+                }
+            /* biographie */
+                if (window['added_by_f008_34'] != '') {
+                    removeField(added_by_f008_34);
+                    added_by_f008_34 = '';
+                }
+                if (f008_34 == 'a') {
+                    if (f008_33 == '1') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Roman autobiographique', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_34 = fieldID;
+                    }
+                    else {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Biographies', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_34 = fieldID;
+                    }
+                }
+                else if (f008_34 == 'b') {
+                    if (f008_33 == '1') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Roman biographique', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_34 = fieldID;
+                    }
+                    else {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Biographies', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_34 = fieldID;
+                    }
+                }
+                else if (f008_34 == 'c') {
+                        insert = {id: '655', i1: '', i2: '7', a: 'Biographies', '2': 'ram' };
+                        var fieldID = insertFieldAuto();
+                        added_by_f008_34 = fieldID;
+                }
+            }
     });
 
 // From actions: main marc fields
@@ -451,12 +568,13 @@ $('#f020_q').on('blur', function () {
 
 $('#f040_a').on('blur', function () {
         f040.a = $(this).val();
-        createCookie('name',f040.a,5);
+        createCookie('name',f040.a,7);
         user_id = readCookie('name');
         console.log('040#a: ' + f040.a);
-        /* DYNAMIC FORM: prefill f852_a with 4 first char of f040_a's value' */
+        /* DYNAMIC FORM: prefill f852_a with 4 first char of f040_a's value' and create cookie */
         document.getElementById('f852_a').value = f040.a.substring(0, 4);
         f852.a = f040.a.substring(0, 4);
+        createCookie('location',f852.a,7);
     });
 
 $('#f040_b').on('blur', function () {
@@ -466,7 +584,7 @@ $('#f040_b').on('blur', function () {
 
 $('#f040_d').on('blur', function () {
         f040.d = $(this).val();
-        createCookie('name',f040.d,5);
+        createCookie('name',f040.d,7);
         user_id = readCookie('name');
         console.log('040#d: ' + f040.d);
         if ($(this).val() == '') {
@@ -936,6 +1054,8 @@ function icebean_submit(){
                     // f852
                     f852['9'] = icebean_data[7];
                     document.getElementById('f852_9').value = f852['9'];
+                    // amazon_url
+                    amazon_url = icebean_data[15];
                });
             }
 
@@ -1108,7 +1228,7 @@ function showInsert() {
             $('#i2_insert').prop('checked', true);
             document.getElementById('subfields_insert').value = '';
             subfields = '';
-            insert = insert = {id: '', i1: '', i2: ''};
+            insert = {id: '', i1: '', i2: ''};
             document.getElementById('field_insert').value = insert.id;
             $("#" + focus_previous ).focus();
         }
@@ -1130,6 +1250,70 @@ function showFast() {
             $('#fastLookup').focus(); 
         } 
 }
+
+function showTools() {
+    console.log( 'Tools (CTRL + DEL)' );
+        if( $('.tools').is(':visible') ) {
+            $('.tools').hide();
+            $("#" + focus_previous ).focus();
+        }
+        else {
+            $('.tools').show();
+            $("#" + focus_previous ).focus();
+        }     
+}
+
+$(document).ready(function() { 
+    $("#but_classify").click(function(event){
+        window.open("http://classify.oclc.org/classify2/ClassifyDemo?search-standnum-txt="+ f020.a);
+    });
+    $("#but_classify").hover(
+        function(){document.getElementById('footer').innerHTML='click to search OCLC Classify using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_worldcat").click(function(event){
+        window.open("http://www.worldcat.org/search?q="+ f020.a);
+    });
+    $("#but_worldcat").hover(
+        function(){document.getElementById('footer').innerHTML='click to search OCLC Worldcat using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_amazon").click(function(event){
+        window.open(amazon_url);
+    });
+    $("#but_amazon").hover(
+        function(){document.getElementById('footer').innerHTML='click to search Amazon using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_goodreads").click(function(event){
+        window.open("https://www.goodreads.com/book/isbn/"+ f020.a);
+    });
+    $("#but_goodreads").hover(
+        function(){document.getElementById('footer').innerHTML='click to search Goodreads using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_bnf").click(function(event){
+        window.open("http://catalogue.bnf.fr/rechercher.do?motRecherche="+ f020.a);
+    });
+    $("#but_bnf").hover(
+        function(){document.getElementById('footer').innerHTML='click to search the BNF using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_nelligan").click(function(event){
+        window.open("http://nelligan.ville.montreal.qc.ca/search*frc/a?searchtype=i&searcharg=" + f020.a + "&searchscope=58&extended=0&SORT=D&submit.x=0&submit.y=0&submit=Chercher");
+    });
+    $("#but_nelligan").hover(
+        function(){document.getElementById('footer').innerHTML='click to search the Nelligan catalogue using the current ISBN (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+    $("#but_google").click(function(event){
+        window.open("https://www.google.com/search?q=" + f100.a);
+    });
+    $("#but_google").hover(
+        function(){document.getElementById('footer').innerHTML='click to search the Google using the current author (will open a new tab)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+}); 
 
 /* Insert button : show insert field */
 $(document).ready(function() { 
@@ -1199,6 +1383,22 @@ $(document).keydown(function(e){
     }
 });
 
+/* Show Tools using either reset button or CTRL+DEL */
+$(document).ready(function() { 
+    $("#showTools").click(function(event){
+        showTools();
+    });
+    $("#showTools").hover(
+        function(){document.getElementById('footer').innerHTML='click to display the external tools buttons (shortcut: CTRL+DEL)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 46 ) ) {
+        showTools();
+    }
+});
+
 /* RESET using either reset button or CTRL+ALT+END */
 $(document).ready(function() { 
     $("#reset").click(function(event){
@@ -1240,6 +1440,7 @@ $(document).ready(function() {
             /* SAVE TO MARC */
             $("#tomarc").click(function(event){
                 toMarc();
+                stats();
             });
             $("#tomarc").hover(
                 function(){document.getElementById('footer').innerHTML='click to convert onscreen data to a MARC record (shortcut: Ctrl + Alt + R)';},
@@ -1333,6 +1534,7 @@ $("#content-wrap").resizable({
     $("#sidebar").outerWidth($("#main-wrap").innerWidth() - $("#content-wrap").outerWidth());
   }
 });
+
 
 /* not used */
 function diacritics(object) {
