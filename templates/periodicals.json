@@ -1,0 +1,75 @@
+{
+"CERN Courier" :
+		{
+			"place_code": " sz",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0304-288X",
+			"title": "CERN Courier",
+			"place": "Geneva",
+			"publisher": "European Organization for Nuclear Research",
+			"frequency": "10 issues per year",
+			"permanent_subjects": ["Nuclear physics"],
+			"corporate_name": "European Organization for Nuclear Research",
+			"form": "Periodicals",
+			"classification": "CER",
+			"barcode_prefix": "CER",
+			"price": "p5chf",
+			"website": "http://http://cerncourier.com"
+		},
+"Economist (the)" :
+		{
+			"place_code": "enk",
+			"frequency_code": "w",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0013-0612",
+			"title": "The Economist",
+			"place": "London",
+			"publisher": "Economist Newspaper Limited",
+			"frequency": "51 issues per year",
+			"permanent_subjects": ["Economic history", "Finance", "Current events"],
+			"form": "Periodicals",
+			"classification": "ECI",
+			"barcode_prefix": "ECO",
+			"price": "p8chf",
+			"website": "http://www.economist.com"
+		},
+"History Today" :
+		{
+			"place_code": "enk",
+			"frequency_code": "m",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0018-2753",
+			"title": "History Today",
+			"place": "London",
+			"publisher": "History Today Limited",
+			"frequency": "Monthly",
+			"permanent_subjects": ["History"],
+			"form": "Periodicals",
+			"classification": "HIS",
+			"barcode_prefix": "HIT",
+			"price": "p8chf",
+			"website": "http://www.historytoday.com"
+		},
+"Marianne" :
+		{
+			"place_code": " fr",
+			"frequency_code": "w",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "1275-7500",
+			"title": "Marianne",
+			"place": "Paris",
+			"publisher": "Marianne SA",
+			"frequency": "Hebdomadaire",
+			"permanent_subjects": ["Actualité"],
+			"form": "Périodiques",
+			"classification": "MAR",
+			"barcode_prefix": "MAR",
+			"price": "p5.50chf",
+			"website": "https://www.marianne.net"
+		}
+}

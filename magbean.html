@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>the magBean</title>
+  <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="css/custom_Mb.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/main_functions_Mb.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/assignFASTGadget.js" type="text/javascript"></script>
+  <script src="js/assignFASTExample.js" type="text/javascript"></script>
+  <script src="js/assignFASTComplete.js" type="text/javascript"></script>
+</head>
+
+<body onload="setUpPage()">
+<div id="header">
+  <div id = 'main_title'>The Magbean, v0.9- 20170614</div>
+  <div id = 'help'>
+    <input type="button" id = 'help_b' class="help_button" value="help">
+    <input type="button" id = 'sizebean_b' class="sizebean_button" value="sizebean">
+    <input type="button" id = 'icebean_b' class="icbean_button" value="icebean">
+  </div>
+</div>
+<div id="main-wrap">
+<div id="content-wrap">
+<form id='main_form' action='marc.php' method='post'>
+  <div class="title_select">template
+    <select id="title_select">
+      <option value=""></option>
+    </select>
+    <label for="vol_input">vol.</label>
+      <input type= 'text' id='vol_input' placeholder='vol.' maxlength="5" pattern="\d*">
+    <label for="vol_input">num.</label>
+      <input type= 'text' id='num_input' placeholder='num.' maxlength="5" pattern="\d*">
+    <label for="date_input">date</label>
+      <input type= 'text' id='date_input' placeholder='date' maxlength="8" pattern="\d{6}(\d{2})?">
+  </div>
+  <div class="f022">022
+    <label for="f022_i1">i1</label>
+      <input type= 'text' id='f022_i1' class='ind_placeholder' disabled="disabled">
+    <label for="f022_i2">i2</label>
+      <input type= 'text' id='f022_i2' class='ind_placeholder' disabled="disabled">
+    <label for="f022_a">a</label>
+      <input type="text" id="f022_a" placeholder="ISSN" maxlength="9" pattern="^\d{4}-\d{3}[\dxX]$">
+  </div>
+  <div class="f040">040
+    <label for="f040_i1">i1</label>
+      <input type= 'text' id='f040_i1' class='ind_placeholder' disabled="disabled">
+    <label for="f040_i2">i2</label>
+      <input type= 'text' id='f040_i2' class='ind_placeholder' disabled="disabled">
+    <label for="f040_a">a</label>
+      <input type="text" id="f040_a" placeholder="cataloguer" maxlength="10" pattern="\w*">
+    <label for="f040_b">b</label>
+      <input type='text' id='f040_b' list='f040_b_list' placeholder='lang.' maxlength="3" pattern="[a-z]{3}"> <!--f008_language_list reused for field 040-->
+         <datalist id='f040_b_list'></datalist>
+    <input type="button" id = 'add_f040_d' class="add_buttons" value="040d">
+    <label for="f040_d">d</label>
+      <input type="text" id="f040_d" placeholder="mod. cat." maxlength="10" pattern="\w*">
+      <input type="hidden" id="f040_e" placeholder="rda" >
+  </div>
+  <div class="f041">041
+    <label for="f041_i1">i1</label>
+      <select id="f041_i1">
+       <option value="0">0</option>
+       <option value="1">1</option>
+      </select>
+    <label for="f041_i2">i2</label>
+      <input type= 'text' id='f041_i2' class='ind_placeholder' disabled="disabled">
+    <label for="f041_a">a</label>
+      <input type='text' id='f041_a' placeholder='lang.' maxlength="12" pattern="[a-z]{3}">
+    <label for="f041_h">h</label>
+      <input type='text' id='f041_h' list='f041_h_list' placeholder='orig.' maxlength="12" pattern="[a-z]{3}"> <!--f008_language_list reused for field 041-->
+        <datalist id='f041_h_list'></datalist>
+  </div>
+  <div id="f245">245
+    <label for="f245_i1">i1</label>
+    <select id="f245_i1">
+         <option value="0">0</option>
+         <option value="1">1</option>
+      </select>
+    <label for="f245_i2">i2</label>
+      <input type="text" id="f245_i2" placeholder="i2" maxlength="1" pattern="[0-9]{1}"> 
+    <label for="f245_a">a</label>
+      <input type="text" id="f245_a" placeholder="title">
+    <label for="f245_b">b</label>
+      <input type="text" id="f245_b" placeholder="subtitle">
+    </div>
+  <div class="generic" id="g250">
+  </div>
+  <div id="g264">
+    <div id="f264" class="generic">264
+      <label for="f264_i1">i1</label>
+        <input type="text" id="f264_i1" class="f264_i1" placeholder="i1" maxlength="1" pattern="[0-9]{1}"> 
+      <label for="f264_i2">i2</label>
+        <input type="text" id="f264_i2" class="f264_i2" placeholder="i2" maxlength="1" value="1" pattern="[0-9]{1}">
+      <label for="f264_a">a</label>
+      <input type="text" id="f264_a" class="f264_a" placeholder="place of publication">
+      <label for="f264_b">b</label>
+      <input type="text" id="f264_b" class="f264_b" placeholder="name of publisher">
+      <label for="f264_c">c</label>
+      <input type="text" id="f264_c" class="f264_c" placeholder="date">
+    </div>
+  </div>
+  <div id="f310">310
+    <label for="f310_i1">i1</label>
+      <input type="text" id="f310_i1" class="f310_i1" disabled="disabled"> 
+    <label for="f310_i2">i2</label>
+      <input type="text" id="f310_i2" class="f310_i2" disabled="disabled">
+    <label for="f310_a">a</label>
+      <input type="text" id="f310_a" placeholder="frequency">
+  </div>
+  <div id="f362">362
+    <label for="f362_i1">i1</label>
+      <input type="text" id="f362_i1" class="f362_i1" value="0" maxlength="1" pattern="0|1"> 
+    <label for="f362_i2">i2</label>
+      <input type="text" id="f362_i2" class="f362_i2" disabled="disabled">
+    <label for="f362_a">a</label>
+      <input type="text" id="f362_a" placeholder="sequential designation / date">
+  </div>
+  <div id="f505">505
+      <label for="f505_i1">i1</label>
+        <input type="text" id="f505_i1" class="f505_i1" maxlength="1" value="8" pattern="[0-9]{1}"> 
+      <label for="f505_i2">i2</label>
+        <input type="text" id="f505_i2" class="f505_i2" disabled="disabled">
+      <label for="f505_a">a</label>
+        <textarea id="f505_a"></textarea>
+  </div>
+  <div class="generic" id="g600">
+  </div>
+  <div class="generic" id="g610">
+  </div>
+  <div class="generic" id="g611">
+  </div>
+  <div class="generic" id="g630">
+  </div>
+  <div class="generic" id="g650">
+  </div>
+  <div class="generic" id="g651">
+  </div>
+  <div class="generic" id="g655">
+  </div>
+  <div class="f852">852
+    <label for="f852_i1">i1</label>
+      <select id="f852_i1" disabled="disabled">
+        <option value="1">1</option>
+      </select>
+    <label for="f852_i2">i2</label>
+      <select id="f852_i1" disabled="disabled">
+        <option value=" "> </option>
+      </select>
+    <label for="f852_a">a</label>
+      <input type='text' id='f852_a' placeholder='location' maxlength="8">
+    <label for="f852_k">k</label>
+      <input type='text' id='f852_k' placeholder='classific.' maxlength="3" pattern="([A-Z]| |'){3}">
+    <label for="f852_h">h</label>
+      <input type='text' id='f852_h' placeholder='classific.' maxlength="12">
+    <label for="f852_i">i</label>
+      <input type='text' id='f852_i' placeholder='item part.' maxlength="3" pattern="([A-Z]| |'){3}">
+    <label for="f852_p">p</label>
+      <input type='text' id='f852_p' placeholder='barcode' maxlength="10" pattern="\w{3}\d{6}">
+    <label for="f852_9">9</label>
+      <input type='text' id='f852_9' placeholder='price' maxlength="10" pattern="^p(\d{1,4})(.\d{1,2})?chf">
+  </div>
+  <div class="insert">INS
+    <label for="field_insert">id</label>
+      <input type='text' id='field_insert' placeholder='000' maxlength="3" pattern="[0-9]{3}">
+    <label for="i1_insert">i1</label>
+      <input type="checkbox" id='i1_insert' value="" checked>
+    <label for="i2_insert">i2</label>
+      <input type="checkbox" id='i2_insert' value="" checked>
+    <label for="subfields_insert">subfields</label>
+      <input type='text' id='subfields_insert' placeholder='subfields' maxlength="8">
+    <input type="button" id = 'submit_insert' class="add_buttons" value="submit">
+  </div>
+  <div class="ui-widget">FAST
+      <span id="exampleXtra"></span>
+      <input id="fastLookup" type="text" size="60"></input>
+  </div>
+  <div class="tools">TOOLS
+      <input type="button" id = 'but_website' class="insert_show_insert_submit" value="website">
+      <input type="button" id = 'but_journaux' class="insert_show_insert_submit" value="journaux.fr">
+      <input type="button" id = 'but_google' class="insert_show_insert_submit" value="Google">
+  </div>
+</form>
+</div>
+
+<div id="sidebar">
+  <div id="sidebar_top">
+    <div id = 'sidebar_wrapper'>        
+        <div id = 'actions'>
+        <label for="actions">actions</label>
+          <div id='row1'>
+            <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
+            <input type="button" id = 'showFast' class="insert_show_insert_submit" value="insert fast">
+            <input type="button" id = 'showTools' class="insert_show_insert_submit" value="tools">
+            <input type="button" id = 'reset' value="reset">
+          </div>
+          <div id='row2'> 
+            <input type="button" id = 'tomarc' class="isbn_submit" value="save record">
+            <a id = 'rec_link' href="./batch/marcy.mrc"><input type="button" id = 'downloadmarc' class="isbn_submit" value="download"></a>
+            
+          </div>
+          <div id='row3'>
+            <input type="button" id = 'tobatch' class="batch_submit" value="save to batch">
+            <input type="button" id = 'remove' class="batch_submit" value="delete from batch">
+            <a id = 'bat_link' href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
+          </div>
+          <div id='row4'>
+            <input type="button" id = 'read' class="batch_submit" value="inspect files">
+            <input type="button" id = 'clearbatch' class="batch_submit" value="clear batch">
+          </div>
+        </div>
+      </div>
+  </div>
+  <div id="sidebar_bottom">
+    <label for="ib">infobox</label>
+    <div id = "ib">
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="footer">&nbsp</div>
+<script src="js/infobox.js"></script>
+<script src="js/listen_Mb.js"></script>
+
+
+</body>
+</html>
+
+

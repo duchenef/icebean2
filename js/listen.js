@@ -1506,10 +1506,10 @@ $(document).ready(function() {
 
 /* HELP */
 $(document).ready(function() {
-    $("#help").click(function(event){
+    $("#help_b").click(function(event){
         helpIB();   
     });
-    $("#help").hover(
+    $("#help_b").hover(
         function(){document.getElementById('footer').innerHTML='click for help (shortcut: Ctrl + Alt + H)';},
         function(){document.getElementById('footer').innerHTML='&nbsp';}
     );
@@ -1520,6 +1520,17 @@ $(document).keydown(function(e){
             helpIB(); 
         }
     });
+
+// Link to magbean
+$(document).ready(function() {
+    $("#magbean_b").click(function(event){
+        window.open("./magbean.html", "_self"); 
+    });
+    $("#magbean_b").hover(
+        function(){document.getElementById('footer').innerHTML='click to switch the magBean (periodicals cataloguing)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
 
 
 /*$("#content-wrap").resizable({
