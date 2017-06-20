@@ -456,7 +456,7 @@ function undoPunct() {
     }
     window.punctuation_undo = [];
     console.log('punctuation_undo has been cleared');
-    console.log(punctuation_undo);
+    //console.log(punctuation_undo);
 }
 
 /* Proper nouns */
@@ -550,12 +550,6 @@ function toMarc() {
                         function(data) {
                         var marc_data = data.split('~');
                         $('#ib').html(marc_data);
-                        time_end = event.timeStamp;
-                        time_diff = time_end - time_start;
-                        console.log('Cataloguing finished at: ' + time_end);
-                        console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
-                        cat_stats = f020.a + "\t" + f245.a + "\t" + f245.b + "\t" + f245.c + "\t" + (parseInt(time_diff/1000)) + "s";
-                        $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                   }
                ); 
                }
@@ -620,6 +614,12 @@ function clearBatch() {
 
 function stats() {
     console.log('click: remove from batch');
+                time_end = event.timeStamp;
+                time_diff = time_end - time_start;
+                console.log('Cataloguing finished at: ' + time_end);
+                console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
+                cat_stats = f020.a + "\t" + f245.a + "\t" + f245.b + "\t" + f245.c + "\t" + (parseInt(time_diff/1000)) + "s";
+                $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                 $.post( 
                   "./php/fd_marc_stats.php",
                   { cat_stats: cat_stats, user_id: user_id },

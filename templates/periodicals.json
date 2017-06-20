@@ -1,4 +1,22 @@
 {
+"BBC Music" :
+		{
+			"place_code": "enk",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0966-7180",
+			"title": "BBC Music",
+			"place": "Bristol",
+			"publisher": "Immediate Media Company",
+			"frequency": "13 issues per year",
+			"permanent_subjects": ["Music"],
+			"form": "Periodicals",
+			"classification": "MUS",
+			"barcode_prefix": "MUS",
+			"price": "p9.50chf",
+			"website": "http://www.classical-music.com"
+		},	
 "CERN Courier" :
 		{
 			"place_code": " sz",
@@ -16,7 +34,61 @@
 			"classification": "CER",
 			"barcode_prefix": "CER",
 			"price": "p5chf",
-			"website": "http://http://cerncourier.com"
+			"website": "http://cerncourier.com"
+		},
+"Chasseur d'images" :
+		{
+			"place_code": " fr",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "0396-8235",
+			"title": "Chasseur d'images",
+			"place": "Châtellerault",
+			"publisher": "Editions Jibéna SA",
+			"frequency": "10 numéros par an",
+			"permanent_subjects": ["Photographie"],
+			"form": "Périodiques",
+			"classification": "CHA",
+			"barcode_prefix": "CHA",
+			"price": "p10.30chf",
+			"website": "http://www.chassimages.com"
+		},
+"Courrier International" :
+		{
+			"place_code": " fr",
+			"frequency_code": "w",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "1154-516X",
+			"title": "Courrier international",
+			"place": "Paris",
+			"publisher": "Courrier international SA",
+			"frequency": "Hebdomadaire",
+			"permanent_subjects": ["Actualité"],
+			"form": "Périodiques",
+			"classification": "COU",
+			"barcode_prefix": "COI",
+			"price": "p6.20chf",
+			"website": "http://www.courrierinternational.com"
+		},
+"Discover" :
+		{
+			"place_code": "wiu",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0274-7529",
+			"title": "Discover",
+			"place": "Waukesha, WS",
+			"publisher": "Kalmbach Publishing",
+			"frequency": "10 issues per year",
+			"permanent_subjects": ["Technology", "Science"],
+			"form": "Periodicals",
+			"classification": "DIS",
+			"barcode_prefix": "DIS",
+			"price": "p8chf",
+			"website": "http://discovermagazine.com"
 		},
 "Economist (the)" :
 		{
@@ -36,6 +108,24 @@
 			"price": "p8chf",
 			"website": "http://www.economist.com"
 		},
+"Geographical" :
+		{
+			"place_code": "enk",
+			"frequency_code": "m",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0016-741X",
+			"title": "Geographical",
+			"place": "Brentford, MDX",
+			"publisher": "Syon Geographical Ltd.",
+			"frequency": "12 issues per year",
+			"permanent_subjects": ["Geography"],
+			"form": "Periodicals",
+			"classification": "GEO",
+			"barcode_prefix": "GEM",
+			"price": "p6.50chf",
+			"website": "http://geographical.co.uk"
+		},
 "History Today" :
 		{
 			"place_code": "enk",
@@ -54,6 +144,25 @@
 			"price": "p8chf",
 			"website": "http://www.historytoday.com"
 		},
+"Jeune Afrique" :
+		{
+			"place_code": " fr",
+			"frequency_code": "w",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "1950-1285",
+			"title": "Jeune Afrique",
+			"place": "Paris",
+			"publisher": "Groupe Jeune Afrique",
+			"frequency": "Hebdomadaire",
+			"permanent_subjects": ["Actualité"],
+			"geographical_subjects": ["Afrique"],
+			"form": "Périodiques",
+			"classification": "JEU",
+			"barcode_prefix": "JEU",
+			"price": "p6chf",
+			"website": "http://www.jeuneafrique.com"
+		},
 "Marianne" :
 		{
 			"place_code": " fr",
@@ -71,5 +180,59 @@
 			"barcode_prefix": "MAR",
 			"price": "p5.50chf",
 			"website": "https://www.marianne.net"
+		},
+"New Scientist" :
+		{
+			"place_code": "enk",
+			"frequency_code": "w",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0262-4079",
+			"title": "New Scientist",
+			"place": "London",
+			"publisher": "Reed Business Information Ltd",
+			"frequency": "51 issues per year",
+			"permanent_subjects": ["Technology", "Science"],
+			"form": "Periodicals",
+			"classification": "NEW",
+			"barcode_prefix": "NES",
+			"price": "p5.50chf",
+			"website": "https://www.newscientist.com"
+		},
+"Society" :
+		{
+			"place_code": " fr",
+			"frequency_code": "e",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "2426-5780",
+			"title": "Society",
+			"place": "Paris",
+			"publisher": "So press",
+			"frequency": "Bimensuel (quinzomadaire)",
+			"permanent_subjects": ["Actualité", "Société"],
+			"form": "Périodiques",
+			"classification": "SOC",
+			"barcode_prefix": "SOC",
+			"price": "p6.30chf",
+			"website": "http://www.society-magazine.fr"
+		},
+"Time" :
+		{
+			"place_code": " ne",
+			"frequency_code": "w",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0928-8430",
+			"title": "Time (European edition)",
+			"place": "Amsterdam",
+			"publisher": "Time inc.",
+			"frequency": "Weekly",
+			"permanent_subjects": ["Current events"],
+			"form": "Periodicals",
+			"classification": "TIM",
+			"barcode_prefix": "TIM",
+			"price": "p9chf",
+			"website": "http://time.com"
 		}
 }

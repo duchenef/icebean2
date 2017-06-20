@@ -22,7 +22,7 @@ if(!is_file($stats_path)) {
 }
 
 $stats = fopen($stats_path, 'a') or die("Unable to open file!");
-fwrite($stats, "\n".$cat_stats); //write the sum existing + new to the file
+fwrite($stats, $cat_stats."\n"); //write the sum existing + new to the file
 fclose($stats); //close the file handle
 
 

@@ -70,6 +70,7 @@ var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrie
 var f362 = {id: '362', i1: '0', i2: null, a: ''};
 var f505 = {id: '505', i1: '8', i2: '', a: ''};
 var f852 = {id: '852', i1: 1, i2: '', a: '', k: 'PER', h: '', i: '', p:'', '9': ''};
+var f856 = {id: '856', i1: 4, i2: 2, u: ''};
 
 // Marc fields default value for reset
 var f022_default = {id: '022', i1: null, i2: null, a: ''};
@@ -102,6 +103,7 @@ var f710_default = {id: '710', i1: 2, i2: '', a: ''};
 var f730_default = {id: '730', i1: 0, i2: '', a: ''};
 var f740_default = {id: '740', i1: 0, i2: 2, a: ''};
 var f852_default = {id: '852', i1: 1, i2: '', a: '', k: 'PER', h: '', i: '', p:'', '9': ''};
+var f856_default = {id: '856', i1: 4, i2: 2, u: ''};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
@@ -130,7 +132,8 @@ var punctuation = {
                     f700: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
                     f710: {a: '', last: '.'},
                     f730: {a: '', last: '.'},
-                    f740: {a: '', last: '.'}
+                    f740: {a: '', last: '.'},
+                    f856: {u: '', last: ''}
 };
 
 var punctuation_undo = [];
@@ -261,6 +264,8 @@ $('#title_select').on('change', function () {
                 document.getElementById('f852_h').value = f852.h;
         f852['9'] = templates[selected_title]['price'];
                 document.getElementById('f852_9').value = f852['9'];
+        // 856 (URL)
+        f856.u = templates[selected_title]['website'];
         // subject and form headings
         subjects_array = templates[selected_title]['permanent_subjects'];
         for (i = 0; i < subjects_array.length; ++i) {
@@ -281,7 +286,7 @@ $('#title_select').on('change', function () {
             insert = {id: '655', i1: '', i2: '7', a: templates[selected_title]['form'], '2': 'fast' };
         }
         insertFieldAuto();
-        if (templates[selected_title]['corporate_name'].length>0) {
+        if (templates[selected_title]['corporate_name']) {
             console.log(templates[selected_title]['corporate_name']);
             if (templates[selected_title]['language'] == 'fre') {
                 insert = {id: '610', i1: '', i2: '7', a: templates[selected_title]['corporate_name'], '2': 'ram' };
@@ -291,6 +296,18 @@ $('#title_select').on('change', function () {
             }
         }
         insertFieldAuto();
+        if (templates[selected_title]['geographical_subjects']) {
+            console.log(templates[selected_title]['geographical_subjects']);
+            if (templates[selected_title]['language'] == 'fre') {
+                insert = {id: '651', i1: '', i2: '7', a: templates[selected_title]['geographical_subjects'], '2': 'ram' };
+            }
+            else {
+                insert = {id: '651', i1: '', i2: '7', a: templates[selected_title]['geographical_subjects'], '2': 'fast' };
+            }
+        }
+        insertFieldAuto();
+        time_start = event.timeStamp;
+        console.log('Cataloguing began at: ' + time_start);
     });
 
 // Form actions: main marc fields
@@ -372,7 +389,6 @@ $('#date_input').on('blur', function () {
         document.getElementById('f362_a').value = f362.a;
         // jump to 245_b
         $('#f505_a').focus();
-
     });
 
 

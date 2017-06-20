@@ -442,16 +442,19 @@ function undoPunct() {
             var sf = punctuation_undo[i][1];
             var punct = punctuation_undo[i][2];
             console.log('punct undo. f: '+ punctuation_undo[i][0] + ', sf: ' + punctuation_undo[i][1] + ', punct: ' + punctuation_undo[i][2]);
-            console.log(window[f][sf]);
-            if (window[f][sf] != 'undefined') {
-                var punct_len = punct.length;
-                var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
-                console.log('field_match: ' + field_match);
-                if (punct == field_match) {
-         	   	  window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
-               }
-            	console.log('field after punct undo: ' + window[f][sf]);
-        	}
+            //console.log(window[f][sf]);
+            if (window[f] != undefined) {
+                console.log(window[f]);
+                if (window[f][sf] != undefined) {
+                    var punct_len = punct.length;
+                    var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
+                    console.log('field_match: ' + field_match);
+                    if (punct == field_match) {
+             	   	  window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
+                   }
+                	console.log('field after punct undo: ' + window[f][sf]);
+            	}
+            }
         }
     }
     window.punctuation_undo = [];
@@ -550,12 +553,6 @@ function toMarc() {
                         function(data) {
                         var marc_data = data.split('~');
                         $('#ib').html(marc_data);
-                        time_end = event.timeStamp;
-                        time_diff = time_end - time_start;
-                        console.log('Cataloguing finished at: ' + time_end);
-                        console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
-                        cat_stats = f022.a + "\t" + f245.a + "\t" + f245.b + "\t" + "\t" + (parseInt(time_diff/1000)) + "s";
-                        $('#footer').html('active record: '+f022.a + " " + f245.a + " " + f245.b + " " + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                   }
                ); 
                }
@@ -619,14 +616,19 @@ function clearBatch() {
 }
 
 function stats() {
-    console.log('click: remove from batch');
+    console.log('statistics');
+                time_end = event.timeStamp;
+                time_diff = time_end - time_start;
+                console.log('Cataloguing finished at: ' + time_end);
+                console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
+                cat_stats = f022.a + "\t" + f245.a + "\t" + f245.b + "\t" + "\t" + (parseInt(time_diff/1000)) + "s";
+                $('#footer').html('active record: '+f022.a + " " + f245.a + " " + f245.b + " " + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                 $.post( 
                   "./php/fd_marc_stats.php",
                   { cat_stats: cat_stats, user_id: user_id },
                   function(data) {
                      var stats_data = data;
                      console.log(stats_data);//$('#ib').html(stats_data);
-                     //$('#footer').html('the following record was removed from the batch file: '+f022.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );    
 }

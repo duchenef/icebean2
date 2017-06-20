@@ -1,6 +1,6 @@
 /* TFunction infobox update */
 $(function() {
-    $("#main_form input, #main_form select, #f520_a").focusin(function() {
+    $("#main_form input, #main_form select, #f505_a").focusin(function() {
     	var ib = document.getElementById('ib');
         id = this.id;
         $(".infobox").show();
@@ -395,8 +395,57 @@ var infobox_DB =    {
                         CTRL + ALT + R: convert onscreen data to a MARC record<BR>\
                         CTRL + ALT + B: copy the last saved MARC record the the batch file<BR>\
                         CTRL + ALT + D: delete the current ISBN (as displayed in 020#a) from the batch file<BR>\
-                        CTRL + ALT + C: clear the batch file. All saved data will be lost'
-            }
+                        CTRL + ALT + C: clear the batch file. All saved data will be lost',
+    title_select: 'Template selection.  This will download values and populate the following MARC fields: <BR>f008: place code; frequency code; regularity code; language code<BR>\
+                        f022a: ISSN<BR>\
+                        f245a: title<BR>\
+                        f264a: place of publication; f264b: publisher<BR>\
+                        f300a: frequency<BR>\
+                        f610, 650 or 650: permanent fast or ram subsject headings<BR>\
+                        f655: form (in French or in English)<BR>\
+                        f852: classification code; 852p: barcode prefix; 852_9: Price<BR>\
+                        f856u: url.',
+    vol_input: 'Volume number. This will be used in field 362. Not mandatory',
+    num_input: 'Number. This will be used in field 362 and in field 245 if vol. is left empty.',
+    date_input: 'Enter date in ISO format: YYYYMMDD or YYYYMM. This will be used in field 245a (ISO format, making it possible to sort issues by date), 264c (year only), 362a, 852p (barcode: Prefix + DDMMYY.',
+    f022_a: 'ISSN number. Imported from template.',
+    f264_i1: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 1 -  Sequence of statements<BR>\
+                        # - Not applicable/No information provided/Earliest (Used when a resource is first cataloged.)<BR>\
+                        2 - Intervening (Used when the place or publisher changes)<BR>\
+                        3 - Current/Latest (Same as 2, but use for the current or latest statement only',
+    f264_i2: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        Indicator 2 -  Function of entity<BR>\
+                        0 - Production<BR>\
+                        1 - Publication<BR>\
+                        2 - Distribution<BR>\
+                        3 - Manufacture<BR>\
+                        4 - Copyright notice date',
+    f264_a: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield a - Place of production, publication, distribution, manufacture',
+    f264_b: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield b - Name of producer, publisher, distributor, manufacturer',
+    f264_c: 'field 264 - Production, Publication, Distribution, Manufacture, and Copyright Notice (R)<BR>\
+                        subfield c - Date of production, publication, distribution, manufacture, or copyright notice',
+    f310_a: 'Frequency. Imported from template.',
+    f362_a: 'Date of publication / Sequential designation. Built from volume, number and date form fields',
+    f505_i1: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Indicator 1 - Display constant controller<BR>\
+                        Controls the generation of an introductory phrase.<BR>\
+                        0 - Contents<BR>\
+                        1 - Incomplete contents<BR>\
+                        2 - Partial contents<BR>\
+                        8 - No display constant generated',
+    f505_i2: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Indicator 2 - Level of content designation<BR>\
+                        Level of content designation that has been provided for the data recorded in the field.<BR>\
+                        _ - Basic<BR>\
+                        0 - Enhanced<BR>',
+    f505_a: 'field 505 - Formatted Contents Note (R)<BR>\
+                        Subfield a - Formatted contents note<BR>\
+                        Type the names of the articles included in the periodical\s issue, separated with a double dash (--). The first item (generally the main title on the magazine\'s cover will be automatically copied to 245b',
+    f852_k: 'field 852 - subfield k prefix (NR) (PER for periodicals is default)'
+}
 
 /* infobox var assignment for field buttons */
 infobox_DB.add_f040_d = infobox_DB.f040_d;
