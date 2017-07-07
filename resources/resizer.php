@@ -27,9 +27,9 @@ $imagepath = urldecode($_GET["url"]);
     if ($size[0] < 2) {
    		$imagepath = "no_image.jpg";
 	}
-	if (substr($imagepath, -3) == 'png') {
+	/*if (substr($imagepath, -3) == 'png') {
    		$imagepath = "no_image.jpg";
-	}
+	}*/
 }
 
 // calcul des nouvelles dimensions;
@@ -40,7 +40,15 @@ $nw = $width / $r;
 
 // resample de l'image;
 $image_p = imagecreatetruecolor($nw, $nh);
-$image=imagecreatefromjpeg($imagepath);
+if (substr($imagepath, -3) == 'png') {
+	$image=imagecreatefrompng($imagepath);
+}
+elseif (substr($imagepath, -3) == 'gif') {
+	$image=imagecreatefromgif($imagepath);
+}
+else {
+	$image=imagecreatefromjpeg($imagepath);
+}
 imagecopyresampled($image_p, $image, 0, 0, 0, 0, $nw, $nh, $width, $height);
 
 

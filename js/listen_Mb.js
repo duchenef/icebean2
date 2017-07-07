@@ -63,7 +63,7 @@ var f041 = {id: '041', i1: 0, i2: null, a: '', h: ''};
 var f100 = {id: '100', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f245 = {id: '245', i1: 0, i2: 0, a: '', b: ''};
 var f264 = {id: '264', i1: '', i2: 1, a: '', b: '', c:''};
-var f310 = {id: '300', i1: null, i2: null, a: ''};
+var f310 = {id: '310', i1: null, i2: null, a: ''};
 var f336 = {id: '336', i1: null, i2: null, a: 'text', b: 'txt', '2': 'rdacontent'};
 var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'};
 var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
@@ -80,7 +80,7 @@ var f100_default = {id: '100', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f110_default = {id: '110', i1: 2, i2: '', a: ''};
 var f245_default = {id: '245', i1: 0, i2: 0, a: '', b: ''};
 var f264_default = {id: '264', i1: '', i2: '', a: '', b: '', c:''};
-var f310_default = {id: '300', i1: null, i2: null, a: ''};
+var f310_default = {id: '310', i1: null, i2: null, a: ''};
 var f362_default = {id: '362', i1: '0', i2: null, a: ''};
 var f500_default = {id: '500', i1: null, i2: null, a: ''};
 var f505_default = {id: '505', i1: '8', i2: '', a: ''};
@@ -562,6 +562,11 @@ $('#subfields_insert').on('blur', function () {
     }
 });
 
+$('#resizer_url').on('blur', function () {
+        resizer_url = $(this).val();
+        console.log('resier url: ' + resizer_url);
+    });
+
 function parseFast(fast_data) {
     var fast = {id: '', i1: '', i2: '', punct: 'no'};
     var indexes = [];
@@ -657,6 +662,18 @@ function showTools() {
         }
         else {
             $('.tools').show();
+            $("#" + focus_previous ).focus();
+        }     
+}
+
+function showResizer() {
+    console.log( 'Tools (CTRL + END)' );
+        if( $('.resizer').is(':visible') ) {
+            $('.resizer').hide();
+            $("#" + focus_previous ).focus();
+        }
+        else {
+            $('.resizer').show();
             $("#" + focus_previous ).focus();
         }     
 }
@@ -783,6 +800,30 @@ $(document).keydown(function(e){
     if ( e.ctrlKey && e.altKey &&( e.which === 35 ) ) {
         location.reload();
     }
+});
+
+/* Show resizer using either resizer button or CTRL+END*/
+$(document).ready(function() { 
+    $("#sizebean_b").click(function(event){
+        showResizer();
+    });
+    $("#sizebean_b").hover(
+        function(){document.getElementById('footer').innerHTML='click to display the image resizer (shortcut: CTRL+END)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 35 ) ) {
+        showResizer();
+    }
+});
+
+$(document).ready(function() { 
+    $("#resizer_submit").click(function(event){
+        console.log(resizer_url);
+        $('#pic1').html("<a download='"+f852.p+".jpg' href='images/"+f852.p+".jpg' ><img align='middle' src='resources/resizer.php?url="+resizer_url+"&h=120&fn="+f852.p+".jpg'></a>");
+        /*$("<img src='./images/"+im[i]+"' width='24px' height='24px' id = '_am' align='top'></img>" ).appendTo( "#pic"+i );*/
+    });    
 });
 
 /* DOWNLOAD BUTTONS */

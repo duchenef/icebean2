@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="icebean2.appcache">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <head>
   <title>Icebean 2</title>
   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Jura" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -16,11 +18,9 @@
 
 <body onload="setUpPage()">
 <div id="header">
-  <div id = 'main_title'>The Icebean 2, v1.02- 20170620</div>
+  <div id = 'main_title'>the icebean 2</div>
   <div id = 'help'>
-    <input type="button" id = 'help_b' class="help_button" value="help">
-    <input type="button" id = 'sizebean_b' class="sizebean_button" value="sizebean">
-    <input type="button" id = 'magbean_b' class="sizebean_button" value="magbean">
+    <input type="image" src="./images/book.svg" id = 'magbean_b' class="magbean_button" value="magbean">
   </div>
 </div>
 <div id="main-wrap">
@@ -277,76 +277,88 @@
       <input type="button" id = 'but_nelligan' class="insert_show_insert_submit" value="Nelligan">
       <input type="button" id = 'but_google' class="insert_show_insert_submit" value="Google (author)">
   </div>
+  <div class="resizer">RESIZER
+      <input type='text' id='resizer_url' placeholder='url'>
+      <input type="button" id = 'resizer_submit' class="add_buttons" value="submit">
+  </div>
 </form>
 </div>
 
 <div id="sidebar">
   <div id="sidebar_top">
     <div id = 'sidebar_wrapper'>
-      <label for="options">options</label>
+      <!--<label for="options">options</label>-->
+      <img src="./images/settings.svg" id = 'label_settings'></img>             
+        <div id = 'actions'>
+        <!--<label for="actions">actions</label>-->
+          <div id='row1'>
+            <input type="image" src="./images/plus.svg" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
+            <input type="image" src="./images/tag.svg" id = 'showFast' class="insert_show_insert_submit" value="insert fast">
+            <input type="image" src="./images/external-link.svg" id = 'showTools' class="insert_show_insert_submit" value="tools">
+            <input type="image" src="./images/maximize-2.svg" id = 'sizebean_b' class="sizebean_button" value="sizebean">
+            <input type="image" src="./images/refresh-cw.svg" id = 'reset' value="reset">
+            <input type="image" src="./images/info.svg" id = 'help_b' class="help_button" value="help">
+            <input type="image" src="./images/search.svg" id = 'isbn_submit' class="isbn_submit" value="icebean">
+          </div>
+          <div id='row2'> 
+            <input type="image" src="./images/save.svg" id = 'tomarc' class="isbn_submit" value="save record">
+            <a id = 'rec_link' href="./batch/marcy.mrc"><input type="image" src="./images/download.svg" id = 'downloadmarc' class="isbn_submit" value="download"></a>
+            <input type="image" src="./images/file-plus.svg" id = 'tobatch' class="batch_submit" value="save to batch">
+            <input type="image" src="./images/file-minus.svg" id = 'remove' class="batch_submit" value="delete from batch">
+            <a id = 'bat_link' href="./batch/batch.mrc"><input type="image" src="./images/download.svg" id = 'downloadbatch' class="isbn_submit" value="download"></a>
+            <input type="image" src="./images/eye.svg" id = 'read' class="batch_submit" value="inspect files">
+            <input type="image" src="./images/delete.svg" id = 'clearbatch' class="batch_submit" value="clear batch">
+          </div>
+          <div id='row3'>
+          </div>
+          <div id='row4'>
+            
+          </div>
+        </div>
       <div id = 'options'>
-        <div class = 'o100'>
-          <label for="o100">author</label>
-          <div class="toggle_radio" id = 't100'>
+        <div class="options_icons">
+          <img src="./images/amazon_.png" width="24px" height="24px" id = '_am' align="top"></img>
+          <img src="./images/goodreads_.png" width="24px" height="24px" id = '_gr' align="top"></img>
+          <img src="./images/Google.svg" width="22px" height="22px" id = '_gb' align="top"></img>
+        </div>
+        <div class = 'o100'> 
+         <div class="toggle_radio" id = 't100'>&nbsp100
             <input type="radio" checked class="toggle_option" id="toggle_1_100" name="toggle_100">
             <input type="radio" class="toggle_option" id="toggle_2_100" name="toggle_100">
             <input type="radio" class="toggle_option" id="toggle_3_100" name="toggle_100">
-            <label for="toggle_1_100">Amazon</label>
-            <label for="toggle_2_100">Goodreads</label>
-            <label for="toggle_3_100">Google</label>
-            <div class="toggle_option_slider_100" id='slider_100'></div>
+            <label for="toggle_1_100"></label>
+            <label for="toggle_2_100"></label>
+            <label for="toggle_3_100"></label>
+            <div class="toggle_option_slider_100" id='slider_100'></div> 
+
          </div>
         </div>  
         <div class = 'o245'>
-          <label for="t245">title</label>
-          <div class="toggle_radio" id = 't245'>
+          <div class="toggle_radio" id = 't245'>&nbsp245
             <input type="radio" checked class="toggle_option" id="toggle_1_245" name="toggle_245">
             <input type="radio" class="toggle_option" id="toggle_2_245" name="toggle_245">
             <input type="radio" class="toggle_option" id="toggle_3_245" name="toggle_245">
-            <label for="toggle_1_245">Amazon</label>
-            <label for="toggle_2_245">Goodreads</label>
-            <label for="toggle_3_245">Google</label>
+            <label for="toggle_1_245"></label>
+            <label for="toggle_2_245"></label>
+            <label for="toggle_3_245"></label>
             <div class="toggle_option_slider" id='slider_245'></div>
          </div>
         </div>
         <div class = 'o520'>
-          <label for="o520">summary</label>
-          <div class="toggle_radio" id = 't520'>
+          <!---<label for="o520">summary</label>-->
+          <div class="toggle_radio" id = 't520'>&nbsp520
             <input type="radio" class="toggle_option" id="toggle_1_520" name="toggle_520">
             <input type="radio" checked class="toggle_option" id="toggle_2_520" name="toggle_520">
             <input type="radio" class="toggle_option" id="toggle_3_520" name="toggle_520">
-            <label for="toggle_1_520">Amazon</label>
-            <label for="toggle_2_520">Goodreads</label>
-            <label for="toggle_3_520">Google</label>
+            <label for="toggle_1_520"></label>
+            <label for="toggle_2_520"></label>
+            <label for="toggle_3_520"></label>
             <div class="toggle_option_slider_520" id='slider_520'></div>
          </div>
         </div>
-             
-        <div id = 'actions'>
-        <label for="actions">actions</label>
-          <div id='row1'>
-            <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
-            <input type="button" id = 'showFast' class="insert_show_insert_submit" value="insert fast">
-            <input type="button" id = 'showTools' class="insert_show_insert_submit" value="tools">
-            <input type="button" id = 'reset' value="reset">
-            <input type="button" id = 'isbn_submit' class="isbn_submit" value="icebean">
-          </div>
-          <div id='row2'> 
-            <input type="button" id = 'tomarc' class="isbn_submit" value="save record">
-            <a id = 'rec_link' href="./batch/marcy.mrc"><input type="button" id = 'downloadmarc' class="isbn_submit" value="download"></a>
-            
-          </div>
-          <div id='row3'>
-            <input type="button" id = 'tobatch' class="batch_submit" value="save to batch">
-            <input type="button" id = 'remove' class="batch_submit" value="delete from batch">
-            <a id = 'bat_link' href="./batch/batch.mrc"><input type="button" id = 'downloadbatch' class="isbn_submit" value="download"></a>
-          </div>
-          <div id='row4'>
-            <input type="button" id = 'read' class="batch_submit" value="inspect files">
-            <input type="button" id = 'clearbatch' class="batch_submit" value="clear batch">
-          </div>
-        </div>
-      <label for="images">images</label>
+      </div>
+      <!--<label for="images">images</label>-->
+      <img src="./images/image.svg" id = 'label_images'></img>
       <div id = 'images'>
         <div id='pictures'>
           <div id=pic1></div>
@@ -357,14 +369,15 @@
     </div>
   </div>
   <div id="sidebar_bottom">
-    <label for="ib">infobox</label>
+    <img src="./images/info.svg" id = 'label_info'></img>
+    <!--<label for="ib">infobox</label>-->
     <div id = "ib">
     </div>
   </div>
 </div>
 </div>
 
-<div id="footer">&nbsp</div>
+<div id="footer">&nbspv1.23- 20170626</div>
 
 <script src="js/func.js"></script>
 <script src="js/infobox.js"></script>

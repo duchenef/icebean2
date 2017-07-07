@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <head>
   <title>the magBean</title>
   <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
@@ -15,11 +16,10 @@
 
 <body onload="setUpPage()">
 <div id="header">
-  <div id = 'main_title'>The Magbean, v1.0- 20170620</div>
+  <div id = 'main_title'>The Magbean, v1.2- 20170626</div>
   <div id = 'help'>
     <input type="button" id = 'help_b' class="help_button" value="help">
-    <input type="button" id = 'sizebean_b' class="sizebean_button" value="sizebean">
-    <input type="button" id = 'icebean_b' class="icbean_button" value="icebean">
+    <input type="button" id = 'icebean_b' class="icebean_button" value="icebean">
   </div>
 </div>
 <div id="main-wrap">
@@ -182,6 +182,10 @@
       <input type="button" id = 'but_journaux' class="insert_show_insert_submit" value="journaux.fr">
       <input type="button" id = 'but_google' class="insert_show_insert_submit" value="Google">
   </div>
+  <div class="resizer">RESIZER
+      <input type='text' id='resizer_url' placeholder='url'>
+      <input type="button" id = 'resizer_submit' class="add_buttons" value="submit">
+  </div>
 </form>
 </div>
 
@@ -194,6 +198,7 @@
             <input type="button" id = 'show_insert' class="insert_show_insert_submit" value="insert field">
             <input type="button" id = 'showFast' class="insert_show_insert_submit" value="insert fast">
             <input type="button" id = 'showTools' class="insert_show_insert_submit" value="tools">
+            <input type="button" id = 'sizebean_b' class="sizebean_button" value="sizebean">
             <input type="button" id = 'reset' value="reset">
           </div>
           <div id='row2'> 
@@ -210,6 +215,14 @@
             <input type="button" id = 'read' class="batch_submit" value="inspect files">
             <input type="button" id = 'clearbatch' class="batch_submit" value="clear batch">
           </div>
+        </div>
+      </div>
+    <img src="./images/image.svg" id = 'label_images'></img>
+      <div id = 'images'>
+        <div id='pictures'>
+          <div id=pic1></div>
+          <div id=pic2></div>
+          <div id=pic3></div>
         </div>
       </div>
   </div>

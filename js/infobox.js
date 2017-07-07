@@ -389,7 +389,8 @@ var infobox_DB =    {
                         CTRL + ENTER: submit the current ISBN to the Icebean<BR>\
                         CTRL + INS: insert a new field<BR>\
                         CTRL + HOME: insert a new fast subject heading field<BR>\
-                        CTRL + END: display the tools<BR>\
+                        CTRL + DEL: display the tools<BR>\
+                        CTRL + END: display the image resizer tool<BR>\
                         CTRL + ALT + END: reset the cataloging form (All data will be lost)<BR>\
                         CTRL + ALT + I: inspect the content of current user\'s last saved record and batch file<BR>\
                         CTRL + ALT + R: convert onscreen data to a MARC record<BR>\

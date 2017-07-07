@@ -25,6 +25,8 @@ var full_sumamry_GB = '';
 
 var amazon_url = '';
 
+var resizer_url = '';
+
 // clock variables
 var time_start, time_end, time_diff;
 // stats variable
@@ -847,6 +849,58 @@ $('#subfields_insert').on('blur', function () {
     }
 });
 
+$('#resizer_url').on('blur', function () {
+        resizer_url = $(this).val();
+        console.log('resier url: ' + resizer_url);
+    });
+
+/*
+$("#auth_am").click(function(event){
+    console.log('AM author');
+    parseAuthor(author_AM);
+}); 
+
+$("#auth_gr").click(function(event){
+    console.log('GR author');
+    parseAuthor(author_GR);
+});   
+
+$("#auth_gb").click(function(event){
+    console.log('GB author');
+    parseAuthor(author_GB);
+});  
+
+$("#title_am").click(function(event){
+    console.log('AM title');
+    parseTitle(full_title_AM);
+}); 
+
+$("#title_gr").click(function(event){
+    console.log('GR title');
+    parseTitle(full_title_GR);
+});   
+
+$("#title_gb").click(function(event){
+    console.log('GB title');
+    parseTitle(full_title_GB);
+}); 
+
+$("#summary_am").click(function(event){
+    document.getElementById('f520_a').value = full_summary_AM;
+    f520.a = document.getElementById('f520_a').value;
+}); 
+
+$("#summary_gr").click(function(event){
+    document.getElementById('f520_a').value = full_summary_GR;
+    f520.a = document.getElementById('f520_a').value;
+});   
+
+$("#summary_gb").click(function(event){
+    document.getElementById('f520_a').value = full_summary_GB;
+    f520.a = document.getElementById('f520_a').value;
+}); */
+
+
 $("input[name = 'toggle_100']").on('change', function() {
     if ($("#toggle_1_100").is(":checked")) { 
         console.log('AM author');
@@ -892,6 +946,7 @@ $("input[name = 'toggle_520']").on('change', function() {
     }
 });
 
+
 /* ICEBEAN REQUEST */
 // function
 function icebean_submit(){
@@ -932,6 +987,10 @@ function icebean_submit(){
                             if (f852.h.substring(0, 3) > 0 && f852.h.substring(0, 3) < 1000) {
                                 f852.j = 'DCX' + f852.h.substring(0, 3);
                             }
+                        if (f852.h == 'F' && f008_3537 == 'fre') {
+                            f852.h = 'R';
+                            document.getElementById('f852_h').value = f852.h;
+                        }
                     }
                 }
                );
@@ -942,11 +1001,14 @@ function icebean_submit(){
                     //$('#ib').html(data);
                     var images_url_data = data.split('~');
                     var lab = {'1':'AM', '2':'GR', '3':'GB'};
+                    var im = {'1':'amazon_.png', '2':'goodreads_.png', '3':'Google.svg'};
                     // Fast headings
                     for (var i = 1; i < images_url_data.length; i++) {
                         console.log(images_url_data[i]);
                         $('#pic'+i).html("<a download='"+f020.a+lab[i]+".jpg' href='images/"+f020.a+lab[i]+".jpg' title='"+lab[1]+"''><img align='middle' src='resources/resizer.php?url="+images_url_data[i]+"&h=120&fn="+f020.a+lab[i]+".jpg'></a>");
-                        $("<input type='button' id = 'picbut"+i+"' class='insert_show_insert_submit' value='"+lab[i]+"'>'" ).appendTo( "#pic"+i );
+                        /*$("<input type='button' id = 'picbut"+i+"' class='insert_show_insert_submit' value='"+lab[i]+"'>'" ).appendTo( "#pic"+i );*/
+                        $("<img src='./images/"+im[i]+"' width='24px' height='24px' id = '_am' align='top'></img>" ).appendTo( "#pic"+i );
+                        
                     }
                 }
                );        
@@ -1263,6 +1325,18 @@ function showTools() {
         }     
 }
 
+function showResizer() {
+    console.log( 'Tools (CTRL + END)' );
+        if( $('.resizer').is(':visible') ) {
+            $('.resizer').hide();
+            $("#" + focus_previous ).focus();
+        }
+        else {
+            $('.resizer').show();
+            $("#" + focus_previous ).focus();
+        }     
+}
+
 $(document).ready(function() { 
     $("#but_classify").click(function(event){
         window.open("http://classify.oclc.org/classify2/ClassifyDemo?search-standnum-txt="+ f020.a);
@@ -1383,7 +1457,7 @@ $(document).keydown(function(e){
     }
 });
 
-/* Show Tools using either reset button or CTRL+DEL */
+/* Show Tools using either tools button or CTRL+DEL */
 $(document).ready(function() { 
     $("#showTools").click(function(event){
         showTools();
@@ -1397,6 +1471,30 @@ $(document).keydown(function(e){
     if ( e.ctrlKey && ( e.which === 46 ) ) {
         showTools();
     }
+});
+
+/* Show resizer using either resizer button or CTRL+END*/
+$(document).ready(function() { 
+    $("#sizebean_b").click(function(event){
+        showResizer();
+    });
+    $("#sizebean_b").hover(
+        function(){document.getElementById('footer').innerHTML='click to display the image resizer (shortcut: CTRL+END)';},
+        function(){document.getElementById('footer').innerHTML='&nbsp';}
+    );
+});
+$(document).keydown(function(e){
+    if ( e.ctrlKey && ( e.which === 35 ) ) {
+        showResizer();
+    }
+});
+
+$(document).ready(function() { 
+    $("#resizer_submit").click(function(event){
+        console.log(resizer_url);
+        $('#pic1').html("<a download='"+f852.p+".jpg' href='images/"+f852.p+".jpg' ><img align='middle' src='resources/resizer.php?url="+resizer_url+"&h=120&fn="+f852.p+".jpg'></a>");
+        /*$("<img src='./images/"+im[i]+"' width='24px' height='24px' id = '_am' align='top'></img>" ).appendTo( "#pic"+i );*/
+    });    
 });
 
 /* RESET using either reset button or CTRL+ALT+END */
