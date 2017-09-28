@@ -944,7 +944,7 @@ $(document).ready(function() {
 });
 
 
-$("#content-wrap").resizable({
+jQuery("#content-wrap").resizable({
   handles: 'e', //'East' draggable edge
   resize: function() {
     $("#sidebar").outerWidth($("#main-wrap").innerWidth() - $("#content-wrap").outerWidth());

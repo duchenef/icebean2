@@ -90,6 +90,7 @@ foreach ($_POST as $key => $value) {
 
 	echo 'user id: '.$user_id;
 	echo '<BR>--------------<BR>';
+	echo 'bloblouh '.$record_path;
 	echo "record saved in ".$record_path;
 	echo '<BR>--------------<BR>';
 	echo 'marc output: ';

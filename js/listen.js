@@ -110,6 +110,7 @@ var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
 var f611_default_fr = {id: '611', i1: '', i2: 7, a: '', '2': 'ram'};
 var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default_fr = {id: '630', i1: '', i2: 7, a: '', '2': 'ram'};
+var f648_default = {id: '648', i1: '', i2: 7, a: '', '2': 'fast'};
 var f650_default = {id: '650', i1: '', i2: 7, a: '', x: '', '2': 'fast'};
 var f650_default_fr = {id: '650', i1: '', i2: 7, a: '', x: '', z: '', y: '', '2': 'ram'};
 var f651_default = {id: '651', i1: '', i2: 7, a: '', z: '', '2': 'fast'};
@@ -142,6 +143,7 @@ var punctuation = {
                     f610: {a: '', b: '.', last: '.'},
                     f611: {a: '', last: '.'},
                     f630: {a: '', p: '.', last: '.'},
+                    f648: {a: '', last: '.'},
                     f650: {a: '', x: '', z: '', y: '', last: '.'},
                     f651: {a: '', x: '', z: '', y: '', last: '.'},
                     f655: {a: '', last: '.'},
@@ -282,6 +284,9 @@ $('#f008_illustrations').on('blur', function () {
             ill.push('maps');    
         }
         if (f008_1821.indexOf("c") >= 0) {
+            ill.push('portraits');
+        }
+        if (f008_1821.indexOf("d") >= 0) {
             ill.push('charts');
         }
         if (f008_1821.indexOf("e") >= 0) {
@@ -1637,7 +1642,7 @@ $(document).ready(function() {
 });*/
 
 
-$("#content-wrap").resizable({
+jQuery("#content-wrap").resizable({
   handles: 'e', //'East' draggable edge
   resize: function() {
     $("#sidebar").outerWidth($("#main-wrap").innerWidth() - $("#content-wrap").outerWidth());

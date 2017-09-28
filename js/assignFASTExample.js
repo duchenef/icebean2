@@ -17,7 +17,7 @@ var currentSuggestIndexDefault = "suggestall";  //initial default value
 
 function setUpPage() {
 // connect the autoSubject to the input areas
-    $('#fastLookup').autocomplete(   {
+    jQuery('#fastLookup').autocomplete(   {
           source: autoSubjectExample, 
           minLength: 1,
        select: function(event, ui) {
