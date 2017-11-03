@@ -74,6 +74,7 @@ var infobox_DB =    {
     f008_nature_of_content: 'field 008 position 24-27 - Nature of contents<BR>\
                         Up to four one-character codes that indicate whether a significant part of the item is or contains certain types of material<BR>\
                         _ - (leave blank or enter [space] to erase a value previously entered)<BR>\
+                        6 - Comics/graphic novels<BR>\
                         a - Abstracts/summaries<BR>\
                         b - Bibliographies<BR>\
                         c - Catalogs<BR>\

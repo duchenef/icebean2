@@ -407,8 +407,8 @@ function punctuate(element) {
     var divID = "#" + element + " :input[type=text]";
     var i = $(divID);
     var lastID = 'xxx';
-    // console.log('punctuate ' + element);
-    // look for last subfield with data in field
+    console.log('punctuate ' + element);
+    // look for last subfield that contains data
     for (var e = i.length-1; e >= 0; e = e-1) {
         element = i[e]['id'];
         f = ElemToVar(element)[1];
@@ -416,7 +416,7 @@ function punctuate(element) {
         if (window[f][sf] != '') {
             var newObj = jQuery.extend(true, {}, sf);
             lastID = newObj[0]}
-            //console.log('lastID is: ' + lastID);
+            console.log('lastID is: ' + lastID);
         if (sf == '2' || sf == '9') {lastID == 'xxx'; continue;}
         if (lastID != 'xxx') {break;}
     }
@@ -429,7 +429,7 @@ function punctuate(element) {
         }
         else {
             punctuatesf(element, f, sf, lastID);
-            //console.log('punct ' + f + sf + ' 0', lastID);
+            //console.log('punct ' + f + ' ' + sf + ' ', lastID);
         }
     }
 }
@@ -442,16 +442,18 @@ function undoPunct() {
             var sf = punctuation_undo[i][1];
             var punct = punctuation_undo[i][2];
             console.log('punct undo. f: '+ punctuation_undo[i][0] + ', sf: ' + punctuation_undo[i][1] + ', punct: ' + punctuation_undo[i][2]);
-            console.log(window[f][sf]);
-            if (window[f][sf] != 'undefined') {
-                var punct_len = punct.length;
-                var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
-                console.log('field_match: ' + field_match);
-                if (punct == field_match) {
-         	   	  window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
-               }
-            	console.log('field after punct undo: ' + window[f][sf]);
-        	}
+            console.log(window[f]);
+            if (window[f] != undefined) {
+                if (window[f][sf] != undefined) {
+                    var punct_len = punct.length;
+                    var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
+                    console.log('field_match: ' + field_match);
+                    if (punct == field_match) {
+             	   	  window[f][sf] = window[f][sf].slice(0, window[f][sf].length-punct.length);
+                   }
+                	console.log('field after punct undo: ' + window[f][sf]);
+            	}
+            }
         }
     }
     window.punctuation_undo = [];
@@ -520,7 +522,6 @@ function toMarc() {
     console.log('click: to marc');
                 /* TO DO: integrate punctuation in export to marc loop */
                 undoPunct();
-                //console.log('adding punctuation to f100, f245, f246');
                 // post all the variables that match the following pattern (fxxx or fxxx_n) 
                     var pattern = /^f[0-9]{3}(_[0-9])?$/;
                     var post_to_marc2 = {};

@@ -17,6 +17,24 @@
 			"price": "p8chf",
 			"website": "http://www.alternatives-economiques.fr"
 		},
+"Alternatives économiques hors-série" :
+		{
+			"place_code": " fr",
+			"frequency_code": "q",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "0247-3739",
+			"title": "Alternatives économiques Hors Série",
+			"place": "Paris",
+			"publisher": "SCOP SA",
+			"frequency": "4 numéros par an",
+			"permanent_subjects": ["Economie politique", "Conditions économiques"],
+			"form": "Périodiques",
+			"classification": "ALT",
+			"barcode_prefix": "ALH",
+			"price": "p15chf",
+			"website": "http://www.alternatives-economiques.fr"
+		},
 "Aramco World" :
 		{
 			"place_code": "txu",
@@ -396,6 +414,24 @@
 			"price": "p15chf",
 			"website": "http://www.invivomagazine.com/en"
 		},
+"InterCDI" :
+		{
+			"place_code": " fr",
+			"frequency_code": "q",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "0242-2999",
+			"title": "InterCDI",
+			"place": "Etampes",
+			"publisher": "CEDIS",
+			"frequency": "Bimestriel",
+			"permanent_subjects": ["Services de documentation", "Bibliothèques scolaires", "Bibliothèques d'écoles secondaires"],
+			"form": "Periodiques",
+			"classification": "INT",
+			"barcode_prefix": "INT",
+			"price": "p17.50chf",
+			"website": "http://intercdi.com/"
+		},
 "Je bouquine" :
 		{
 			"place_code": " fr",
@@ -699,7 +735,7 @@
 			"permanent_subjects": ["Science"],
 			"form": "Periodicals",
 			"classification": "SCI",
-			"barcode_prefix": "SCA",
+			"barcode_prefix": "SCI",
 			"price": "p14chf",
 			"website": "https://www.scientificamerican.com"
 		},

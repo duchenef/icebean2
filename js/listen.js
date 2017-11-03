@@ -60,6 +60,7 @@ var plates = '';
 var added_by_f008_22 = '';
 var added_by_f008_1114 = '';
 var added_by_f008_33 = '';
+var added_by_f008_2427 = '';
 var added_by_f008_34 = '';
 
 // Main marc field variables
@@ -111,10 +112,10 @@ var f611_default_fr = {id: '611', i1: '', i2: 7, a: '', '2': 'ram'};
 var f630_default = {id: '630', i1: '', i2: 7, a: '', '2': 'fast'};
 var f630_default_fr = {id: '630', i1: '', i2: 7, a: '', '2': 'ram'};
 var f648_default = {id: '648', i1: '', i2: 7, a: '', '2': 'fast'};
-var f650_default = {id: '650', i1: '', i2: 7, a: '', x: '', '2': 'fast'};
-var f650_default_fr = {id: '650', i1: '', i2: 7, a: '', x: '', z: '', y: '', '2': 'ram'};
-var f651_default = {id: '651', i1: '', i2: 7, a: '', z: '', '2': 'fast'};
-var f651_default_fr = {id: '651', i1: '', i2: 7, a: '', z: '', y: '', '2': 'ram'};
+var f650_default = {id: '650', i1: '', i2: 7, a: '', '2': 'fast'};
+var f650_default_fr = {id: '650', i1: '', i2: 7, a: '', '2': 'ram'};
+var f651_default = {id: '651', i1: '', i2: 7, a: '', '2': 'fast'};
+var f651_default_fr = {id: '651', i1: '', i2: 7, a: '', '2': 'ram'};
 var f655_default = {id: '655', i1: '', i2: 7, a: '', '2': 'fast'};
 var f655_default_fr = {id: '655', i1: '', i2: 7, a: '', '2': 'ram'};
 var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
@@ -352,6 +353,20 @@ $('#f008_nature_of_content').on('blur', function () {
             $('#f504').hide();
             reset('504', 'a');
         }
+
+        if (f008_2427.indexOf("6") >= 0) {
+            insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
+            var fieldID = insertFieldAuto();
+            added_by_f008_2427 = fieldID;
+            f336_2 = {id: '336', i1: null, i2: null, a: 'still image', b: 'sti', '2': 'rdacontent'};
+            f380 = {id: '380', i1: null, i2: null, a: 'Graphic novel.'};
+        }
+        else {
+            f336_2 = '';
+            f380 = '';
+            removeField(added_by_f008_2427);
+            added_by_f008_2427 = '';
+        }
     });
 
 $('#f008_index').on('change', function () {
@@ -386,13 +401,6 @@ $('#f008_literary_form').on('blur', function () {
                 added_by_f008_33 = fieldID;
                 f852.h = 'F';
                 document.getElementById('f852_h').value = f852.h;
-        }
-        else if (f008_33 == 'c') {
-                insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
-                var fieldID = insertFieldAuto();
-                added_by_f008_33 = fieldID;
-                f336_2 = {id: '336', i1: null, i2: null, a: 'still image', b: 'sti', '2': 'rdacontent'};
-                f380 = {id: '380', i1: null, i2: null, a: 'Graphic novel.'};
         }
         else if (f008_33 == 'd') {
                 insert = {id: '655', i1: '', i2: '7', a: 'Drama',  '2': 'fast' };
@@ -503,10 +511,11 @@ $('#f008_language').on('change', function () {
                         f852.h = 'R';
                         document.getElementById('f852_h').value = f852.h;
                 }
-                else if (f008_33 == 'c') {
+                else if (f008_2427.indexOf("6") >= 0) {
+                        removeField(added_by_f008_2427);
                         insert = {id: '655', i1: '', i2: '7', a: 'Bandes dessin\xE9es',  '2': 'ram' };
                         var fieldID = insertFieldAuto();
-                        added_by_f008_33 = fieldID;
+                        added_by_f008_2427 = fieldID;
                 }
                 else if (f008_33 == 'd') {
                         insert = {id: '655', i1: '', i2: '7', a: 'Th\xE9\xE2tre',  '2': 'ram' };
