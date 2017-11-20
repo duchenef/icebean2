@@ -89,6 +89,23 @@
 			"price": "p9.50chf",
 			"website": "http://www.sciencefocus.com"
 		},
+"Biological sciences review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0953-5365",
+			"title": "Biological sciences review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Biology"],
+			"form": "Periodicals",
+			"classification": "BIO",
+			"barcode_prefix": "BIO",
+			"price": "p8chf"
+		},
 "Books" :
 		{
 			"place_code": " fr",
@@ -124,6 +141,23 @@
 			"barcode_prefix": "BEA",
 			"price": "p8chf",
 			"website": "www.beauxartsmagazine.com"
+		},
+"Business review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "1354-1110",
+			"title": "Business review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Business", "Entrepreneurship", "Marketing"],
+			"form": "Periodicals",
+			"classification": "BUS",
+			"barcode_prefix": "BUS",
+			"price": "p8chf"
 		},
 "Ca m'intéresse" :
 		{
@@ -198,6 +232,23 @@
 			"price": "p10.30chf",
 			"website": "http://www.chassimages.com"
 		},
+"Chemistry review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0959-8464",
+			"title": "Chemistry review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Chemistry"],
+			"form": "Periodicals",
+			"classification": "CHE",
+			"barcode_prefix": "CHE",
+			"price": "p8chf"
+		},
 "Cosinus" :
 		{
 			"place_code": " fr",
@@ -252,6 +303,23 @@
 			"price": "p8chf",
 			"website": "http://discovermagazine.com"
 		},
+"Economic review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0265-0290",
+			"title": "Economic review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Economics"],
+			"form": "Periodicals",
+			"classification": "ECO",
+			"barcode_prefix": "ECR",
+			"price": "p8chf"
+		},
 "Economist (the)" :
 		{
 			"place_code": "enk",
@@ -269,6 +337,23 @@
 			"barcode_prefix": "ECO",
 			"price": "p8chf",
 			"website": "http://www.economist.com"
+		},
+"English review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0955-0955",
+			"title": "English review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "English literature", "English language"],
+			"form": "Periodicals",
+			"classification": "ENG",
+			"barcode_prefix": "ENG",
+			"price": "p8chf"
 		},
 "Environnement" :
 		{
@@ -342,6 +427,23 @@
 			"price": "p6.50chf",
 			"website": "http://geographical.co.uk"
 		},
+"Geography review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0950-7035",
+			"title": "Geography review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Geography"],
+			"form": "Periodicals",
+			"classification": "GEO",
+			"barcode_prefix": "GER",
+			"price": "p8chf"
+		},
 "Histoire (Les collections de L')" :
 		{
 			"place_code": " fr",
@@ -395,6 +497,23 @@
 			"barcode_prefix": "HIT",
 			"price": "p8chf",
 			"website": "http://www.historytoday.com"
+		},
+"IB review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "2055-1037",
+			"title": "IB review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["International Baccalaureate", "Study skills"],
+			"form": "Periodicals",
+			"classification": "IBR",
+			"barcode_prefix": "IBR",
+			"price": "p8chf"
 		},
 "In Vivo" :
 		{
@@ -541,6 +660,23 @@
 			"price": "p5.50chf",
 			"website": "https://www.marianne.net"
 		},
+"Modern history review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "1746-6512",
+			"title": "Modern history review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "History"],
+			"form": "Periodicals",
+			"classification": "MOD",
+			"barcode_prefix": "MOD",
+			"price": "p8chf"
+		},
 "National Geographic" :
 		{
 			"place_code": "enk",
@@ -630,6 +766,23 @@
 			"barcode_prefix": "PHE",
 			"price": "p18chf",
 			"website": "http://iopscience.iop.org/0031-9120"
+		},
+"Physics review" :
+		{
+			"place_code": "enk",
+			"frequency_code": "q",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0959-8472",
+			"title": "Physics review",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Quarterly (September, November, February, April)",
+			"permanent_subjects": ["A-level examinations", "Physics"],
+			"form": "Periodicals",
+			"classification": "PHY",
+			"barcode_prefix": "PHY",
+			"price": "p8chf"
 		},
 "Physicsworld" :
 		{

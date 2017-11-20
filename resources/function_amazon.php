@@ -110,7 +110,8 @@ else {
         $amount = substr($formattedprice, 1, 20);
     }
 
-    $swissprice = round(currency($currency, $amount) * 2, 1)/2;
+    $rate = currency($currency);
+    $swissprice = round(($rate*$amount) * 2, 1)/2;
 
 
     // Messages d'erreur si rien n'a été trouvé dans aucun des items

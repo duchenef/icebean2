@@ -2,48 +2,48 @@
 
 <?php
 
-//Currency converter using Yahoo! finance
+//Currency converter using Google finance
 
-function currency($currency, $amount) {
+function currency($from_Currency) {
+$to_Currency = 'CHF';
+$from_Currency = urlencode($from_Currency);
+$to_Currency = urlencode($to_Currency);
+$get = file_get_contents("https://finance.google.com/finance/converter?a=1&from=$from_Currency&to=$to_Currency");
+$get = explode("<span class=bld>",$get);
+$get = explode("</span>",$get[1]);
+$converted_currency = preg_replace("/[^0-9\.]/", null, $get[0]);
 
-$to     = 'CHF'; //to Swiss Franc
- 
-$url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s='. $currency . $to .'=X';
-
-$handle = @fopen($url, 'r');
-if ($handle) {
-    $result = fgets($handle, 4096);
-    fclose($handle);
-}
-
-$array = array(explode(',',$result));
-$rate =  (float)$array[0][1];
-$swissprice = $rate*$amount;
-return $swissprice;
- 
+return $converted_currency;
 }
  
-//if (!isset($_GET["from"]))
-//{
-//die("PARAMETER 'currency' IS MISSING. Parameter id is from=".$from);
-//}
-//else
-//{
-//$from = $_GET["from"];
-//}
+/*if (!isset($_GET["from"]))
+{
+die("PARAMETER 'currency' IS MISSING. Parameter id is from=".$from);
+}
+else
+{
+$from = $_GET["from"];
+}
 
-//if (!isset($_GET["amount"]))
-//{
-//die("AMOUNT is MISSING. Parameter id is amount=");
-//}
-//else
-//{
-//$amount = $_GET["amount"];
-//}
+if (!isset($_GET["amount"]))
+{
+die("AMOUNT is MISSING. Parameter id is amount=");
+}
+else
+{
+$amount = $_GET["amount"];
+}
+
+//echo $from;
+//echo '<BR>';
+//echo $amount;
+//echo '<BR>';
 
 
-// $final = currency($currency, $amount);
-// var_dump($final);
+$final = currency($from, 'CHF', $amount);
+print($final);*/
 
+//$u = currency('GBP', 5);
+//echo $u;
 
 ?>

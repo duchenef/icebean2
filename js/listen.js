@@ -474,6 +474,7 @@ $('#f008_language').on('change', function () {
         /* translate everythin in french if fre */
             /* ill. */
             if (f008_3537 == 'fre') {
+                console.log('Translation to french launched');
                 f300.a = document.getElementById('f300_a').value.replace('of plates', 'de planches');
                 document.getElementById('f300_a').value = f300.a;
                 plates = document.getElementById('f300_a').value;
@@ -496,6 +497,14 @@ $('#f008_language').on('change', function () {
             /* Bibliographie */
                 f504.a = document.getElementById('f504_a').value.replace('Bibliography', 'Bibliographie');
                 document.getElementById('f504_a').value = f504.a; 
+            /* BD */
+                if (f008_2427.indexOf("6") >= 0) {
+                    console.log('BD');
+                    removeField(added_by_f008_2427);
+                    insert = {id: '655', i1: '', i2: '7', a: 'Bandes dessin\xE9es',  '2': 'ram' };
+                    var fieldID = insertFieldAuto();
+                    added_by_f008_2427 = fieldID;
+                }
             /* index */
                 f500_1.a = document.getElementById('f500_1_a').value.replace('Includes', 'Comprend un');
                 document.getElementById('f500_1_a').value = f500_1.a; 
@@ -510,12 +519,6 @@ $('#f008_language').on('change', function () {
                         added_by_f008_33 = fieldID;
                         f852.h = 'R';
                         document.getElementById('f852_h').value = f852.h;
-                }
-                else if (f008_2427.indexOf("6") >= 0) {
-                        removeField(added_by_f008_2427);
-                        insert = {id: '655', i1: '', i2: '7', a: 'Bandes dessin\xE9es',  '2': 'ram' };
-                        var fieldID = insertFieldAuto();
-                        added_by_f008_2427 = fieldID;
                 }
                 else if (f008_33 == 'd') {
                         insert = {id: '655', i1: '', i2: '7', a: 'Th\xE9\xE2tre',  '2': 'ram' };
