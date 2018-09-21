@@ -1,4 +1,22 @@
 {
+/*"_Debug" :
+		{
+			"place_code": " fr",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "0247-3739",
+			"title": "Debugger",
+			"place": "Founex",
+			"publisher": "fred",
+			"frequency": "365 numéros par an",
+			"permanent_subjects": ["sujet 1", "sujet 2", "sujet 3", "sujet 4", "sujet 5", "sujet 6", "sujet 7", "sujet 8", "sujet 9"],
+			"form": "Périodiques",
+			"classification": "FRD",
+			"barcode_prefix": "FRD",
+			"price": "p8chf",
+			"website": "http://libraries.ecolint.ch"
+		},*/
 "Alternatives économiques" :
 		{
 			"place_code": " fr",
@@ -407,7 +425,7 @@
 			"classification": "GEO",
 			"barcode_prefix": "GEL",
 			"price": "p7chf",
-			"website": "http://www.geo.fr"
+			"website": "https://www.geo.de/geolino"
 		},
 "Geographical" :
 		{
@@ -431,7 +449,7 @@
 		{
 			"place_code": "enk",
 			"frequency_code": "q",
-			"regularity": "n",
+			"regularity": "h",
 			"language": "eng",
 			"issn": "0950-7035",
 			"title": "Geography review",
@@ -442,6 +460,23 @@
 			"form": "Periodicals",
 			"classification": "GEO",
 			"barcode_prefix": "GER",
+			"price": "p8chf"
+		},
+"Hindsight" :
+		{
+			"place_code": "enk",
+			"frequency_code": "m",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0958-3637",
+			"title": "Hindsight",
+			"place": "London",
+			"publisher": "Hodder Education",
+			"frequency": "Triennal (September, January, April)",
+			"permanent_subjects": ["General Certificate of Secondary Education", "History"],
+			"form": "Periodicals",
+			"classification": "HIN",
+			"barcode_prefix": "HIN",
 			"price": "p8chf"
 		},
 "Histoire (Les collections de L')" :
@@ -606,24 +641,6 @@
 			"price": "p11.10chf",
 			"website": "http://www.lire.fr"
 		},
-"Magazine littéraire (le)" :
-		{
-			"place_code": " fr",
-			"frequency_code": "m",
-			"regularity": "n",
-			"language": "fre",
-			"issn": "0024-9807",
-			"title": "Le magazine littéraire",
-			"place": "Paris",
-			"publisher": "Sophia publications",
-			"frequency": "11 numéros par an",
-			"permanent_subjects": ["Littérature"],
-			"form": "Périodiques",
-			"classification": "MAG",
-			"barcode_prefix": "MAG",
-			"price": "p12chf",
-			"website": "http://www.magazine-litteraire.com"
-		},
 "Make:" :
 		{
 			"place_code": "cau",
@@ -713,6 +730,24 @@
 			"price": "p5.50chf",
 			"website": "https://www.newscientist.com"
 		},
+"Nouveau magazine littéraire (le)" :
+		{
+			"place_code": " fr",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "0024-9807",
+			"title": "Le nouveau magazine littéraire",
+			"place": "Paris",
+			"publisher": "Sophia publications",
+			"frequency": "11 numéros par an",
+			"permanent_subjects": ["Littérature"],
+			"form": "Périodiques",
+			"classification": "NOU",
+			"barcode_prefix": "NOU",
+			"price": "p8.80chf",
+			"website": "http://www.magazine-litteraire.com"
+		},
 "Okapi" :
 		{
 			"place_code": " fr",
@@ -748,6 +783,24 @@
 			"barcode_prefix": "PHI",
 			"price": "p10chf",
 			"website": "http://www.philomag.com"
+		},
+"Phosphore" :
+		{
+			"place_code": " fr",
+			"frequency_code": "e",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "0249-4138",
+			"title": "Phosphore",
+			"place": "Montrouge",
+			"publisher": "Bayard",
+			"frequency": "Deux fois par mois",
+			"permanent_subjects": ["Education"],
+			"form": "Périodiques",
+			"classification": "PHO",
+			"barcode_prefix": "PHO",
+			"price": "p9.40chf",
+			"website": "http://www.phosphore.com"
 		},
 "Physics Education" :
 		{
@@ -801,24 +854,6 @@
 			"barcode_prefix": "PHW",
 			"price": "p14chf",
 			"website": "http://www.physicsworld.com"
-		},
-"Phosphore" :
-		{
-			"place_code": " fr",
-			"frequency_code": "m",
-			"regularity": "r",
-			"language": "fre",
-			"issn": "0249-4138",
-			"title": "Phosphore",
-			"place": "Montrouge",
-			"publisher": "Bayard",
-			"frequency": "12 numéros par an",
-			"permanent_subjects": ["Education"],
-			"form": "Périodiques",
-			"classification": "PHO",
-			"barcode_prefix": "PHO",
-			"price": "p10.40chf",
-			"website": "http://www.phosphore.com"
 		},
 "Resurgence & Ecologist" :
 		{
@@ -955,7 +990,7 @@
 			"issn": "0996-6994",
 			"title": "Sciences humaines",
 			"place": "Paris",
-			"publisher": "Sciencs humaines",
+			"publisher": "Sciences humaines",
 			"frequency": "11 numéros par an",
 			"permanent_subjects": ["Sciences humaines"],
 			"form": "Périodiques",
@@ -1016,6 +1051,25 @@
 			"classification": "SPI",
 			"barcode_prefix": "SPI",
 			"price": "p7chf"
+		},
+"Spirou" :
+		{
+			"place_code": " fr",
+			"frequency_code": "w",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "0771-8071",
+			"title": "Spirou",
+			"place": "Marcinelle",
+			"publisher": "editions Dupuis",
+			"frequency": "Hebdomadaire",
+			"permanent_subjects": ["Bandes dessinées"],
+			"form": "Periodiques",
+			"classification": "SPI",
+			"barcode_prefix": "SPI",
+			"price": "p4.50chf",
+			"website": "http://www.spirou.com"
+
 		},
 "Time" :
 		{
