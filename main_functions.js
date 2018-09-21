@@ -8,10 +8,7 @@ function insertField() {
         var group_id = 'g' + insert.id;
         if ($('#' + group_id).children().last().length) {
             var group_div = $('#' + group_id).children().last().attr('id');
-            console.log("group div:" + group_div);
-            //counter = parseInt(group_div.slice(-1))+1; old: only one digit in counter
-            console.log(group_div.substring(group_div.indexOf('_')+1));
-            counter = parseInt(group_div.substring(group_div.indexOf('_')+1))+1;
+            counter = parseInt(group_div.slice(-1))+1;
             console.log('group id: ' + group_id + ', counter: ' + counter);
         }
         var field_id = 'f' + insert.id + '_' + counter;
@@ -69,8 +66,7 @@ function insertFieldAuto() {
         
         if ($('#' + group_id).children().last().length) {
             var group_div = $('#' + group_id).children().last().attr('id');
-            // counter = parseInt(group_div.slice(-1))+1; old: only works wiuth one digits counters
-            counter = parseInt(group_div.substring(group_div.indexOf('_')+1))+1;
+            counter = parseInt(group_div.slice(-1))+1;
             //console.log('group id: ' + group_id + ', counter: ' + counter);
         }
         var field_id = 'f' + insert.id + '_' + counter;
@@ -225,7 +221,6 @@ function replaceAtPos(substring, string, position) {
 
 /* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
 function ElemToVar(elementID) {
-    //console.log("ElementID in ElemToVar:" + elementID);
     var position = elementID.indexOf("_", elementID.indexOf("_") + 1);
     if (position == -1) {position = elementID.indexOf("_");}
     var fullcode = replaceAtPos('.', elementID, position);
@@ -234,10 +229,9 @@ function ElemToVar(elementID) {
     return [fullcode, fieldcode, subfieldcode];
 }
 
-/* function that converts element field id to standard field id (omitting the counter): f100_1_a => f100_a */
+/* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
 function ElemIDtoStdElemID(elementID) {
-    console.log(elementID);
-    var standardFieldID = elementID.replace(/_[0-9][0-9]?/g, "");
+    var standardFieldID = elementID.replace(/_[0-9]/g, "");
     return standardFieldID;
 }
 
@@ -325,7 +319,7 @@ function  pop240l() {
                     break;
                 case 'fre':
                     f240.l = 'Français';
-                    document.getElementById('f240_l').value = 'Français';
+                    document.getElementById('f240_l').value = 'Fran\xe7ais';
                     break;
             }
 }
@@ -343,7 +337,7 @@ function punctuatesf(element, f, sf, lastID) {
     var sf_up = ElemToVar(i_up)[2];
     var fID_p = ElemIDtoStdElemID(i);
     var f_p = ElemToVar(fID_p)[1];
-    console.log('current in punctuatesf: field: ' + fi + " sfi: " + sfi + ' lastID: ' + lastID + ' f_up: ' + f_up + ' sf_up: ' + sf_up + ' fID_p: ' + fID_p + ' i: ' + i);
+    //console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
     if (sf_up == 'i1' || sf_up == 'i2') {
         if (Object.is(lastID, sfi)) {
                 //console.log('last and current are the same');
@@ -377,7 +371,6 @@ function punctuatesf(element, f, sf, lastID) {
                     return;
                 }
                 else {
-                    //console.log('current in punctuatesf before crash: field: ' + fi + " sfi: " + sfi + ' lastID: ' + lastID + ' f_up: ' + f_up + ' sf_up: ' + sf_up);
                     window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
                     punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
                     //console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
@@ -415,22 +408,20 @@ function punctuate(element) {
     var i = $(divID);
     var lastID = 'xxx';
     console.log('punctuate ' + element);
-    // look for last subfield with data in field
+    // look for last subfield that contains data
     for (var e = i.length-1; e >= 0; e = e-1) {
         element = i[e]['id'];
-        console.log('Element in punctuate A: ' + element);
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
         if (window[f][sf] != '') {
             var newObj = jQuery.extend(true, {}, sf);
             lastID = newObj[0]}
-            //console.log('punct A ' + f + ' ' + sf + ' 0', lastID);
+            console.log('lastID is: ' + lastID);
         if (sf == '2' || sf == '9') {lastID == 'xxx'; continue;}
         if (lastID != 'xxx') {break;}
     }
     for (var c = i.length-1; c >= 0; c = c-1) {
         element = i[c]['id'];
-        console.log('Element in punctuate B: ' + element);
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
         if (sf == 'i1' || sf == 'i2') {
@@ -438,7 +429,7 @@ function punctuate(element) {
         }
         else {
             punctuatesf(element, f, sf, lastID);
-            //console.log('punct B ' + f + ' ' + sf + ' 0', lastID);
+            //console.log('punct ' + f + ' ' + sf + ' ', lastID);
         }
     }
 }
@@ -451,9 +442,8 @@ function undoPunct() {
             var sf = punctuation_undo[i][1];
             var punct = punctuation_undo[i][2];
             console.log('punct undo. f: '+ punctuation_undo[i][0] + ', sf: ' + punctuation_undo[i][1] + ', punct: ' + punctuation_undo[i][2]);
-            //console.log(window[f][sf]);
+            console.log(window[f]);
             if (window[f] != undefined) {
-                console.log(window[f]);
                 if (window[f][sf] != undefined) {
                     var punct_len = punct.length;
                     var field_match = window[f][sf].slice(window[f][sf].length-punct.length, window[f][sf].length);
@@ -468,7 +458,7 @@ function undoPunct() {
     }
     window.punctuation_undo = [];
     console.log('punctuation_undo has been cleared');
-    console.log(punctuation_undo);
+    //console.log(punctuation_undo);
 }
 
 /* Proper nouns */
@@ -532,15 +522,13 @@ function toMarc() {
     console.log('click: to marc');
                 /* TO DO: integrate punctuation in export to marc loop */
                 undoPunct();
-                //console.log('adding punctuation to f100, f245, f246');
                 // post all the variables that match the following pattern (fxxx or fxxx_n) 
-                    //var pattern = /^f[0-9]{3}(_[0-9])?$/; old pattern (only one digit in counter)
-                    var pattern = /^f[0-9]{3}(_[0-9][0-9]?)?$/;
+                    var pattern = /^f[0-9]{3}(_[0-9])?$/;
                     var post_to_marc2 = {};
                     for (var varName in window) {
                         if ('undefined' === typeof window[varName]) { continue; }
                         if (pattern.test(varName)) {
-                            console.log(varName);
+                            //console.log(varName);
                             //console.log(window[varName].punct);
                             if (window[varName].punct != 'no') {
                                 punctuate(varName);
@@ -554,10 +542,9 @@ function toMarc() {
                     //console.log(post_to_marc2);
                     console.log('punctuation has been applied');
                 // actual post
-                if (/^\d{4}-\d{3}[\dxX]$/.test(f022.a)) {
-                    $('#footer').html('marc record has been created and saved (isbn: '+f022.a+')');
+                if (/^(97(8|9))?\d{9}(\d|X)$/.test(f020.a)) {
+                    $('#footer').html('marc record has been created and saved (isbn: '+f020.a+')');
                     console.log('writing marc');
-                    console.log(post_to_marc2);
                     $.post( 
                         "marc_record.php",
                         post_to_marc2,
@@ -589,11 +576,11 @@ function toBatch() {
     console.log('click: to batch');
                 $.post( 
                   "marc_batch.php",
-                  { isbn: f022.a, user_id: user_id},
+                  { isbn: f020.a, user_id: user_id},
                   function(data) {
                      var marc_batch = data;
                      $('#ib').html(marc_batch);
-                     $('#footer').html('the following record was added the batch file: '+f022.a + " " + f245.a + " " + f245.b);
+                     $('#footer').html('the following record was added the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                ); 
 }
@@ -602,11 +589,11 @@ function removeFromBatch() {
     console.log('click: remove from batch');
                 $.post( 
                   "marc_batch_remove.php",
-                  { isbn: f022.a, user_id: user_id },
+                  { isbn: f020.a, user_id: user_id },
                   function(data) {
                      var remove_data = data;
                      $('#ib').html(remove_data);
-                     $('#footer').html('the following record was removed from the batch file: '+f022.a + " " + f245.a + " " + f245.b);
+                     $('#footer').html('the following record was removed from the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );    
 }
@@ -616,7 +603,7 @@ function clearBatch() {
                 if (window.confirm("Are you sure?")) {
                     $.post( 
                         "marc_batch_clear.php",
-                        { isbn: f022.a, user_id: user_id },
+                        { isbn: f020.a, user_id: user_id },
                         function(data) {
                          var clear_data = data;
                          $('#ib').html(clear_data);
@@ -627,19 +614,20 @@ function clearBatch() {
 }
 
 function stats() {
-    console.log('statistics');
+    console.log('click: remove from batch');
                 time_end = event.timeStamp;
                 time_diff = time_end - time_start;
                 console.log('Cataloguing finished at: ' + time_end);
                 console.log('Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
-                cat_stats = f022.a + "\t" + f245.a + "\t" + f245.b + "\t" + "\t" + (parseInt(time_diff/1000)) + "s";
-                $('#footer').html('active record: '+f022.a + " " + f245.a + " " + f245.b + " " + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
+                cat_stats = f020.a + "\t" + f245.a + "\t" + f245.b + "\t" + f245.c + "\t" + (parseInt(time_diff/1000)) + "s";
+                $('#footer').html('active record: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c + '// Cataloguing time: ' + (parseInt(time_diff/1000)) + ' seconds');
                 $.post( 
                   "./php/fd_marc_stats.php",
                   { cat_stats: cat_stats, user_id: user_id },
                   function(data) {
                      var stats_data = data;
                      console.log(stats_data);//$('#ib').html(stats_data);
+                     //$('#footer').html('the following record was removed from the batch file: '+f020.a + " " + f245.a + " " + f245.b + " " + f245.c);
                   }
                );    
 }
@@ -648,82 +636,4 @@ function helpIB() {
     console.log('click: help')
     ib.innerHTML = infobox_DB['help'];
     $('#footer').html('Displaying help in the infobox');
-}
-
-function dateToText(date) {
-    var f_YYYY = date.substring(0, 4);
-    var f_YY = date.substring(2, 4);
-    var f_MM = date.substring(4, 6);
-    if (date.substring(6, 8).length > 0) {
-        var f_DD = date.substring(6, 8);
-    }
-    else {
-        var f_DD = '00';
-    }
-    var array = [];
-    var english = '';
-    var french = '';
-    switch (f_MM) {
-        case '01': 
-            english = 'January';
-            french = 'janvier';
-            break;
-        case '02': 
-            english = 'February';
-            french = 'f\xE9vrier';
-            break;
-        case '03': 
-            english = 'March';
-            french = 'mars';
-            break;
-        case '04': 
-            english = 'April';
-            french = 'avril';
-            break;
-        case '05': 
-            english = 'May';
-            french = 'mai';
-            break;
-        case '06': 
-            english = 'June';
-            french = 'juin';
-            break;
-        case '07': 
-            english = 'July';
-            french = 'juillet';
-            break;
-        case '08': 
-            english = 'August';
-            french = 'Ao\xFBt';
-            break;
-        case '09': 
-            english = 'September';
-            french = 'septembre';
-            break;
-        case '10': 
-            english = 'October';
-            french = 'octobre';
-            break;
-        case '11': 
-            english = 'November';
-            french = 'novembre';
-            break;
-        case '12': 
-            english = 'December';
-            french = 'D\xE9cembre';
-            break;
-    }
-    var plain_date_english;
-    var plain_date_french;
-
-    if (f_DD == '' || f_DD == '00') {
-        plain_date_english = english + ' ' + f_YYYY;
-        plain_date_french = french + ' ' + f_YYYY;
-    }
-    else {
-        plain_date_english =  f_DD + ' ' + english + ' ' + f_YYYY;
-        plain_date_french =  f_DD + ' ' + french + ' ' + f_YYYY;
-    }
-
-    return [plain_date_english, plain_date_french]
 }

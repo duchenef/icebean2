@@ -1,4 +1,22 @@
 {
+"_Debug" :
+		{
+			"place_code": " fr",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "0247-3739",
+			"title": "Debugger",
+			"place": "Founex",
+			"publisher": "fred",
+			"frequency": "365 numéros par an",
+			"permanent_subjects": ["sujet 1", "sujet 2", "sujet 3", "sujet 4", "sujet 5", "sujet 6", "sujet 7", "sujet 8", "sujet 9"],
+			"form": "Périodiques",
+			"classification": "FRD",
+			"barcode_prefix": "FRD",
+			"price": "p8chf",
+			"website": "http://libraries.ecolint.ch"
+		},
 "Alternatives économiques" :
 		{
 			"place_code": " fr",

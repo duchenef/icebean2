@@ -83,7 +83,7 @@ var f546 =  {id: '546', i1: null, i2: null, a: ''};
 var f590 = {id: '590', i1: null, i2: null, a: ''};
 var f520 = {id: '520', i1: '8', i2: null, a: ''};
 
-var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
+var f852 = {id: '852', i1: 1, i2: '', a: '', k: '', h: '', i: '', p:'', '9': ''};
 
 // Marc fields default value for reset
 var f020_default = {id: '020', i1: null, i2: null, a: '', q: ''};
@@ -126,7 +126,7 @@ var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f710_default = {id: '710', i1: 2, i2: '', a: ''};
 var f730_default = {id: '730', i1: 0, i2: '', a: ''};
 var f740_default = {id: '740', i1: 0, i2: 2, a: ''};
-var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
+var f852_default = {id: '852', i1: 1, i2: '', a: '', k: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
@@ -362,6 +362,8 @@ $('#f008_nature_of_content').on('blur', function () {
 
         if (f008_2427.indexOf("6") >= 0) {
             insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
+            f504.a = 'Bibliography: pages';
+            f852.k = 'BD';
             var fieldID = insertFieldAuto();
             added_by_f008_2427 = fieldID;
             f336_2 = {id: '336', i1: null, i2: null, a: 'still image', b: 'sti', '2': 'rdacontent'};
