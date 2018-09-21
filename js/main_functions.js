@@ -319,7 +319,7 @@ function  pop240l() {
                     break;
                 case 'fre':
                     f240.l = 'Français';
-                    document.getElementById('f240_l').value = 'Français';
+                    document.getElementById('f240_l').value = 'Fran\xe7ais';
                     break;
             }
 }

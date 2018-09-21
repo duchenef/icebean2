@@ -8,7 +8,10 @@ function insertField() {
         var group_id = 'g' + insert.id;
         if ($('#' + group_id).children().last().length) {
             var group_div = $('#' + group_id).children().last().attr('id');
-            counter = parseInt(group_div.slice(-1))+1;
+            console.log("group div:" + group_div);
+            //counter = parseInt(group_div.slice(-1))+1; old: only one digit in counter
+            console.log(group_div.substring(group_div.indexOf('_')+1));
+            counter = parseInt(group_div.substring(group_div.indexOf('_')+1))+1;
             console.log('group id: ' + group_id + ', counter: ' + counter);
         }
         var field_id = 'f' + insert.id + '_' + counter;
@@ -66,7 +69,8 @@ function insertFieldAuto() {
         
         if ($('#' + group_id).children().last().length) {
             var group_div = $('#' + group_id).children().last().attr('id');
-            counter = parseInt(group_div.slice(-1))+1;
+            // counter = parseInt(group_div.slice(-1))+1; old: only works wiuth one digits counters
+            counter = parseInt(group_div.substring(group_div.indexOf('_')+1))+1;
             //console.log('group id: ' + group_id + ', counter: ' + counter);
         }
         var field_id = 'f' + insert.id + '_' + counter;
@@ -221,6 +225,7 @@ function replaceAtPos(substring, string, position) {
 
 /* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
 function ElemToVar(elementID) {
+    //console.log("ElementID in ElemToVar:" + elementID);
     var position = elementID.indexOf("_", elementID.indexOf("_") + 1);
     if (position == -1) {position = elementID.indexOf("_");}
     var fullcode = replaceAtPos('.', elementID, position);
@@ -229,9 +234,10 @@ function ElemToVar(elementID) {
     return [fullcode, fieldcode, subfieldcode];
 }
 
-/* function that converts element field id to three variables field id (field and subfield): f100_1_a => f100_1.a, f100_1, a */
+/* function that converts element field id to standard field id (omitting the counter): f100_1_a => f100_a */
 function ElemIDtoStdElemID(elementID) {
-    var standardFieldID = elementID.replace(/_[0-9]/g, "");
+    console.log(elementID);
+    var standardFieldID = elementID.replace(/_[0-9][0-9]?/g, "");
     return standardFieldID;
 }
 
@@ -337,7 +343,7 @@ function punctuatesf(element, f, sf, lastID) {
     var sf_up = ElemToVar(i_up)[2];
     var fID_p = ElemIDtoStdElemID(i);
     var f_p = ElemToVar(fID_p)[1];
-    //console.log('current: ' + sfi + ' lastID: ' + lastID + ' sf_up: ' + sf_up);
+    console.log('current in punctuatesf: field: ' + fi + " sfi: " + sfi + ' lastID: ' + lastID + ' f_up: ' + f_up + ' sf_up: ' + sf_up + ' fID_p: ' + fID_p + ' i: ' + i);
     if (sf_up == 'i1' || sf_up == 'i2') {
         if (Object.is(lastID, sfi)) {
                 //console.log('last and current are the same');
@@ -371,6 +377,7 @@ function punctuatesf(element, f, sf, lastID) {
                     return;
                 }
                 else {
+                    //console.log('current in punctuatesf before crash: field: ' + fi + " sfi: " + sfi + ' lastID: ' + lastID + ' f_up: ' + f_up + ' sf_up: ' + sf_up);
                     window[f_up][sf_up] = window[f_up][sf_up] + punctuation[f_p][sf];
                     punctuation_undo.push([f_up, sf_up, punctuation[f_p][sf]]);
                     //console.log('punctuation applied to previous subfield: ' + punctuation[f_p][sf]);
@@ -407,21 +414,23 @@ function punctuate(element) {
     var divID = "#" + element + " :input[type=text]";
     var i = $(divID);
     var lastID = 'xxx';
-    // console.log('punctuate ' + element);
+    console.log('punctuate ' + element);
     // look for last subfield with data in field
     for (var e = i.length-1; e >= 0; e = e-1) {
         element = i[e]['id'];
+        console.log('Element in punctuate A: ' + element);
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
         if (window[f][sf] != '') {
             var newObj = jQuery.extend(true, {}, sf);
             lastID = newObj[0]}
-            //console.log('lastID is: ' + lastID);
+            //console.log('punct A ' + f + ' ' + sf + ' 0', lastID);
         if (sf == '2' || sf == '9') {lastID == 'xxx'; continue;}
         if (lastID != 'xxx') {break;}
     }
     for (var c = i.length-1; c >= 0; c = c-1) {
         element = i[c]['id'];
+        console.log('Element in punctuate B: ' + element);
         f = ElemToVar(element)[1];
         sf = ElemToVar(element)[2];
         if (sf == 'i1' || sf == 'i2') {
@@ -429,7 +438,7 @@ function punctuate(element) {
         }
         else {
             punctuatesf(element, f, sf, lastID);
-            //console.log('punct ' + f + sf + ' 0', lastID);
+            //console.log('punct B ' + f + ' ' + sf + ' 0', lastID);
         }
     }
 }
@@ -525,12 +534,13 @@ function toMarc() {
                 undoPunct();
                 //console.log('adding punctuation to f100, f245, f246');
                 // post all the variables that match the following pattern (fxxx or fxxx_n) 
-                    var pattern = /^f[0-9]{3}(_[0-9])?$/;
+                    //var pattern = /^f[0-9]{3}(_[0-9])?$/; old pattern (only one digit in counter)
+                    var pattern = /^f[0-9]{3}(_[0-9][0-9]?)?$/;
                     var post_to_marc2 = {};
                     for (var varName in window) {
                         if ('undefined' === typeof window[varName]) { continue; }
                         if (pattern.test(varName)) {
-                            //console.log(varName);
+                            console.log(varName);
                             //console.log(window[varName].punct);
                             if (window[varName].punct != 'no') {
                                 punctuate(varName);
@@ -547,6 +557,7 @@ function toMarc() {
                 if (/^\d{4}-\d{3}[\dxX]$/.test(f022.a)) {
                     $('#footer').html('marc record has been created and saved (isbn: '+f022.a+')');
                     console.log('writing marc');
+                    console.log(post_to_marc2);
                     $.post( 
                         "marc_record.php",
                         post_to_marc2,
@@ -659,7 +670,7 @@ function dateToText(date) {
             break;
         case '02': 
             english = 'February';
-            french = 'février';
+            french = 'f\xE9vrier';
             break;
         case '03': 
             english = 'March';

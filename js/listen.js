@@ -78,10 +78,12 @@ var f336_2;
 var f337 = {id: '337', i1: null, i2: null, a: 'unmediated', b: 'n', '2': 'rdamedia'};
 var f338 = {id: '338', i1: null, i2: null, a: 'volume', b: 'nc', '2': 'rdacarrier'};
 var f500_1 =  {id: '500', i1: null, i2: null, a: ''};
-var f504 =  {id: '500', i1: null, i2: null, a: ''};
+var f504 =  {id: '504', i1: null, i2: null, a: ''};
+var f546 =  {id: '546', i1: null, i2: null, a: ''};
+var f590 = {id: '590', i1: null, i2: null, a: ''};
 var f520 = {id: '520', i1: '8', i2: null, a: ''};
 
-var f852 = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
+var f852 = {id: '852', i1: 1, i2: '', a: '', k: '', h: '', i: '', p:'', '9': ''};
 
 // Marc fields default value for reset
 var f020_default = {id: '020', i1: null, i2: null, a: '', q: ''};
@@ -102,9 +104,11 @@ var f504_default = {id: '504', i1: null, i2: null, a: ''};
 var f505_default = {id: '505', i1: '8', i2: '', a: ''};
 var f520_default = {id: '520', i1: '8', i2: null, a: ''};
 var f521_default = {id: '521', i1: '8', i2: null, a: ''};
+var f546_default = {id: '546', i1: null, i2: null, a: ''};
 var f586_default = {id: '586', i1: '8', i2: null, a: ''};
-var f600_default = {id: '600', i1: '', i2: 7, a: '', d: '', '2': 'fast'};
-var f600_default_fr = {id: '600', i1: '', i2: 7, a: '', d: '', '2': 'ram'};
+var f590_default = {id: '590', i1: null, i2: null, a: ''};
+var f600_default = {id: '600', i1: '1', i2: 7, a: '', d: '', '2': 'fast'};
+var f600_default_fr = {id: '600', i1: '1', i2: 7, a: '', d: '', '2': 'ram'};
 var f610_default = {id: '610', i1: '', i2: 7, a: '', '2': 'fast'};
 var f610_default_fr = {id: '610', i1: '', i2: 7, a: '', '2': 'ram'};
 var f611_default = {id: '611', i1: '', i2: 7, a: '', '2': 'fast'};
@@ -122,7 +126,7 @@ var f700_default = {id: '700', i1: 1, i2: null, a: '', q: '', d: '', e: ''};
 var f710_default = {id: '710', i1: 2, i2: '', a: ''};
 var f730_default = {id: '730', i1: 0, i2: '', a: ''};
 var f740_default = {id: '740', i1: 0, i2: 2, a: ''};
-var f852_default = {id: '852', i1: 1, i2: '', a: '', h: '', i: '', p:'', '9': ''};
+var f852_default = {id: '852', i1: 1, i2: '', a: '', k: '', h: '', i: '', p:'', '9': ''};
 
 var punctuation = {
                     f100: {a:'', b:'', c:',', q:',', d:',', e:',', last:'.'},
@@ -139,7 +143,9 @@ var punctuation = {
                     f505: {a: '', last: '.'},
                     f520: {a: '', last: '.'},
                     f521: {a: '', last: '.'},
+                    f546: {a: '', last: '.'},
                     f586: {a: '', last: ''},
+                    f590: {a: '', last: ''},
                     f600: {a: '', b: ',', c: ',', d: ',', q: '', last: '.'},
                     f610: {a: '', b: '.', last: '.'},
                     f611: {a: '', last: '.'},
@@ -356,6 +362,8 @@ $('#f008_nature_of_content').on('blur', function () {
 
         if (f008_2427.indexOf("6") >= 0) {
             insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
+            f504.a = 'Bibliography: pages';
+            f852.k = 'BD';
             var fieldID = insertFieldAuto();
             added_by_f008_2427 = fieldID;
             f336_2 = {id: '336', i1: null, i2: null, a: 'still image', b: 'sti', '2': 'rdacontent'};
@@ -802,6 +810,7 @@ $('#f520_a').on('blur', function () {
         f520.a = $(this).val();
         f520.a = f520.a.replace(/(\r\n|\n|\r)/gm," ");
         f520.a = f520.a.replace(/ ,/g, ',');
+        f520.a = f520.a.replace(/\u2019/g, "\'");
         f520.a = f520.a.replace(/\s+/g,' ').trim();
         document.getElementById('f520_a').value = f520.a;
         console.log('520#a: summary recorded');
