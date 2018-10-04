@@ -362,7 +362,6 @@ $('#f008_nature_of_content').on('blur', function () {
 
         if (f008_2427.indexOf("6") >= 0) {
             insert = {id: '655', i1: '', i2: '7', a: 'Graphic novels',  '2': 'fast' };
-            f504.a = 'Bibliography: pages';
             f852.k = 'BD';
             var fieldID = insertFieldAuto();
             added_by_f008_2427 = fieldID;
@@ -440,12 +439,12 @@ $('#f008_biography').on('blur', function () {
         }
         if (f008_34 == 'a') {
             if (f008_33 == '1') {
-                insert = {id: '655', i1: '', i2: '7', a: 'Fictional autobiographies', '2': 'fast' };
+                insert = {id: '655', i1: '', i2: '7', a: 'Autobiographies', '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_34 = fieldID;
             }
             else {
-                insert = {id: '655', i1: '', i2: '7', a: 'Biography', '2': 'fast' };
+                insert = {id: '655', i1: '', i2: '7', a: 'Autobiographies', '2': 'fast' };
                 var fieldID = insertFieldAuto();
                 added_by_f008_34 = fieldID;
             }
