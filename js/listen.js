@@ -590,6 +590,7 @@ $('#f020_a').on('blur', function () {
 $('#f020_q').on('blur', function () {
         f020.q = $(this).val();
         console.log('020#q: ' + f020.q);
+        $('label[for=f852_p], #852_p').focus();
     });
 
 $('#f040_a').on('blur', function () {
@@ -840,6 +841,7 @@ $('#f852_i').on('blur', function () {
 $('#f852_p').on('blur', function () {
         f852.p = $(this).val();
         console.log('852#p: ' + f852.p);
+        $('label[for=f100_a], #f100_a').focus();
     });
 
 $('#f852_9').on('blur', function () {
