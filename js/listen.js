@@ -510,6 +510,11 @@ $('#f008_language').on('change', function () {
                     var fieldID = insertFieldAuto();
                     added_by_f008_22 = fieldID;
                 }
+                else if ( (f008_22 == 'j' || f008_22 == 'd' || f008_22 == 'c') && ( f008_33 == '0') ) {
+                    insert = {id: '655', i1: '', i2: '7', a: 'Ouvrages pour la jeunesse', '2': 'ram' };
+                    var fieldID = insertFieldAuto();
+                    added_by_f008_22 = fieldID;
+                }
             /* Bibliographie */
                 f504.a = document.getElementById('f504_a').value.replace('Bibliography', 'Bibliographie');
                 document.getElementById('f504_a').value = f504.a; 
