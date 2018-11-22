@@ -57,6 +57,7 @@ var f008_3537 = '   '; /* f008_language */
 
 var f008 = f008_0005 + f008_06 + f008_0710 + f008_1114 + f008_1517 + f008_1821 + f008_22 + f008_23 + f008_2427 + f008_2830 + f008_31 + f008_32 + f008_33 + f008_34 + f008_3537 + f008_3839;
 var plates = '';
+added_by_f008_6 = '';
 var added_by_f008_22 = '';
 var added_by_f008_1114 = '';
 var added_by_f008_33 = '';
@@ -222,6 +223,14 @@ $('#f008_type_of_date').on('change', function () {
                 added_by_f008_1114 = '';
             }
         }
+        else if ($(this).val() == 'r') {
+            console.log('adding 264');
+            f264_1.i2 = '3';
+            document.getElementById('f264_1_i2').value = f264_1.i2;
+            insert = {id: '264', i1: '', i2: '1', a: '', b: '', c:'' };
+            var fieldID = insertFieldAuto();
+            added_by_f008_6 = fieldID;
+        }    
         else {
             $('#f008_date_2').show();
         }
