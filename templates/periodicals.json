@@ -1,22 +1,4 @@
 {
-/*"_Debug" :
-		{
-			"place_code": " fr",
-			"frequency_code": "m",
-			"regularity": "n",
-			"language": "fre",
-			"issn": "0247-3739",
-			"title": "Debugger",
-			"place": "Founex",
-			"publisher": "fred",
-			"frequency": "365 numéros par an",
-			"permanent_subjects": ["sujet 1", "sujet 2", "sujet 3", "sujet 4", "sujet 5", "sujet 6", "sujet 7", "sujet 8", "sujet 9"],
-			"form": "Périodiques",
-			"classification": "FRD",
-			"barcode_prefix": "FRD",
-			"price": "p8chf",
-			"website": "http://libraries.ecolint.ch"
-		},*/
 "Alternatives économiques" :
 		{
 			"place_code": " fr",
@@ -461,6 +443,23 @@
 			"classification": "GEO",
 			"barcode_prefix": "GER",
 			"price": "p8chf"
+		},
+"Guardian weekly (the)" :
+		{
+			"place_code": "enk",
+			"frequency_code": "w",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0959-3608",
+			"title": "The Guardian weekly",
+			"place": "London",
+			"publisher": "Guardian Media Group",
+			"frequency": "Weekly",
+			"permanent_subjects": ["Current events"],
+			"form": "Periodicals",
+			"classification": "GUA",
+			"barcode_prefix": "GUA",
+			"price": "p10chf"
 		},
 "Hindsight" :
 		{
@@ -1088,6 +1087,24 @@
 			"barcode_prefix": "TIM",
 			"price": "p9chf",
 			"website": "http://time.com"
+		},
+"Topo" :
+		{
+			"place_code": " fr",
+			"frequency_code": "b",
+			"regularity": "r",
+			"language": "fre",
+			"issn": "2495-0297",
+			"title": "Topo",
+			"place": "Paris",
+			"publisher": "Topolino",
+			"frequency": "Bimestriel",
+			"permanent_subjects": ["Périodiques"],
+			"form": "Périodiques",
+			"classification": "TOP",
+			"barcode_prefix": "TOP",
+			"price": "p20chf",
+			"website": "http://www.toporevue.fr"
 		},
 "Un seul monde" :
 		{
