@@ -461,6 +461,23 @@
 			"barcode_prefix": "GUA",
 			"price": "p10chf"
 		},
+"Guitar player" :
+		{
+			"place_code": "cau",
+			"frequency_code": "m",
+			"regularity": "r",
+			"language": "eng",
+			"issn": "0017-5463",
+			"title": "Guitar Player",
+			"place": "San Bruno, CA",
+			"publisher": "Future US",
+			"frequency": "Monthly",
+			"permanent_subjects": ["Guitar", "Guitar music"],
+			"form": "Periodicals",
+			"classification": "GUI",
+			"barcode_prefix": "GUI",
+			"price": "p4.50chf"
+		},
 "Hindsight" :
 		{
 			"place_code": "enk",
