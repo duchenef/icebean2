@@ -1033,6 +1033,24 @@
 			"price": "p9chf",
 			"website": "http://www.csicop.org"
 		},
+"So Foot" :
+		{
+			"place_code": " fr",
+			"frequency_code": "m",
+			"regularity": "n",
+			"language": "fre",
+			"issn": "1765-9086",
+			"title": "So Foot",
+			"place": "Paris",
+			"publisher": "So press",
+			"frequency": "Mensuel",
+			"permanent_subjects": ["Football"],
+			"form": "Périodiques",
+			"classification": "SOF",
+			"barcode_prefix": "SOF",
+			"price": "p9chf",
+			"website": "www.sofoot.com"
+		},
 "Society" :
 		{
 			"place_code": " fr",
@@ -1116,7 +1134,7 @@
 			"place": "Paris",
 			"publisher": "Topolino",
 			"frequency": "Bimestriel",
-			"permanent_subjects": ["Périodiques"],
+			"permanent_subjects": ["Actualité", "Bandes dessinées"],
 			"form": "Périodiques",
 			"classification": "TOP",
 			"barcode_prefix": "TOP",
