@@ -303,6 +303,24 @@
 			"price": "p8chf",
 			"website": "http://discovermagazine.com"
 		},
+"Dramatics (the)" :
+		{
+			"place_code": "ohu",
+			"frequency_code": "b",
+			"regularity": "n",
+			"language": "eng",
+			"issn": "0012-5989",
+			"title": "The Dramatics",
+			"place": "Cincinnati, OH",
+			"publisher": "Educational Theatre Association",
+			"frequency": "6 issues per year",
+			"permanent_subjects": ["Theater", "College and school drama"],
+			"form": "Periodicals",
+			"classification": "DRA",
+			"barcode_prefix": "DRA",
+			"price": "p8chf",
+			"website": "https://www.schooltheatre.org"
+		},
 "Economic review" :
 		{
 			"place_code": "enk",
@@ -389,7 +407,7 @@
 			"classification": "GEO",
 			"barcode_prefix": "GEO",
 			"price": "p10.50chf",
-			"website": "http://www.geo.de/geolino"
+			"website": "http://www.geo.fr"
 		},
 "Geo lino" :
 		{
