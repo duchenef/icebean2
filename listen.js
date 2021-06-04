@@ -1744,6 +1744,14 @@ jQuery("#content-wrap").resizable({
               }
           });
 
+/* recherche rameau */
+  function ramSearch() {
+      var ramsearchterm = document.getElementById("ramquery").value;
+      var ramsearchstring = encodeURI("http://data.bnf.fr/search?term=" + ramsearchterm + "#Rameau");
+      console.log(ramsearchstring);
+      window.open(ramsearchstring, '_blank');
+
+  }
 
 /* not used */
 function diacritics(object) {
