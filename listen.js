@@ -998,7 +998,7 @@ function icebean_submit(){
                $.post(
                     "./php/fd_images_cleanup.php",
                     function(data) {
-                        console.log(data);
+                        // console.log(data);
                     }   
                );
                $.post( 
@@ -1007,6 +1007,7 @@ function icebean_submit(){
                     function(data) {
                         //$('#ib').html(data);
                         var fast_data = data.split('~');
+                        // console.log(fast_data);
                         // Fast headings
                         for (var i = 2; i < fast_data.length; i++) {
                             //console.log(fast_data[i]);
@@ -1049,8 +1050,15 @@ function icebean_submit(){
                     // Fast headings
                     for (var i = 1; i < images_url_data.length; i++) {
                         console.log(images_url_data[i]);
+                        /* IF AMAZON ie #1 then : */
+                        if (i == 1) {
+                            var isbn10 = convISBN13toISBN10(f020.a);
+                            var amazon_image_url = "http://images.amazon.com/images/P/"+isbn10+".jpg";
+                            console.log(amazon_image_url);
+                            $('#pic'+i).html("<a download='"+f020.a+lab[i]+".jpg' href='images/"+f020.a+lab[i]+".jpg' title='"+lab[1]+"''><img align='middle' src='resources/resizer.php?url="+amazon_image_url+"&h=150&fn="+f020.a+lab[i]+".jpg'></a>");
+                        }
                         /* IF GOODREADS ie #2 then : .*/
-                        if (i == 2) {
+                        else if (i == 2) {
                            var SX = "SX150";
                            var flip = images_url_data[2];
                            var flip = flip.replace('SX98', SX);
@@ -1089,11 +1097,10 @@ function icebean_submit(){
                     document.getElementById('f245_c').value = f245.c;
                     $('#ib').html(icebean_data);
                     // f245
-                    var full_title = icebean_data[3];
-                    //console.log(icebean_data[3]);
-                    //console.log('ARGHHHH');
+                    var full_title = icebean_data[3];                  
                     full_title_AM = icebean_data[2];
                     full_title_GR = icebean_data[3];
+                    console.log(icebean_data[3]);
                     full_title_GB = icebean_data[11];
                     if (full_title.indexOf(':') != -1) {
                         f245.a = full_title.slice(0, full_title.indexOf(':'));
@@ -1191,20 +1198,10 @@ function icebean_submit(){
                     f852['9'] = icebean_data[7];
                     document.getElementById('f852_9').value = f852['9'];
                     // amazon_url
-                    amazon_url = icebean_data[15];
+                    // amazon_url = icebean_data[15]; (used only when amazon API is available)
+                    amazon_url = "https://www.amazon.fr/s?k="+f020.a;
                });
-                scrape_amazon_image(f020.a);
             }
-
-/* NOT YET IMPLEMENTED 20210527 .*/
-function scrape_amazon_image(isbn) {
-    amazon_image_scraping_url = "https://www.amazon.fr/s?k="+isbn+"&__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss";
-    console.log(amazon_image_scraping_url);
-    /*.var name = "amazon_data";$.get(amazon_image_scraping_url, function(response) {  console.log(response);});.*/
-    /*var name = "amazon_data";var url = "http://www.whateverorigin.org/get?url=" + encodeURIComponent(amazon_image_scraping_url) + "&callback=?";$.get(url, function(response) {  console.log(response);});.*/
-    /*var blip = document.getElementById(amazon_image_scraping_url);
-    console.log(blip);*/
-}
 
 function parseFast(fast_data) {
     var fast = {id: '', i1: '', i2: '', punct: 'no'};
@@ -1769,4 +1766,30 @@ function diacritics(object) {
         }
 
     }
+}
+
+
+/* ISBN 13 to ISBN 10 */
+/* SOURCE: https://gist.github.com/tsupo/108922 */
+function convISBN13toISBN10(str) {
+    var s;
+    var c;
+    var checkDigit = 0;
+    var result = "";
+    console.log(str);
+    console.log(str.length);
+    if (str.length == 10) {
+        result = str;
+    }
+    else {
+        s = str.substring(3,str.length);
+        for ( i = 10; i > 1; i-- ) {
+            c = s.charAt(10 - i);
+            checkDigit += (c - 0) * i;
+            result += c;
+        }
+        checkDigit = (11 - (checkDigit % 11)) % 11;
+        result += checkDigit == 10 ? 'X' : (checkDigit + "");
+    }
+    return ( result );
 }

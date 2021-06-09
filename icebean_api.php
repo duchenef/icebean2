@@ -83,6 +83,7 @@ include 'resources/function_goodreads.php';
   $GRauthor = $goodreads[2];
   $GRsummary = $goodreads[3];
     $GRsummary = str_replace("\xE2\x80\x99", "'",  $GRsummary);
+  $GRPublisher = $goodreads[7];
  
 // appel fonction fast
 // retourne un tableau: [0]=fast format marc mandarin, [1]=fast format lisible, [2]=status, [3]=dewey, [4]= edition ddc
@@ -92,8 +93,8 @@ include 'resources/function_goodreads.php';
 
 // choix de la description à afficher en fonction du choix dans le formulaire
 
-$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $AMsummary, $f264b, $GRsummary, $GBtitle, $GRauthor, $GBauthor, $GBsummary, $pageurl);
-//                    0      1          2         3         4       5       6       7            8           9       10          11        12         13         14
+$output_array = array($isbn, $AMauthor, $AMtitle, $GRtitle, $dewey, $f300a, $f300c, $swissprice, $AMsummary, $f264b, $GRsummary, $GBtitle, $GRauthor, $GBauthor, $GBsummary, $pageurl, $GRPublisher);
+//                    0      1          2         3         4       5       6       7            8           9       10          11        12         13         14          15        16
 //echo json_encode($output_array);
 echo implode('~',$output_array);
 //echo "<SCRIPT LANGUAGE='javascript'> gettemplate('$output_array');</SCRIPT>\n";
